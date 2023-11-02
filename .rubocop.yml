@@ -3,3 +3,10 @@ require:
 
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/BlockLength:
+  Max: 25
+  ExcludedMethods: ['describe', 'context', 'it']
