@@ -31,12 +31,13 @@ describe '::Usuário faz sign up' do
   it 'sem sucesso - confirmação falha de senha' do
     # Arrange
     # Act
-    fill_in 'E-mail', with: 'usuario@servidor.com.uk'
+    fill_in 'E-mail', with: 'usuario@servidor.co.uk'
     fill_in 'Senha', with: 'SenhaSuper!9'
     fill_in 'Confirme sua senha', with: 'SenhaSuper9'
     click_on 'Cadastre-se'
     # Assert
     expect(current_path).to eq(user_registration_path)
+    expect(page).to have_content('Confirme sua senha não é igual a Senha')
   end
 
   it 'sem sucesso - email fora do padrão' do
@@ -49,6 +50,6 @@ describe '::Usuário faz sign up' do
     click_on 'Cadastre-se'if expect(page).to have_content('Boas vindas!')
     # Assert
     expect(current_path).to eq(root_path)
-    expect(page).to have_content('Você já está auten')
+    expect(page).to have_content('Você já está autenticado')
   end
 end
