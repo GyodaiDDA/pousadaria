@@ -1,24 +1,15 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Usando: Ruby 3.2.2, Rails 7.1.1
+  
+  Login de usuário gerado pelo Devise, posteriormente acrescentado o campo 'type'.
+  
+  Criadas duas subclasses de User: Owner e Customer, associadas ao campo 'type' em User.
 
-Things you may want to cover:
+  home/index.html.erb deverá fazer a checagem do current_user.type para selecionar a exibição de acordo
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+  próximos passos: 
+    
+    . gerar os modelos de pousada, quarto e preços_especiais
+    . selecionar em que condições as views desses modelos serão apresentadas ao usuário
+    . finalizar a configuração do fluxo entre rotas

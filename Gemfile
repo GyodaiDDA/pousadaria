@@ -28,6 +28,9 @@ gem 'stimulus-rails'
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem 'jbuilder'
 
+# Localization
+gem 'rails-i18n', '~> 7.0'
+
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '>= 4.0.1'
 
@@ -70,5 +73,3 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem 'selenium-webdriver'
 end
-
-gem "rails-i18n", "~> 7.0"

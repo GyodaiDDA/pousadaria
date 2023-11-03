@@ -3,4 +3,5 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
   root to: 'home#index'
+  resources :inns, only: %I[show new create edit update]
 end
