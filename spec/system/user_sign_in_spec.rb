@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-describe '::Usuário faz sign in' do
+describe '::Usuário clica no botão Entrar' do
   before(:each) do
     User.create!(email: 'usuario@servidor.co.uk',
-                 password: 'SenhaSuper!9')
+                 password: '.SenhaSuper3')
     visit root_path
     click_on 'Entrar'
   end
-  it 'pelo botão Entrar na home' do
+  it 'e vê a página de login' do
     # Arrange
     # Act
     # Assert
@@ -18,25 +18,25 @@ describe '::Usuário faz sign in' do
     expect(page).to have_button('Entrar')
   end
 
-  it 'com sucesso' do
+  it 'e faz login com sucesso' do
     # Arrange
     # Act
     fill_in 'E-mail', with: 'usuario@servidor.co.uk'
-    fill_in 'Senha', with: 'SenhaSuper!9'
+    fill_in 'Senha', with: '.SenhaSuper3'
     click_on 'Entrar'
     # Assert
     expect(current_path).to eq(root_path)
     expect(page).to have_content('Olá! Seu login foi feito com sucesso.')
   end
 
-  it 'sem sucesso - dados inválidos' do
+  it 'e falha ao fazer login' do
     # Arrange
     # Act
     fill_in 'E-mail', with: 'usuario@servidor.com'
-    fill_in 'Senha', with: 'SenhaSuper!9'
+    fill_in 'Senha', with: '.SenhaSuper3'
     click_on 'Entrar'
     # Assert
     expect(page).to have_content('E-mail ou senha inválidos.')
-    expect(current_path).to eq(user_session_path)
+    expect(current_path).to eq(user_session_path) && eq(new_user_session_path)
   end
 end
