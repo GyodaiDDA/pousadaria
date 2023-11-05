@@ -1,5 +1,5 @@
 <%= form_with(model: @inn) do |f| %>
-  <%= f.label :brand_name, t('activerecord.attributes.inn.brand_name') %>
+  <%= f.label :brand_name %>
   <%= f.text_field :brand_name %>
   <%= f.label :legal_name %>
   <%= f.text_field :legal_name %>
@@ -25,16 +25,17 @@
   <%= f.text_field :payment_options %>
   <%= f.label :pet_friendly %>
   <%= f.check_box :pet_friendly %>
-  <%= f.label :wheelchair_friendly %>
-  <%= f.check_box :wheelchair_friendly %>
+  <%= f.label :wheelchair_accessible %>
+  <%= f.check_box :wheelchair_accessible %>
   <%= f.label :rules %>
   <%= f.text_area :rules %>
   <%= f.label :check_in %>
-  <%= f.time_select :check_in %>
+  <%= f.time_field :check_in %>
   <%= f.label :check_out %>
-  <%= f.time_select :check_out %>
+  <%= f.time_field :check_out %>
   <%= f.label :active %>
   <%= f.check_box :active %>
+  <%= f.hidden_field :user_id, value: current_user.id %>
   <br>
   <%= f.submit %>
 <% end %>

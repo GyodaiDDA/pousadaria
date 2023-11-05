@@ -1,0 +1,10 @@
+<% if @inn.errors.any? %>
+  <div class="bold">
+    Verifique os erros abaixo:
+  </div>
+  <ul class="indented">
+    <% @inn.errors.full_messages.each do |msg| %>
+      <li class="error"> <%= msg %> </li>
+    <% end %>
+  </ul>
+<% end %>

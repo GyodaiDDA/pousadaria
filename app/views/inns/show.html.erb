@@ -1,0 +1,29 @@
+<h1><strong><%= @inn.brand_name %></strong></h1>
+<h4><%= @inn.description %></h4>
+
+  <p>
+    <strong>Razão Social:</strong> <%= @inn.legal_name %>
+  </p>
+  <p>
+    <strong> CNPJ:</strong> <%= @inn.vat_number %>
+  </p>
+  <p>
+    <strong>Endereço:</strong> <%= @inn.address %>, <%= @inn.zone %>
+  </p>
+  <p>
+    <strong>CEP:</strong> <%= @inn.postal_code %>
+  </p>
+  <p>
+    <strong>Cidade/UF:</strong> <%= @inn.city %>/<%= @inn.state %>
+  </p>
+  <p>
+    <strong>Telefone:</strong> <%= @inn.phone %>
+  </p>
+  <p>
+    <strong>E-mail:</strong> <%= @inn.email %>
+  </p>
+
+<div class="box">
+  <%= link_to 'Editar', edit_inn_path(@inn) %> |
+  <%= link_to 'Voltar', inns_path %>
+</div>
