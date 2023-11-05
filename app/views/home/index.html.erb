@@ -1,9 +1,11 @@
 <h1> POUSADARIA </h1>
 <%= button_to 'Entrar', new_user_session_path, method: :get %>
 <nav></nav>
-<%= button_to 'Vai', new_inn_path %>
+<%= button_to 'Vai', new_inn_path, method: :get %>
 <% if user_signed_in? && current_user.type == 'Owner' %>
   <% if Inn.find_by(user_id: current_user.id) %>
     <p> tem pousada </p>
-  <%end%>
+  <% else %>
+    <%= render 'inns/form' %>
+  <%end %>
 <% end %>

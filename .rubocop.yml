@@ -10,3 +10,6 @@ Style/Documentation:
 Metrics/BlockLength:
   Max: 25
   ExcludedMethods: ['describe', 'context', 'it']
+
+Style/ClassAndModuleChildren:
+  Enabled: false

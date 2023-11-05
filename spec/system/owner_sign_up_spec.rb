@@ -1,15 +1,13 @@
 require 'rails_helper'
 
 describe '::Usuário cria uma nova conta' do
-  before(:each) do
-    visit root_path
-    click_on 'Entrar'
-    click_on 'Ainda não tem cadastro?'
-  end
 
   it 'mas falha na confirmação de senha' do
     # Arrange
     # Act
+    visit root_path
+    click_on 'Entrar'
+    click_on 'Ainda não tem cadastro?'
     within('section#owner-signup') do
       fill_in 'E-mail', with: 'usuario@servidor.co.uk'
       fill_in 'Senha', with: '.SenhaSuper3'
