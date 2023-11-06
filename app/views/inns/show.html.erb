@@ -1,29 +1,54 @@
-<h1><strong><%= @inn.brand_name %></strong></h1>
+<h1><%= @inn.brand_name %></h1>
 <h4><%= @inn.description %></h4>
 
-  <p>
-    <strong>Razão Social:</strong> <%= @inn.legal_name %>
-  </p>
-  <p>
-    <strong> CNPJ:</strong> <%= @inn.vat_number %>
-  </p>
-  <p>
-    <strong>Endereço:</strong> <%= @inn.address %>, <%= @inn.zone %>
-  </p>
-  <p>
+<ul class="list">
+  <li>
+    <strong>Razão Social:</strong> <%= @inn.legal_name.upcase %>
+  </li>
+  <li>
+    <strong> CNPJ:</strong> <%= @inn.vat_number.upcase %>
+  </li>
+  <li>
+    <strong>Endereço:</strong> <%= [@inn.address, @inn.zone].compact.join(' - ') %>
+  </li>
+  <li>
     <strong>CEP:</strong> <%= @inn.postal_code %>
-  </p>
-  <p>
-    <strong>Cidade/UF:</strong> <%= @inn.city %>/<%= @inn.state %>
-  </p>
-  <p>
+  </li>
+  <li>
+    <strong>Cidade/UF:</strong> <%= [@inn.city.presence, @inn.state.presence].compact.join(' / ') %>
+  </li>
+  <li>
     <strong>Telefone:</strong> <%= @inn.phone %>
-  </p>
-  <p>
+  </li>
+  <li>
     <strong>E-mail:</strong> <%= @inn.email %>
-  </p>
+  </li>
+</ul>
 
-<div class="box">
-  <%= link_to 'Editar', edit_inn_path(@inn) %> |
-  <%= link_to 'Voltar', inns_path %>
+<div id="rooms_list" class="list">
+<% @rooms.each do |room| %>
+  <span class="inline"><%= room.name %> | </span> 
+  <span class="inline"><%= room.size %>m² | </span>
+  <span class="inline">R$ <%= room.base_price %> | </span>
+  <span class="inline"><% if room.available %>
+                         <%= 'Disponível' %>
+                       <% else %>
+                         <%= 'Indisponível' %>
+                       <% end %></span>
+  <%= button_to 'Editar', edit_room_path(room), method: :get, form_class: "inline", class: "inline-button" %>
+  <%= button_to 'Ver', room_path(room), method: :get, form_class: "inline", class: "inline-button" %>
+  <br>
+<% end %>
 </div>
+
+
+<nav>
+  <ul>
+    <li>
+      <%= button_to 'Editar Pousada', edit_inn_path(@inn), method: :get %>
+    </li>
+    <li>
+      <%= button_to 'Adicionar Quarto', new_room_path, method: :get %>
+    </li>
+  </ul>
+</nav>

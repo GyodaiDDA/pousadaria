@@ -23,7 +23,9 @@ describe '::Usuário clica no botão Entrar' do
     # Act
     fill_in 'E-mail', with: 'usuario@servidor.co.uk'
     fill_in 'Senha', with: '.SenhaSuper3'
-    click_on 'Entrar'
+    within('div.actions') do
+      click_on 'Entrar'
+    end
     # Assert
     expect(current_path).to eq(root_path)
     expect(page).to have_content('Olá! Seu login foi feito com sucesso.')
@@ -34,7 +36,9 @@ describe '::Usuário clica no botão Entrar' do
     # Act
     fill_in 'E-mail', with: 'usuario@servidor.com'
     fill_in 'Senha', with: '.SenhaSuper3'
-    click_on 'Entrar'
+    within('div.actions') do
+      click_on 'Entrar'
+    end
     # Assert
     expect(page).to have_content('E-mail ou senha inválidos.')
     expect(current_path).to eq(user_session_path) && eq(new_user_session_path)

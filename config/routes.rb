@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :rooms, only: %I[show new create edit update]
+
   devise_for :user, controllers: {
     registrations: 'users/registrations'
   }

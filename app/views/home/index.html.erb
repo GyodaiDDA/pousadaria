@@ -1,17 +1,2 @@
-<h1> POUSADARIA </h1>
 
-<nav>
-  <% if user_signed_in? %>
-  <%= button_to 'Sair', destroy_user_session_path, method: :delete %>
-    <% if current_user.type == 'Owner'%>
-      <% if Inn.find_by(user_id: current_user.id) %>
-        <%= button_to 'Ver Pousada', inn_path(Inn.find_by(user_id: current_user.id)), method: :get %>
-      <% else %>
-        <%= button_to 'Cadastrar Pousada', new_inn_path, method: :get %>
-      <% end %>
-    <% end %>
-  <% else %>
-    <%= button_to 'Entrar', new_user_session_path, method: :get %>
-  <% end %>
-</nav>
 

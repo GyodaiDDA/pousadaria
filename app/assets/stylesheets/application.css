@@ -1,4 +1,4 @@
-/* Reset some basic elements */
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -15,13 +15,13 @@ time, mark, audio, video {
   margin: 0;
   padding: 0;
   border: 0;
-  font-size: 90%; /* Smaller font size */
+  font-size: 90%; 
   font: inherit;
   vertical-align: baseline;
-  box-sizing: border-box; /* Added for better box sizing */
+  box-sizing: border-box; 
 }
 
-/* HTML5 display-role reset for older browsers */
+
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
   display: block;
@@ -30,8 +30,8 @@ footer, header, hgroup, menu, nav, section {
 body {
   line-height: 1.5;
   font-family: 'Calibri', 'Helvetica Neue', Helvetica;
-  color: #f4f4f4; /* Light text for dark mode */
-  background-color: #121212; /* Dark background */
+  color: #f4f4f4; 
+  background-color: #121212; 
   padding: 20px;
   font-size: 16px;
 }
@@ -55,7 +55,7 @@ table {
   border-spacing: 0;
 }
 
-/* Global styles */
+
 a {
   color: #0d6efd;
   text-decoration: none;
@@ -66,15 +66,17 @@ a:hover {
   text-decoration: underline;
 }
 
-/* Typography */
+
 h1, h2, h3, h4, h5, h6 {
   color: #f4f4f4;
-  margin-bottom: 1.5em;
+  margin-bottom: 0em;
+  margin-left: 5px;
 }
 
 h1 {
-  font-size: 2.5em; /* Smaller heading */
-  margin-bottom: 0.1em;
+  font-size: 2.5em; 
+  margin-bottom: 0em;
+  
 }
 
 h2 {
@@ -99,96 +101,72 @@ h6 {
 }
 
 p {
-  margin-bottom: 0.1em;
+  margin-bottom: 0.0em;
 }
 
-/* Forms */
-input, textarea, select, button {
-  font-family: inherit;
-  font-size: 90%; /* Smaller font size */
-  margin: 0;
-}
-
-input[type="text"],
-input[type="email"],
-input[type="password"],
-textarea {
-  width: 30%;
-  padding: 8px;
-  margin-bottom: 1em;
-  border: 1px solid #333; /* Darker border for inputs */
-  background-color: #2c2c2c; /* Darker background for inputs */
-  color: #f4f4f4; /* Light text for inputs */
-  border-radius: 4px;
-}
-
-input[type="submit"],
-button {
-  padding: 10px 15px;
-  background-color: #0d6efd;
-  border: none;
-  border-radius: 4px;
-  color: white;
-  cursor: pointer;
-}
-
-input[type="submit"]:hover,
-button:hover {
-  background-color: #0a58ca;
-}
-
-/* Navigation */
-nav {
-  margin-bottom: 20px;
-}
 
 nav ul {
+  list-style-type: none; 
+  margin: 0;
   padding: 0;
-  background-color: #0d6efd;
-  overflow: hidden;
+  overflow: hidden; 
 }
 
-nav ul li {
-  display: inline;
-  margin-right: -4px;
+nav li {
+  float: left; /* Faz cada li flutuar para a esquerda, alinhando-os horizontalmente */
 }
 
-nav ul li a {
-  display: inline-block;
-  padding: 10px 15px;
-  color: white;
-  text-align: center;
+nav li button {
+  display: block; 
+  text-align: center; 
+  padding: 10px 15px; 
+  text-decoration: none; 
+  color: white; 
+  background-color: #333; 
+  border: none; 
+  cursor: pointer; 
+  border-radius: 5px;
+  margin: 5px;
 }
 
-nav ul li a:hover {
-  background-color: #0a58ca;
+input[type=submit]{
+  display: block; 
+  text-align: center; 
+  padding: 14px 16px; 
+  text-decoration: none; 
+  color: white; 
+  background-color: #333; 
+  border: none; 
+  cursor: pointer; 
+  border-radius: 5px;
 }
 
-/* Footer */
+nav li button:hover {
+  background-color: #111; 
+}
+
+
+
+
 footer {
-  margin-top: 20px;
+  /* margin-top: 20px; */
   padding: 20px 0;
   background-color: #333;
   color: white;
   text-align: center;
 }
 
-/* Responsive */
+
 @media (max-width: 768px) {
   body {
     padding: 10px;
   }
-
-  nav ul li {
-    display: block;
-    margin-right: 0;
-  }
 }
 
 .box {
-  
-  width: 31%;
-  margin-top: 10px;
+  max-width: 600px; 
+  margin: 0; 
+  margin-top: 20px;
   padding-left: 20px;
   padding: 10px;
   background-color: #fdfdfd80;
@@ -198,4 +176,108 @@ footer {
 a {
   color: #252525;
   text-decoration: none;
+}
+
+
+form {
+  max-width: 600px; 
+  margin: 0; 
+}
+
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form input[type="tel"],
+form textarea,
+form select {
+  width: 100%; 
+  padding: 10px; 
+  /* margin-bottom: 15px; */
+  border: 1px solid #ccc; 
+}
+
+
+form label {
+  display: block; 
+  margin: 0 auto;
+  margin-top: 20px;
+  
+}
+
+
+form input[type="submit"] {
+  background-color: #5cb85c; 
+  color: white; 
+  padding: 10px 15px; 
+  border: none; 
+  border-radius: 5px; 
+  cursor: pointer; 
+  margin-top: 20px;
+}
+
+form input[type="submit"]:hover {
+  background-color: #4cae4c; 
+}
+
+.peq{
+  font-size:x-small;
+  margin: 0px;
+}
+
+
+
+strong{
+  font-size: small;
+  text-transform: uppercase;
+}
+
+.notice{
+  color: #0a58ca;
+  max-width: 600px;
+  padding: 10px;
+  text-transform: uppercase;
+}
+
+.alert{
+  color: #ca470a;
+  max-width: 600px;
+  padding: 10px;
+  font-style: italic;
+}
+
+.list{
+  padding: 10px;
+  padding-left: 30px;
+  white-space: nowrap;
+  background-color: #f4f4f410;
+  border-radius: 5px;
+  margin: 5px;
+}
+
+.inline, .inline-button{
+  display: inline-block;
+}
+
+.inline{
+  margin: 10px 0px 10px 0px;
+  font-size: small;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
+.inline-button{
+  margin-left: 10px;
+  vertical-align: middle;
+  background-color: #f4f4f400;
+  border-radius: 5px;
+  border-style: solid;
+  border-color: #ffffff;
+  border-width: 1px;
+  color: #f4f4f4;
+}
+
+input[type=checkbox].inline{
+  margin-left: 10px;
+  vertical-align: middle;
 }

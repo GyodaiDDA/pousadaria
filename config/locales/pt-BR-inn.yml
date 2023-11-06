@@ -18,7 +18,7 @@ pt-BR:
         description: Descrição
         payment_options: Formas de Pagto
         pet_friendly: Aceita pet?
-        wheelchair_friendly: Acesso com rampa?
+        wheelchair_accessible: Acessível?
         rules: Políticas de uso
         check_in: Check-in
         check_out: Check-out

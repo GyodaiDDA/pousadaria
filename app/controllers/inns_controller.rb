@@ -1,6 +1,8 @@
 class InnsController < ApplicationController
   before_action :set_inn, only: %i[show edit update]
+  before_action :set_rooms, only: %i[show]
   before_action :block_customers, only: %i[new create edit]
+  before_action :block_owners_with_inn, only: %i[new create]
 
   def index
     @inns = Inn.all
@@ -35,12 +37,16 @@ class InnsController < ApplicationController
 
   private
 
-  def block_customers
-    redirect_to root_path, notice: 'Página inacessível' unless current_user.type == 'Owner'
+  def block_owners_with_inn
+    redirect_to inn_path(@inn), notice: 'Sua pousada já está cadastrada.' if @inn
   end
 
   def set_inn
     @inn = Inn.find(params[:id])
+  end
+
+  def set_rooms
+    @rooms = Room.all.select { |room| room.inn_id == @inn.id }
   end
 
   def inn_params

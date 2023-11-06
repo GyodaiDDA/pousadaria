@@ -24,7 +24,7 @@ describe '::Owner altera os dados da pousada' do
                user_id: owner.id)
     login_as(owner)
     visit root_path
-    click_on 'Ver Pousada'
+    click_on 'Minha Pousada'
     click_on 'Editar'
   end
 

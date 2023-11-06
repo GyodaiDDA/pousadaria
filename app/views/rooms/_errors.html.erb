@@ -1,8 +1,8 @@
-<% if @inn.errors.any? %>
+<% if @room.errors.any? %>
   <div class="alert">
     Verifique os erros abaixo:
   <ul>
-    <% @inn.errors.full_messages.each do |msg| %>
+    <% @room.errors.full_messages.each do |msg| %>
       <li> <%= msg %> </li>
     <% end %>
   </ul>

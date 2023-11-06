@@ -11,8 +11,34 @@
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <h1> POUSADARIA </h1>
+    <nav>
+      <ul>
+        <% unless user_signed_in? %> <!-- Not logged in -->
+          <li>          
+            <%= button_to 'Entrar', new_user_session_path, method: :get %>
+          </li>
+        <% end %>
+        <% if user_signed_in? && current_user.type == 'Owner' %> <!--  Inn Owner is logged -->
+          <% if Inn.find_by(user_id: current_user.id) %> <!-- Inn Owner has Inn created -->
+            <li>
+              <%= button_to 'Minha Pousada', inn_path(Inn.find_by(user_id: current_user.id)), method: :get %>
+            </li>
+          <% else %> <!-- Owner has no Inn -->
+            <li>
+              <%= button_to 'Cadastrar Pousada', new_inn_path, method: :get %>
+            </li>
+          <% end %>
+        <% end %>
+        <li>
+        <% if user_signed_in? %> <!-- Logged in -->
+          <%= button_to 'Sair', destroy_user_session_path, method: :delete %>
+        <% end %>
+        </li>
+      </ul>
+    </nav>
+      <span class="notice"><%= notice %></span>
+      <span class="alert"><%= alert %></span>
     <%= yield %>
   </body>
 </html>

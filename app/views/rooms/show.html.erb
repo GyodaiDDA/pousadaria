@@ -1,0 +1,56 @@
+<h1><%= @room.name %></h1>
+<h4><%= @room.description %></h4>
+
+<ul class="list">
+  <li>
+    Tamanho: <%= @room.size %>m²
+  </li>
+  <li>
+     Hóspedes: Até <%= @room.max_guests %> pessoas
+  </li>
+  <li>
+    Preço Base: R$ <%= @room.base_price %>
+  </li>
+  <li>
+    <% if @room.bathroom %>
+      <%= 'Banheiro Próprio' %>
+    <% end %>
+  </li>
+  <li>
+    <% if @room.balcony %>
+      <%= 'Varanda' %>  
+    <% end %>
+  </li>
+  <li>
+    <% if @room.air_conditioning %>
+      <%= 'Ar condicionado' %>
+    <% end %>
+  </li>
+  <li>
+    <% if @room.tv %>
+      <%= 'TV' %>
+    <% end %>
+  </li>
+  <li>
+    <% if @room.wardrobe %>
+      <%= 'Guarda-roupas' %>
+    <% end %>
+  </li>
+  <li>
+    <% if @room.safe %>
+      <%= 'Cofre' %>
+    <% end %>
+  </li>
+  <li>
+    <% if @room.accessible %>
+      <%= 'Quarto com acessibilidade' %>
+    <% end %>
+  </li>
+</ul>
+<nav>
+  <ul>
+    <li>
+      <%= button_to 'Editar Quarto', edit_room_path(@room), method: :get %>
+    </li>
+  </ul>
+</nav>

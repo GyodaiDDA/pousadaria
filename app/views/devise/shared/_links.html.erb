@@ -1,5 +1,5 @@
 <div class="box">
-  <%- if controller_name != 'sessions' %>
+<%- if controller_name != 'sessions' %>
   <%= link_to "Entrar", new_session_path(resource_name) %><br />
 <% end %>
 
@@ -24,4 +24,5 @@
     <%= button_to "Entre com #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), data: { turbo: false } %><br />
   <% end %>
 <% end %>
+<%= link_to 'Voltar', root_path %>
 </div>

@@ -1,0 +1,25 @@
+---
+pt-BR:
+  activerecord:
+    models:
+      room: Quarto
+    attributes:
+      room:
+        name: Nome
+        description: Descrição
+        size: Área (m²)
+        max_guests: Hóspedes
+        base_price: Preço Base
+        bathroom: Banheiro
+        balcony: Varanda
+        air_conditioning: Ar-condicionado
+        tv: TV
+        wardrobe: Guarda-roupas
+        safe: Cofre
+        accessible: Acessível
+        available: Disponível
+    helpers:
+    submit:
+      create: "Adicionar %{model}"
+      update: "Atalizar %{model}"
+      submit: "Enviar %{model}"

@@ -1,0 +1,6 @@
+pt-BR:
+  helpers:
+    submit:
+      create: "Adicionar %{model}"
+      update: "Atualizar %{model}"
+      submit: "Enviar %{model}"

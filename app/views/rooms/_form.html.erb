@@ -1,0 +1,31 @@
+<%= form_with(model: @room) do |f| %>
+  <%= f.label :name%>
+  <%= f.text_field :name %>
+  <%= f.label :description%>
+  <%= f.text_field :description %>
+  <%= f.label :size%>
+  <%= f.number_field :size %>
+  <%= f.label :max_guests%>
+  <%= f.number_field :max_guests %>
+  <%= f.label :base_price%>
+  <%= f.text_field :base_price %>
+  <%= f.check_box :bathroom, class: 'inline' %>
+  <%= f.label :bathroom, class: 'inline' %>
+  <%= f.check_box :balcony, class: 'inline' %>
+  <%= f.label :balcony, class: 'inline' %>
+  <%= f.check_box :air_conditioning, class: 'inline' %>
+  <%= f.label :air_conditioning, class: 'inline' %>
+  <%= f.check_box :tv, class: 'inline' %>
+  <%= f.label :tv, class: 'inline' %><br>
+  <%= f.check_box :wardrobe, class: 'inline' %>
+  <%= f.label :wardrobe, class: 'inline' %>
+  <%= f.check_box :safe, class: 'inline' %>
+  <%= f.label :safe, class: 'inline' %>
+  <%= f.check_box :accessible, class: 'inline' %>
+  <%= f.label :accessible, class: 'inline' %><br>
+  <%= f.check_box :available, class: 'inline' %>
+  <%= f.label :available, class: 'inline' %>
+  <%= f.hidden_field :inn_id, value: Inn.find_by(user_id: current_user.id).id %>
+  <br>
+  <%= f.submit %>
+<% end %>
