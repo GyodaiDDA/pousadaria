@@ -1,0 +1,11 @@
+<div id="seasonals_list" class="list">
+<% Seasonal.all.select(room_id: room.id).each do |seasonal| %>
+  <span class="inline"><%= seasonal.name %> | </span> 
+  <span class="inline"><%= seasonal.start_date %> | </span>
+  <span class="inline"><%= seasonal.end_date %> | </span>
+  <span class="inline">R$ <%= seasonal.special_price %></span>
+  <!-- <%= button_to 'Editar', edit_room_seasonal_path(seasonal), method: :get, form_class: "inline", class: "inline-button" %> -->
+  <!-- <%= button_to 'Ver', room_seasonal_path(seasonal), method: :get, form_class: "inline", class: "inline-button" %> -->
+  <br>
+<% end %>
+</div>

@@ -1,0 +1,17 @@
+<hr>
+<% render 'errors' %>
+<%= form_with(model: [@room, @seasonal]) do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+  <%= f.label :start_date %>
+  <%= f.date_field :start_date %>
+  <%= f.label :end_date %>
+  <%= f.date_field :end_date %>
+  <%= f.label :special_price %>
+  <%= f.number_field :special_price %>
+  <%= f.hidden_field :room_id, value: params[:room_id] %>
+  <br>
+  <%= f.submit "Adicionar Período Especial" %>
+<% end %>
+
+<hr>

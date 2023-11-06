@@ -1,10 +1,13 @@
 Rails.application.routes.draw do
-  resources :rooms, only: %I[show new create edit update]
+  root to: 'home#index'
+  resources :rooms, only: %I[show new create edit update] do
+    resources :seasonals
+  end
+  resources :inns, only: %I[show new create edit update]
+  resources :seasonals
 
   devise_for :user, controllers: {
     registrations: 'users/registrations'
   }
-  root to: 'home#index'
-  resources :inns, only: %I[show new create edit update]
   get '/inns/new' => 'home#after_registration_path'
 end

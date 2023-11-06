@@ -281,3 +281,8 @@ input[type=checkbox].inline{
   margin-left: 10px;
   vertical-align: middle;
 }
+
+.frozen{
+  background-color: #535353;
+  color: #000000;
+}

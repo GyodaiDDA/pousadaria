@@ -42,8 +42,13 @@ class RoomsController < ApplicationController
     @inn = Inn.find_by(user_id: current_user.id)
   end
 
+  def set_seasonals
+    @seasonals = Seasonal.all.where(room_id: @room.id)
+  end
+
   def room_params
-    params.require(:room).permit(:name, :description, :size, :max_guests, :base_price, :bathroom, :balcony,
-                                 :air_conditioning, :tv, :wardrobe, :safe, :accessible, :available, :inn_id)
+    params.require(:room)
+          .permit(:name, :description, :size, :max_guests, :base_price, :bathroom, :balcony,
+                  :air_conditioning, :tv, :wardrobe, :safe, :accessible, :available, :inn_id)
   end
 end
