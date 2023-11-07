@@ -43,4 +43,16 @@ describe '::Usuário clica no botão Entrar' do
     expect(page).to have_content('E-mail ou senha inválidos.')
     expect(current_path).to eq(user_session_path) && eq(new_user_session_path)
   end
+
+  it 'com sucesso e é levado para criar a pousada' do
+    # Arrange
+    # Act
+    fill_in 'E-mail', with: 'usuario@servidor.co.uk'
+    fill_in 'Senha', with: '.SenhaSuper3'
+    within('div.actions') do
+      click_on 'Entrar'
+    end
+    # Assert
+    expect(current_path).to eq(inns_new_path)
+  end
 end

@@ -7,7 +7,9 @@ Rails.application.routes.draw do
   resources :seasonals
 
   devise_for :user, controllers: {
-    registrations: 'users/registrations'
+    registrations: 'users/registrations',
+    sessions: 'users/sessions'
   }
-  get '/inns/new' => 'home#after_registration_path'
+
+  # get '/inns/new' => 'home#after_registration_path'
 end

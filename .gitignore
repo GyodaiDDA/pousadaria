@@ -36,3 +36,5 @@
 
 # Ignore VSCode files
 *.code-workspace
+appmap.yml
+.vscode/extensions.json

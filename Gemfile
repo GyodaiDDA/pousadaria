@@ -2,6 +2,8 @@ source 'https://rubygems.org'
 
 ruby '3.2.2'
 
+# This should be the first gem listed, so that appmap is loaded first
+# gem 'appmap', group: %i[test development]
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 7.1.1'
 
