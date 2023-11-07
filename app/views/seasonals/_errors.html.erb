@@ -1,0 +1,9 @@
+<% if @seasonal.errors.any? %>
+  <div class="alert">
+    Verifique os erros abaixo:
+    <br>
+    <% @seasonal.errors.full_messages.each do |msg| %>
+      <%= msg %>
+    <% end %>
+  </div>
+<% end %>

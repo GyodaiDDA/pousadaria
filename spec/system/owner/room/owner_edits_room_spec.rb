@@ -5,7 +5,7 @@ describe '::Owner altera Quarto' do
     before(:each) do
       owner = Owner.create(email: 'usuario@servidor.co.uk',
                            password: '.SenhaSuper3',
-                           type: 'Owner')
+                           user_type: 'Owner')
       inn = Inn.create(brand_name: 'Pousada Recanto do Sossego',
                        legal_name: 'Recanto do Sossego Hospedagens LTDA',
                        vat_number: '12345678000911',
@@ -74,7 +74,7 @@ describe '::Owner altera Quarto' do
     before(:each) do
       owner = Owner.create(email: 'usuario@servidor.co.uk',
                            password: '.SenhaSuper3',
-                           type: 'Owner')
+                           user_type: 'Owner')
       inn = Inn.create(brand_name: 'Pousada Recanto do Sossego',
                        legal_name: 'Recanto do Sossego Hospedagens LTDA',
                        vat_number: '12345678000911',

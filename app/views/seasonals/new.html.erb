@@ -1,5 +1,5 @@
 <hr>
-<% render 'errors' %>
+<%= render 'errors' %>
 <%= form_with(model: [@room, @seasonal]) do |f| %>
   <%= f.label :name %>
   <%= f.text_field :name %>

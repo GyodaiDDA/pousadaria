@@ -1,12 +1,14 @@
 require 'rails_helper'
 
-describe '::Usuário clica no botão Entrar' do
+describe '::Owner clica no botão Entrar' do
   before(:each) do
-    User.create!(email: 'usuario@servidor.co.uk',
-                 password: '.SenhaSuper3')
+    @owner = User.create!(email: 'usuario@servidor.co.uk',
+                          password: '.SenhaSuper3',
+                          user_type: 'Owner')
     visit root_path
     click_on 'Entrar'
   end
+
   it 'e vê a página de login' do
     # Arrange
     # Act
@@ -20,6 +22,11 @@ describe '::Usuário clica no botão Entrar' do
 
   it 'e faz login com sucesso' do
     # Arrange
+    Inn.create!(brand_name: 'Pousada Recanto do Sossego',
+                legal_name: 'Recanto do Sossego Hospedagens LTDA',
+                vat_number: '12345678000911',
+                postal_code: '13200-000',
+                user_id: @owner.id)
     # Act
     fill_in 'E-mail', with: 'usuario@servidor.co.uk'
     fill_in 'Senha', with: '.SenhaSuper3'
@@ -27,8 +34,9 @@ describe '::Usuário clica no botão Entrar' do
       click_on 'Entrar'
     end
     # Assert
-    expect(current_path).to eq(root_path)
+    expect(current_path).to eq(inn_path(1))
     expect(page).to have_content('Olá! Seu login foi feito com sucesso.')
+    expect(page).to have_content('Pousada Recanto do Sossego')
   end
 
   it 'e falha ao fazer login' do
@@ -53,6 +61,6 @@ describe '::Usuário clica no botão Entrar' do
       click_on 'Entrar'
     end
     # Assert
-    expect(current_path).to eq(inns_new_path)
+    expect(current_path).to eq(new_inn_path)
   end
 end

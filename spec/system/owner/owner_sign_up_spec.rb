@@ -25,7 +25,7 @@ describe '::Usuário cria uma nova conta' do
     # Arrange
     User.create!(email: 'usuario@servidor.co.uk',
                  password: '123456',
-                 type: 'Owner')
+                 user_type: 'Owner')
     # Act
     within('section#owner-signup') do
       fill_in 'E-mail', with: 'usuario@servidor.co.uk'
@@ -42,7 +42,7 @@ describe '::Usuário cria uma nova conta' do
     # Arrange
     User.create!(email: 'usuario@servidor.co.uk',
                  password: '123456',
-                 type: 'Customer')
+                 user_type: 'Customer')
     # Act
     within('section#owner-signup') do
       fill_in 'E-mail', with: 'usuario@servidor.co.uk'
@@ -65,10 +65,10 @@ describe '::Usuário cria uma nova conta' do
       click_on 'Cadastre-se'
     end
     # Assert
-    expect(current_path).to eq(inns_new_path)
+    expect(current_path).to eq(new_inn_path)
     expect(page).to have_content('Boas vindas!')
     user = User.find_by(email: 'usuario@servidor.co.uk')
     expect(user).to be_present
-    expect(user.type).to eq('Owner')
+    expect(user.user_type).to eq('Owner')
   end
 end

@@ -10,6 +10,6 @@ class ApplicationController < ActionController::Base
   def block_customers
     return unless current_user
 
-    redirect_to root_path, notice: 'Página inacessível' unless current_user.type == 'Owner'
+    redirect_to root_path, notice: 'Página inacessível' unless current_user.user_type == 'Owner'
   end
 end

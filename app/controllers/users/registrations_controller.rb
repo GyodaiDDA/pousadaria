@@ -4,14 +4,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
   protected
 
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:type])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:user_type])
   end
 
   def after_sign_up_path_for(resource)
-    if resource.type == 'Owner' && resource.inn.blank?
+    if resource.user_type == 'Owner' && resource.inn.blank?
       new_inn_path
     else
-      root_path
+      new_session_path
     end
   end
 end

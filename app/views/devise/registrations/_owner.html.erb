@@ -1,3 +1,5 @@
+<h2> Cadastro de Dono de Pousada </h2>
+
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
 
@@ -19,7 +21,7 @@
   </div>
 
   <div class="field">
-    <%= f.hidden_field :type, value: "Owner" %>
+    <%= f.hidden_field :user_type, value: "Owner" %>
   </div>
   
   <div class="actions">

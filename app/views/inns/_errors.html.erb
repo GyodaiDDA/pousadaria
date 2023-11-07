@@ -1,10 +1,9 @@
 <% if @inn.errors.any? %>
   <div class="alert">
     Verifique os erros abaixo:
-  <ul>
+    <br>
     <% @inn.errors.full_messages.each do |msg| %>
-      <li> <%= msg %> </li>
+      <%= msg %>
     <% end %>
-  </ul>
   </div>
 <% end %>

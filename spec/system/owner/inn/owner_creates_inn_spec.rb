@@ -39,7 +39,7 @@ describe '::Owner cadastra pousada' do
 
   it 'clicando em Cadastrar Pousada' do
     # Arrange
-    owner = Owner.create(email: 'usuario@servidor.co.uk', password: '.SenhaSuper3', type: 'Owner')
+    owner = Owner.create(email: 'usuario@servidor.co.uk', password: '.SenhaSuper3', user_type: 'Owner')
     login_as(owner)
     # Act
     visit root_path

@@ -17,7 +17,7 @@ class SeasonalsController < ApplicationController
     if @seasonal.save
       redirect_to @room, notice: 'Período adicionado com sucesso!'
     else
-      flash[:alert] = 'Não foi possível adicionar o quarto'
+      flash[:alert] = 'Não foi possível adicionar o período'
       render 'new'
     end
   end
