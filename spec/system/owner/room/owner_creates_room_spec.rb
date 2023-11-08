@@ -6,6 +6,8 @@ describe '::Owner cadastra novo quarto' do
     Inn.create(brand_name: 'Pousada Recanto do Sossego',
                legal_name: 'Recanto do Sossego Hospedagens LTDA',
                vat_number: '12345678000911',
+               city: 'Rublas Gaúchas',
+               state: 'RS',
                postal_code: '13200-000',
                user_id: owner.id)
     login_as(owner)

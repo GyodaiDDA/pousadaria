@@ -9,6 +9,8 @@ describe '::Owner cria novo Período' do
                      legal_name: 'Recanto do Sossego Hospedagens LTDA',
                      vat_number: '12345678000911',
                      postal_code: '13200-000',
+                     city: 'Arruaces',
+                     state: 'AC',
                      user_id: owner.id)
     @room = Room.create(name: 'Quarto Orlindgans',
                         size: 30,

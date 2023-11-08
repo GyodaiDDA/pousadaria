@@ -9,6 +9,8 @@ describe '::Owner altera Quarto' do
       inn = Inn.create(brand_name: 'Pousada Recanto do Sossego',
                        legal_name: 'Recanto do Sossego Hospedagens LTDA',
                        vat_number: '12345678000911',
+                       city: 'Arruaces',
+                       state: 'AC',
                        postal_code: '13200-000',
                        user_id: owner.id)
       Room.create(name: 'Quarto Orlindgans', size: 30, max_guests: 2,
@@ -78,6 +80,8 @@ describe '::Owner altera Quarto' do
       inn = Inn.create(brand_name: 'Pousada Recanto do Sossego',
                        legal_name: 'Recanto do Sossego Hospedagens LTDA',
                        vat_number: '12345678000911',
+                       city: 'Arruaces',
+                       state: 'AC',
                        postal_code: '13200-000',
                        user_id: owner.id)
       Room.create(name: 'Quarto Orlindgans', size: 30, max_guests: 2,

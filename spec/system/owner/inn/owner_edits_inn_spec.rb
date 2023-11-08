@@ -6,10 +6,15 @@ describe '::Owner altera os dados da pousada' do
     Inn.create(brand_name: 'Pousada Recanto do Sossego',
                legal_name: 'Recanto do Sossego Hospedagens LTDA',
                vat_number: '12345678000911',
+               city: 'Saramandaia',
+               state: 'RJ',
                postal_code: '13200-000',
                user_id: owner.id)
-    login_as(owner)
     visit root_path
+    click_on 'Entrar'
+    fill_in 'E-mail', with: 'usuario@servidor.co.uk'
+    fill_in 'Senha', with: '.SenhaSuper3'
+    click_on 'Entrar'
     click_on 'Minha Pousada'
     click_on 'Editar'
   end

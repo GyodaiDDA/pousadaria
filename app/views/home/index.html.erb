@@ -1,0 +1,16 @@
+<% recent = 3 %>
+<% total = 10 %>
+<section id="recent">
+  <h2>
+    <% Inn.all.sort_by(&:created_at).each_with_index do |inn, index| %>
+      <% break if index + 1 > recent %>
+      <%= link_to inn.brand_name, inn_path(inn.id)%><%= " - #{inn.city}/#{inn.state}" %><br>
+    <% end %>
+  </h2>
+</section>
+<section id="all">
+  <% Inn.all.sort_by(&:created_at).each_with_index do |inn, index| %>
+    <% next if index + 1 <= recent || index + 1 > total %>
+    <%= link_to inn.brand_name, inn_path(inn.id)%><%= " - #{inn.city}/#{inn.state}" %><br>
+  <% end %>
+</section>
