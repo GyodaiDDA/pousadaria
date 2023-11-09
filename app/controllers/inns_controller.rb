@@ -35,6 +35,11 @@ class InnsController < ApplicationController
     end
   end
 
+  def cities
+    @inns_by_city = Inn.order(:city).group_by(&:city)
+    @cities_list = @inns_by_city.keys
+  end
+
   private
 
   def block_owners_with_inn

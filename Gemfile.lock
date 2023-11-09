@@ -76,11 +76,6 @@ GEM
       tzinfo (~> 2.0)
     addressable (2.8.5)
       public_suffix (>= 2.0.2, < 6.0)
-    appmap (0.102.1)
-      activesupport
-      method_source
-      rack
-      reverse_markdown
     ast (2.4.2)
     base64 (0.1.1)
     bcrypt (3.1.19)
@@ -115,6 +110,10 @@ GEM
     drb (2.1.1)
       ruby2_keywords
     erubi (1.12.0)
+    factory_bot (6.3.0)
+      activesupport (>= 5.0.0)
+    faker (3.2.2)
+      i18n (>= 1.8.11, < 2)
     globalid (1.2.1)
       activesupport (>= 6.1)
     i18n (1.14.1)
@@ -142,7 +141,6 @@ GEM
       net-smtp
     marcel (1.0.2)
     matrix (0.4.2)
-    method_source (1.0.0)
     mini_mime (1.1.5)
     minitest (5.20.0)
     msgpack (1.7.2)
@@ -220,8 +218,6 @@ GEM
     responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
-    reverse_markdown (2.1.1)
-      nokogiri
     rexml (3.2.6)
     rspec-core (3.12.2)
       rspec-support (~> 3.12.0)
@@ -300,11 +296,12 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  appmap
   bootsnap
   capybara
   debug
   devise
+  factory_bot
+  faker
   importmap-rails
   jbuilder
   puma (>= 5.0)

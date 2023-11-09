@@ -1,0 +1,8 @@
+<nav>
+  <ul>
+    <li>
+      <%= button_to 'Editar Quarto', edit_room_path(@room), method: :get %>
+      <%= button_to 'Adicionar Período Especial', new_room_seasonal_path(room_id: @room.id), params: { room_id: @room.id }, method: :get %>
+    </li>
+  </ul>
+</nav>

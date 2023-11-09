@@ -1,5 +1,4 @@
 class RoomsController < ApplicationController
-  before_action :set_inn, only: %i[new create show update]
   before_action :set_room, only: %i[show edit update]
   before_action :block_customers, only: %i[new create edit]
 
@@ -14,7 +13,7 @@ class RoomsController < ApplicationController
   def create
     @room = Room.new(room_params)
     if @room.save
-      redirect_to @inn, notice: "#{@room.name} foi adicionado com sucesso!"
+      redirect_to @room, notice: "#{@room.name} foi adicionado com sucesso!"
     else
       flash[:alert] = 'Não foi possível adicionar o quarto.'
       render 'new'
@@ -36,14 +35,6 @@ class RoomsController < ApplicationController
 
   def set_room
     @room = Room.find(params[:id])
-  end
-
-  def set_inn
-    @inn = Inn.find_by(user_id: current_user.id)
-  end
-
-  def set_seasonals
-    @seasonals = Seasonal.all.where(room_id: @room.id)
   end
 
   def room_params
