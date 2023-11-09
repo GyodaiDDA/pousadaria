@@ -24,10 +24,11 @@ describe '::Owner clica no botão Entrar' do
     # Arrange
     Inn.create!(brand_name: 'Pousada Recanto do Sossego',
                 legal_name: 'Recanto do Sossego Hospedagens LTDA',
-                vat_number: '12345678000911',
+                vat_number: '22333444000181',
                 city: 'San Francisco',
                 state: 'CA',
                 postal_code: '13200-000',
+                active: true,
                 user_id: @owner.id)
     # Act
     fill_in 'E-mail', with: 'usuario@servidor.co.uk'

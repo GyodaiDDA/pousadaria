@@ -7,7 +7,7 @@ describe '::Owner cria novo Período' do
                          user_type: 'Owner')
     inn = Inn.create(brand_name: 'Pousada Recanto do Sossego',
                      legal_name: 'Recanto do Sossego Hospedagens LTDA',
-                     vat_number: '12345678000911',
+                     vat_number: '22333444000181',
                      postal_code: '13200-000',
                      city: 'Arruaces',
                      state: 'AC',
@@ -16,6 +16,7 @@ describe '::Owner cria novo Período' do
                         size: 30,
                         max_guests: 2,
                         base_price: 300,
+                        available: true,
                         inn_id: inn.id)
     login_as(owner)
     visit root_path

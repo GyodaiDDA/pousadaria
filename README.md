@@ -1,4 +1,3 @@
-
 ## Pousadaria
 
 ***Models Entregues***
@@ -12,7 +11,8 @@
 	- valida presença para nomes, cnpj, cidade, UF e CEP
 	- valida unicidade e comprimento (14) de CNPJ (teste de validade deve ser melhorado)
 - **room.rb:**
-	-  estabelece relação 1<1 entre quartos e pousadas
+  - adicionada validação de CPF em *models/validators/cnpj_validator.rb* - 09/11/2023 
+	- estabelece relação 1<1 entre quartos e pousadas
 	- valida presença para nome, área, qtd hóspedes e preço base
 - **seasonal.rb**
 	- estabelece relação 1< * entre quartos e períodos
@@ -47,6 +47,11 @@
 	- métodos de recurso: `show`, `new`, `create`, `edit`, `update` **³**
 	- métodos privados: `set_seasonal`, `seasonal_params`, para definição de variáveis de período
 	- método customizado: `room_seasonals`: busca lista de períodos no mesmo quarto
+- **registration_controller.rb**
+	- método `configure_sign_up_params` para permitir a inclusão de `user_type` na criação de usuários
+	- método `after_sign_up_path_for` para redirecionar donos de pousada a `new_inn_path` logo após o cadastro
+- **sessions_controller.rb**
+	- método `after_sign_in_path_for` para redirecionar donos de pousada sem pousada à `new_inn_path`
 
 ***Views e Navegação***
 
@@ -78,6 +83,9 @@
 - Especificação dos modelos registrations e sessions para o devise
 
 ***Gems no Dev***: devise, puma, sqlite3, i18n
+
+***CSS***
+- Criado arquivo assets/stylesheets/application.css para formatação mínima
 
 ***Acessos restritos***
 - O acesso à páginas de edição está restrito nas views, checando a variável `@owner_view` do método `check_ownership`

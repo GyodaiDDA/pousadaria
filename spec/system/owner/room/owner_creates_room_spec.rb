@@ -2,14 +2,15 @@ require 'rails_helper'
 
 describe '::Owner cadastra novo quarto' do
   before(:each) do
-    owner = Owner.create(email: 'usuario@servidor.co.uk', password: '.SenhaSuper3', user_type: 'Owner')
-    Inn.create(brand_name: 'Pousada Recanto do Sossego',
-               legal_name: 'Recanto do Sossego Hospedagens LTDA',
-               vat_number: '12345678000911',
-               city: 'Rublas Gaúchas',
-               state: 'RS',
-               postal_code: '13200-000',
-               user_id: owner.id)
+    owner = Owner.create!(email: 'usuario@servidor.co.uk', password: '.SenhaSuper3', user_type: 'Owner')
+    Inn.create!(brand_name: 'Pousada Recanto do Sossego',
+                legal_name: 'Recanto do Sossego Hospedagens LTDA',
+                vat_number: '22333444000181',
+                city: 'Rublas Gaúchas',
+                state: 'RS',
+                postal_code: '13200-000',
+                active: true,
+                user_id: owner.id)
     login_as(owner)
     visit root_path
     click_on 'Minha Pousada'

@@ -6,6 +6,7 @@ class InnsController < ApplicationController
 
   def index
     @inns = Inn.all
+    @active_inns = Inn.all.select { |inn| inn.active == true }
   end
 
   def show; end

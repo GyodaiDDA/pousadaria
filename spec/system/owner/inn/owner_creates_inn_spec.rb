@@ -16,7 +16,7 @@ describe '::Owner cadastra pousada' do
     # Act II
     fill_in 'Nome Fantasia', with: 'Pousada Recanto do Sossego'
     fill_in 'Razão Social', with: 'Recanto do Sossego Hospedagens LTDA'
-    fill_in 'CNPJ', with: '12345678000155'
+    fill_in 'CNPJ', with: '11222333000181'
     fill_in 'Telefone', with: '(11) 99999-9999'
     fill_in 'E-mail', with: 'contato@recantodosossego.com.br'
     fill_in 'Endereço', with: 'Rua das Palmeiras, 100'
@@ -46,7 +46,7 @@ describe '::Owner cadastra pousada' do
     click_on('Cadastrar Pousada')
     fill_in 'Nome Fantasia', with: 'Pousada Recanto do Sossego'
     fill_in 'Razão Social', with: 'Recanto do Sossego Hospedagens LTDA'
-    fill_in 'CNPJ', with: '12345678000155'
+    fill_in 'CNPJ', with: '11222333000181'
     fill_in 'Telefone', with: '(11) 99999-9999'
     fill_in 'E-mail', with: 'contato@recantodosossego.com.br'
     fill_in 'Endereço', with: 'Rua das Palmeiras, 100'

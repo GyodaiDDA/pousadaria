@@ -3,18 +3,19 @@ require 'rails_helper'
 describe '::Owner altera Quarto' do
   context 'a partir da página de Pousada' do
     before(:each) do
-      owner = Owner.create(email: 'usuario@servidor.co.uk',
-                           password: '.SenhaSuper3',
-                           user_type: 'Owner')
-      inn = Inn.create(brand_name: 'Pousada Recanto do Sossego',
-                       legal_name: 'Recanto do Sossego Hospedagens LTDA',
-                       vat_number: '12345678000911',
-                       city: 'Arruaces',
-                       state: 'AC',
-                       postal_code: '13200-000',
-                       user_id: owner.id)
-      Room.create(name: 'Quarto Orlindgans', size: 30, max_guests: 2,
-                  base_price: 300, inn_id: inn.id)
+      owner = Owner.create!(email: 'usuario@servidor.co.uk',
+                            password: '.SenhaSuper3',
+                            user_type: 'Owner')
+      inn = Inn.create!(brand_name: 'Pousada Recanto do Sossego',
+                        legal_name: 'Recanto do Sossego Hospedagens LTDA',
+                        vat_number: '22333444000181',
+                        city: 'Arruaces',
+                        state: 'AC',
+                        postal_code: '13200-000',
+                        active: true,
+                        user_id: owner.id)
+      Room.create!(name: 'Quarto Orlindgans', size: 30, max_guests: 2,
+                   base_price: 300, available: true, inn_id: inn.id)
       login_as(owner)
       visit root_path
       click_on 'Minha Pousada'
@@ -74,18 +75,19 @@ describe '::Owner altera Quarto' do
 
   context 'a partir da página de Quarto' do
     before(:each) do
-      owner = Owner.create(email: 'usuario@servidor.co.uk',
+      owner = Owner.create!(email: 'usuario@servidor.co.uk',
                            password: '.SenhaSuper3',
                            user_type: 'Owner')
-      inn = Inn.create(brand_name: 'Pousada Recanto do Sossego',
-                       legal_name: 'Recanto do Sossego Hospedagens LTDA',
-                       vat_number: '12345678000911',
-                       city: 'Arruaces',
-                       state: 'AC',
-                       postal_code: '13200-000',
-                       user_id: owner.id)
-      Room.create(name: 'Quarto Orlindgans', size: 30, max_guests: 2,
-                  base_price: 300, inn_id: inn.id)
+      inn = Inn.create!(brand_name: 'Pousada Recanto do Sossego',
+                        legal_name: 'Recanto do Sossego Hospedagens LTDA',
+                        vat_number: '22333444000181',
+                        city: 'Arruaces',
+                        state: 'AC',
+                        postal_code: '13200-000',
+                        active: true,
+                        user_id: owner.id)
+      Room.create!(name: 'Quarto Orlindgans', size: 30, max_guests: 2,
+                   base_price: 300, available: true, inn_id: inn.id)
       login_as(owner)
       visit root_path
       click_on 'Minha Pousada'

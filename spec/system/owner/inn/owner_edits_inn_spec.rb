@@ -2,21 +2,26 @@ require 'rails_helper'
 
 describe '::Owner altera os dados da pousada' do
   before(:each) do
-    owner = Owner.create(email: 'usuario@servidor.co.uk', password: '.SenhaSuper3', user_type: 'Owner')
-    Inn.create(brand_name: 'Pousada Recanto do Sossego',
-               legal_name: 'Recanto do Sossego Hospedagens LTDA',
-               vat_number: '12345678000911',
-               city: 'Saramandaia',
-               state: 'RJ',
-               postal_code: '13200-000',
-               user_id: owner.id)
+    owner = Owner.create!(email: 'usuario@servidor.co.uk',
+                          password: '.SenhaSuper3',
+                          user_type: 'Owner')
+    Inn.create!(brand_name: 'Pousada Recanto do Sossego',
+                legal_name: 'Recanto do Sossego Hospedagens LTDA',
+                vat_number: '11.222.333/0001-81',
+                city: 'Saramandaia',
+                state: 'RJ',
+                postal_code: '13200-000',
+                active: true,
+                user_id: owner.id)
     visit root_path
     click_on 'Entrar'
     fill_in 'E-mail', with: 'usuario@servidor.co.uk'
     fill_in 'Senha', with: '.SenhaSuper3'
-    click_on 'Entrar'
+    within('div.actions') do
+      click_on 'Entrar'
+    end
     click_on 'Minha Pousada'
-    click_on 'Editar'
+    click_on 'Editar Pousada'
   end
 
   it 'com sucesso' do
