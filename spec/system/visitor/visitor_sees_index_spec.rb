@@ -34,7 +34,7 @@ describe '::Visitante acessa o site' do
     visit root_path
   end
 
-  it 'e vê as pousadas recentes' do
+  it 'e vê as pousadas mais recentes' do
     # Arrange
     # Act
     # Assert

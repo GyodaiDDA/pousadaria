@@ -224,11 +224,23 @@ form input[type="submit"]:hover {
   margin: 0px;
 }
 
-
-
 strong{
   font-size: small;
   text-transform: uppercase;
+  font-weight: bold;
+}
+
+.title{
+  font-size: small;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.description{
+  font-style: italic;
+  font-size: small;
+  text-transform: uppercase;
+  vertical-align: middle;
 }
 
 .notice{
@@ -259,7 +271,7 @@ strong{
 }
 
 .inline{
-  margin: 10px 0px 10px 0px;
+  margin-bottom: 15px;
   font-size: small;
   text-transform: uppercase;
   vertical-align: middle;

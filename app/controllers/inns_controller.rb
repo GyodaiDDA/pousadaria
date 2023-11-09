@@ -48,10 +48,11 @@ class InnsController < ApplicationController
 
   def set_inn
     @inn = Inn.find(params[:id])
+    check_ownership(@inn)
   end
 
   def set_rooms
-    @rooms = Room.all.select { |room| room.inn_id == @inn.id }
+    @rooms = Room.all.select { |room| room.inn_id == @inn.id && room.available == true }
   end
 
   def inn_params

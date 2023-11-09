@@ -2,46 +2,47 @@
 <h4><%= @inn.description %></h4>
 
 <ul class="list">
-  <li>
-    <strong>Razão Social:</strong> <%= @inn.legal_name.upcase %>
-  </li>
-  <li>
-    <strong> CNPJ:</strong> <%= @inn.vat_number.upcase %>
-  </li>
-  <li>
-    <strong>Endereço:</strong> <%= [@inn.address, @inn.zone].compact.join(' - ') %>
-  </li>
-  <li>
-    <strong>CEP:</strong> <%= @inn.postal_code %>
-  </li>
-  <li>
-    <strong>Cidade/UF:</strong> <%= [@inn.city.presence, @inn.state.presence].compact.join(' / ') %>
-  </li>
-  <li>
-    <strong>Telefone:</strong> <%= @inn.phone %>
-  </li>
-  <li>
-    <strong>E-mail:</strong> <%= @inn.email %>
-  </li>
+  <% if @owner_view %>
+    <li><strong>Razão Social:</strong> <%= @inn.legal_name.upcase %></li>
+    <li><strong> CNPJ:</strong> <%= @inn.vat_number.upcase %></li>
+  <% end %>
+  <li><strong>Endereço:</strong> <%= [@inn.address, @inn.zone].compact.join(' - ') %></li>
+  <li><strong>CEP:</strong> <%= @inn.postal_code %></li>
+  <li><strong>Cidade/UF:</strong> <%= [@inn.city.presence, @inn.state.presence].compact.join(' / ') %></li>
+  <li><strong>Telefone:</strong> <%= @inn.phone %></li>
+  <li><strong>E-mail:</strong> <%= @inn.email %></li>
 </ul>
 
-<div id="rooms_list" class="list">
-<% @rooms.each do |room| %>
-  <span class="inline"><%= room.name %> | </span> 
-  <span class="inline"><%= room.size %>m² | </span>
-  <span class="inline">R$ <%= room.base_price %> | </span>
-  <span class="inline"><% if room.available %>
-                         <%= 'Disponível' %>
-                       <% else %>
-                         <%= 'Indisponível' %>
-                       <% end %></span>
-  <%= button_to 'Editar', edit_room_path(room), method: :get, form_class: "inline", class: "inline-button" %>
-  <%= button_to 'Ver', room_path(room), method: :get, form_class: "inline", class: "inline-button" %>
-  <br>
-<% end %>
-</div>
-
-
-<% if user_signed_in? && current_user.user_type == 'Owner' %>
-  <%= render 'submenu' %>  
+<% if @owner_view %>
+  <section classe="owner-view">
+    <div id="rooms_list" class="list">
+      <% @rooms.each do |room| %>
+        <span class="inline"><%= room.name %> | </span> 
+        <span class="inline"><%= room.size %>m² | </span>
+        <span class="inline">R$ <%= room.base_price %> | </span>
+        <span class="inline"><%= room.available ? 'Disponível' : 'Indisponível' %></span>
+        <%= button_to 'Editar', edit_room_path(room), method: :get, form_class: "inline", class: "inline-button" %>
+        <%= button_to 'Ver', room_path(room), method: :get, form_class: "inline", class: "inline-button" %>
+        <br>
+      <% end %>
+    </div>
+  </section>
+<% else %>
+  <section classe="owner-view">
+    <div id="rooms_list" class="list">
+      <% @rooms.each do |room| %>
+        <!-- #<span class="inline, title"><%= link_to room.name, room_path(room), method: :get, form_class: "inline", class: "inline-button-show" %><br></span>-->
+        <span class="inline, title"><%= room.name %><br></span>
+        <span class="inline, description"><%= room.description %><br>
+        <span class="inline"><%= room.size %>m² | R$ <%= room.base_price %> | Até <%= room.max_guests %> pessoas<br>
+          <% {Suíte: room.bathroom, Varanda: room.balcony, "Ar condicionado": room.air_conditioning, TV: room.tv, Armários: room.wardrobe, Cofre: room.safe, "quarto acessível": room.accessible}.each do |key, value| %>
+            <% if value %>
+             <%= key %>
+            <% end %>
+          <% end %>
+          </span>
+          <br>
+      <% end %>
+    </div>
+  </section>
 <% end %>

@@ -1,3 +1,5 @@
 class HomeController < ApplicationController
-  def index; end
+  def index
+    @active_inns = Inn.all.select { |inn| inn.active == true }
+  end
 end

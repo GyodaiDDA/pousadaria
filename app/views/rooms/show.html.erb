@@ -11,44 +11,16 @@
   <li>
     Preço Base: R$ <%= @room.base_price %>
   </li>
-  <li>
-    <% if @room.bathroom %>
-      <%= 'Banheiro Próprio' %>
+    <% {Suíte: @room.bathroom, Varanda: @room.balcony, "Ar condicionado": @room.air_conditioning, TV: @room.tv, Armários: @room.wardrobe, Cofre: @room.safe, "quarto acessível": @room.accessible}.each do |key, value| %>
+      <% if value %>
+        <li><%= key %></li>
+      <% end %>
     <% end %>
-  </li>
   <li>
-    <% if @room.balcony %>
-      <%= 'Varanda' %>  
-    <% end %>
-  </li>
-  <li>
-    <% if @room.air_conditioning %>
-      <%= 'Ar condicionado' %>
-    <% end %>
-  </li>
-  <li>
-    <% if @room.tv %>
-      <%= 'TV' %>
-    <% end %>
-  </li>
-  <li>
-    <% if @room.wardrobe %>
-      <%= 'Guarda-roupas' %>
-    <% end %>
-  </li>
-  <li>
-    <% if @room.safe %>
-      <%= 'Cofre' %>
-    <% end %>
-  </li>
-  <li>
-    <% if @room.accessible %>
-      <%= 'Quarto com acessibilidade' %>
-    <% end %>
-  </li>
+    <%= @room.available ? 'Disponível' : 'Indisponível' %>
 </ul>
-<%= render 'seasonals/index', :room => @room %>
 
-<% if user_signed_in? && current_user.user_type == 'Owner' %>
+<% if @owner_view %>
+  <%= render 'seasonals/index', :room => @room %>
   <%= render 'submenu' %>  
 <% end %>

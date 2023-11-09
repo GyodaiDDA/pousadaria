@@ -1,0 +1,25 @@
+<% recent = 3 %>
+<% total = 100 %>
+<% if @active_inns %>
+  <section id="recent">
+    <h3>
+      <% @active_inns.sort_by(&:created_at).each_with_index do |inn, index| %>
+        <% break if index + 1 > recent %>
+        <%= link_to inn.brand_name, inn_path(inn.id)%><%= " - #{inn.city}/#{inn.state}" %><br><br>
+      <% end %>
+    </h3>
+  </section>
+  <section id="all">
+    <h5>
+    <% @active_inns.sort_by(&:created_at).each_with_index do |inn, index| %>
+      <% next if index + 1 <= recent || index + 1 > total %>
+      <%= link_to inn.brand_name, inn_path(inn.id)%><%= " - #{inn.city}/#{inn.state}" %><br><br>
+    <% end %>
+    </h5><br>
+  </section>
+<% else %>
+  <section id="empty">
+    <h3>
+      Nenhuma pousada ativa.
+    </h3>
+<% end %>
