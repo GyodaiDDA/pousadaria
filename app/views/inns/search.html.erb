@@ -1,0 +1,7 @@
+<h1> Busca de Pousadas por "<%= @key %>" </h1>
+<div id="resultados" class="list">
+  <h3><%= @active_inns.length %> pousadas encontradas </h3>
+  <%= render partial: 'inns/list_new_inns', locals: { items: @active_inns.length, pousadas: @active_inns } %>
+</div>
+
+

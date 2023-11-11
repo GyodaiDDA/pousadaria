@@ -1,7 +1,8 @@
 require 'rails_helper'
 
-describe '::Visitante acessa o site' do
+describe '::Customer busca por pousadas' do
   before(:each) do
+    customer = Customer.create!(email: 'perdido@naselva.com', password: 'perdido', user_type: 'Customer')
     owner = Owner.create!(email: 'usuario@servidor.co.uk', password: '.SenhaSuper3', user_type: 'Owner')
     Inn.create!(brand_name: 'Pousada Recanto do Sossego',
                 legal_name: 'Recanto do Sossego Hospedagens LTDA',
@@ -14,6 +15,7 @@ describe '::Visitante acessa o site' do
     Inn.create!(brand_name: 'Pousada da Balada Roxa',
                 legal_name: 'José Fernandez Queiroz 89232120911',
                 vat_number: '22.325.669/0001-96',
+                zone: 'Recanto Perdido',
                 city: 'Mandarucaia',
                 state: 'ES',
                 postal_code: '29260-000',
@@ -35,34 +37,19 @@ describe '::Visitante acessa o site' do
                 postal_code: '11580-000',
                 active: true,
                 user_id: owner.id)
+    login_as(customer)
     visit root_path
-    @count = Inn.all.size
   end
 
-  it 'e vê as pousadas mais recentes' do
+  it 'e recebe resultados' do
     # Arrange
     # Act
+    visit root_path
+    fill_in 'busca:', with: 'Recanto'
+    click_on '>'
     # Assert
-    expect(@count).to eq 4
-    expect(current_path).to eq(root_path)
-    expect(page).to have_content('POUSADARIA')
-    within('#featured') do
-      expect(page).to have_content('Pousada Recanto do Sossego')
-      expect(page).to have_content('Rio das Pedras/MG')
-      expect(page).to have_content('Pousada da Balada Roxa')
-      expect(page).to have_content('Mandarucaia/ES')
-      expect(page).to have_content('Pousada Tremelengo')
-      expect(page).to have_content('São Sebastião/SP')
-    end
-  end
-
-  it 'e as pousadas antigas' do
-    # Arrange
-    # Act
-    # Assert
-    within('#all') do
-      expect(page).to have_content('Pousada Atrasada')
-      expect(page).to have_content('Caraguatatuba/SP')
-    end
+    expect(page).to have_content('2 pousadas encontradas')
+    expect(page).to have_content('Pousada da Balada Roxa')
+    expect(page).to have_content('Pousada Recanto do Sossego')
   end
 end

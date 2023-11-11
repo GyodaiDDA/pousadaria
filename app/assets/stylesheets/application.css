@@ -18,10 +18,14 @@ time, mark, audio, video {
   font-size: 90%; 
   font: inherit;
   vertical-align: baseline;
-  box-sizing: border-box; 
+  position: relative;
+  box-sizing: border-box;
+  margin: auto;
+  max-width: 1400px;
+  margin: auto;
 }
 
-
+/* Áreas ================================================================= */
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
   display: block;
@@ -36,10 +40,6 @@ body {
   font-size: 16px;
 }
 
-ol, ul {
-  list-style: none;
-}
-
 blockquote, q {
   quotes: none;
 }
@@ -50,18 +50,7 @@ q:before, q:after {
   content: none;
 }
 
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
-
-a:hover {
-  color: #0a58ca;
-  text-decoration: underline;
-}
-
-
+/* Títulos ================================================================= */
 h1, h2, h3, h4, h5, h6 {
   color: #f4f4f4;
   margin-bottom: 0em;
@@ -71,7 +60,6 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
   font-size: 2.5em; 
   margin-bottom: 0em;
-  
 }
 
 h2 {
@@ -95,15 +83,17 @@ h6 {
   font-size: 0.9em;
 }
 
-p {
-  margin-bottom: 0.0em;
+/* Tabelas ================================================================= */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
 }
 
 dt {
   font-weight: bold;
 }
 
-
+/* Navegação ul ================================================================= */
 nav ul {
   list-style-type: none; 
   margin: 0;
@@ -112,7 +102,7 @@ nav ul {
 }
 
 nav li {
-  float: left; /* Faz cada li flutuar para a esquerda, alinhando-os horizontalmente */
+  float: left;
 }
 
 nav li button {
@@ -128,43 +118,21 @@ nav li button {
   margin: 5px;
 }
 
-input[type=submit]{
-  display: block; 
-  text-align: center; 
-  padding: 14px 16px; 
-  text-decoration: none; 
-  color: white; 
-  background-color: #333; 
-  border: none; 
-  cursor: pointer; 
-  border-radius: 5px;
-}
-
 nav li button:hover {
   background-color: #111; 
 }
 
-
-
-
 footer {
-  /* margin-top: 20px; */
   padding: 20px 0;
   background-color: #333;
   color: white;
   text-align: center;
 }
 
-
-@media (max-width: 768px) {
-  body {
-    padding: 10px;
-  }
-}
-
+/* Containers ================================================================= */
 .box {
-  max-width: 600px; 
-  margin: 0; 
+  max-width: 1200px; 
+  margin: 0px; 
   margin-top: 20px;
   padding-left: 20px;
   padding: 10px;
@@ -177,107 +145,85 @@ a {
   color: #dddddd;
 }
 
-
-form {
-  max-width: 600px; 
-  margin: 0; 
+.logins {
+  right: auto;
 }
 
-
-form input[type="text"],
-form input[type="email"],
-form input[type="password"],
-form input[type="tel"],
-form textarea,
-form select {
-  width: 100%; 
-  padding: 10px; 
-  /* margin-bottom: 15px; */
-  border: 1px solid #ccc; 
+/* Texto ================================================================= */
+a:hover {
+  color: #0a58ca;
+  text-decoration: underline;
 }
 
-
-form label {
-  display: block; 
-  margin: 0 auto;
-  margin-top: 20px;
-  
+a {
+  font-weight: bold;
 }
 
-
-form input[type="submit"] {
-  background-color: #5cb85c; 
-  color: white; 
-  padding: 10px 15px; 
-  border: none; 
-  border-radius: 5px; 
-  cursor: pointer; 
-  margin-top: 20px;
-}
-
-form input[type="submit"]:hover {
-  background-color: #4cae4c; 
-}
-
-.peq{
-  font-size:x-small;
-  margin: 0px;
-}
-
-strong{
+strong {
   font-size: small;
   text-transform: uppercase;
   font-weight: bold;
 }
 
-.title{
+.title {
   font-size: small;
   text-transform: uppercase;
   font-weight: bold;
 }
 
-.description{
+.description {
   font-style: italic;
   font-size: small;
   text-transform: uppercase;
   vertical-align: middle;
 }
 
-.notice{
+.notice {
   color: #0a58ca;
-  max-width: 600px;
   padding: 10px;
   text-transform: uppercase;
 }
 
-.alert{
+.alert {
   color: #ca470a;
   max-width: 600px;
   padding: 10px;
   font-style: italic;
 }
 
-.list{
-  padding: 10px;
-  padding-left: 30px;
+/* Listagens ================================================================= */
+.list {
+  padding: 30px;
   white-space: nowrap;
   background-color: #f4f4f410;
   border-radius: 5px;
   margin: 5px;
 }
 
-.inline, .inline-button{
+.list p{
+  padding: 10px;
+  white-space: nowrap;
+  border-radius: 5px;
+  margin: 5px;
+}
+
+.featured {
+  font-size: x-large;
+}
+
+/* Itens Inline ================================================================= */
+.inline, .inline-button {
   display: inline-block;
 }
 
-.inline{
+.inline {
   margin-bottom: 15px;
   font-size: small;
   text-transform: uppercase;
   vertical-align: middle;
 }
 
-.inline-button{
+.inline-button {
   margin-left: 10px;
   vertical-align: middle;
   background-color: #f4f4f400;
@@ -288,12 +234,12 @@ strong{
   color: #f4f4f4;
 }
 
-input[type=checkbox].inline{
-  margin-left: 10px;
-  vertical-align: middle;
-}
+/* Formulários =================================================================  */
 
-.frozen{
+
+.frozen {
   background-color: #535353;
   color: #000000;
 }
+
+/* ================================================================= */

@@ -1,13 +1,11 @@
 class InnsController < ApplicationController
   before_action :set_inn, only: %i[show edit update]
+  before_action :set_active_inns, only: %i[index search]
   before_action :set_rooms, only: %i[show]
   before_action :block_customers, only: %i[new create edit]
   before_action :block_owners_with_inn, only: %i[new create]
 
-  def index
-    @inns = Inn.all
-    @active_inns = Inn.all.select { |inn| inn.active == true }
-  end
+  def index; end
 
   def show; end
 
@@ -37,8 +35,14 @@ class InnsController < ApplicationController
   end
 
   def cities
-    @inns_by_city = Inn.order(:city).group_by(&:city)
+    @inns_by_city = Inn.order(:city).order(:brand_name).group_by(&:city)
     @cities_list = @inns_by_city.keys
+  end
+
+  def search
+    @key = params[:search]
+    @active_inns =
+      @active_inns.where('brand_name LIKE ? OR city LIKE ? OR zone LIKE ?', "%#{@key}%", "%#{@key}%", "%#{@key}%")
   end
 
   private
@@ -52,8 +56,12 @@ class InnsController < ApplicationController
     check_ownership(@inn)
   end
 
+  def set_active_inns
+    @active_inns = Inn.all.where('active = 1').order(:brand_name)
+  end
+
   def set_rooms
-    @rooms = Room.all.select { |room| room.inn_id == @inn.id && room.available == true }
+    @rooms = Room.all.select { |room| room.inn_id == @inn.id }
   end
 
   def inn_params

@@ -12,40 +12,49 @@
 
   <body>
     <h1> POUSADARIA </h1>
+    <table width="100%"><tr><td>
     <nav>
       <ul>
+        <li>
+            <%= button_to "Home", root_path, method: :get %>
+        </li>
+        <li>
+            <%= button_to 'Cidades', cities_path, method: :get %>
+        </li>
         <% if user_signed_in? %>
           <% if current_user.user_type == 'Owner' %> <!--  Inn Owner is logged -->
             <% unless Inn.find_by(user_id: current_user.id) %>
-              <li>
-                <%= button_to 'Cadastrar Pousada', new_inn_path, method: :get %>
-              </li>
+          <li>
+              <%= button_to 'Cadastrar Pousada', new_inn_path, method: :get %>
+          </li>
             <% else %>
-              <li>
-                <%= button_to 'Minha Pousada', inn_path(Inn.find_by(user_id: current_user.id)), method: :get %>
-              </li>
+          <li>
+              <%= button_to 'Minha Pousada', inn_path(Inn.find_by(user_id: current_user.id)), method: :get %>
+          </li>
             <% end %>
-          <% else current_user.user_type == 'Customer' %>
           <% end %>
-        <% else %>
-          <li>
-            <%= button_to "Home", root_path, method: :get %>
-          </li>
-          <li>
-            <%= button_to 'Cidades', cities_path, method: :get %>
-          </li>
         <% end %>
-        <% unless ['sessions', 'registrations'].include?(controller_name) || user_signed_in? %> <!-- Not logged in -->
-          <li>          
-            <%= button_to 'Entrar', new_user_session_path, method: :get %>
-          </li>
-        <% else %>
-          <li>
-            <%= button_to 'Sair', destroy_user_session_path, method: :delete %>
-          </li>
-        <% end %>
+        <li>          
+          <%= button_to 'Entrar', new_user_session_path, method: :get unless ['sessions', 'registrations'].include?(controller_name) || user_signed_in? %>
+        </li>
+        <li>
+          <%= button_to 'Sair', destroy_user_session_path, method: :delete if user_signed_in? %>
+        </li>
       </ul>
     </nav>
+    </td>
+    <td>
+      <% if user_signed_in? %>
+      <div class="search">
+        <%= form_with(url: search_inns_path, method: :get, class: 'login') do |f| %>
+          <%= f.label :search, 'busca:', class: 'login' %>
+          <%= f.text_field :search, class: 'login' %>
+          <%= f.submit '>', class: 'login' %>
+        <% end %>
+      </div>
+      <% end %>
+    </td></tr></table>
+  
     <span class="notice"><%= notice %></span>
     <span class="alert"><%= alert %></span>
     <%= yield %>

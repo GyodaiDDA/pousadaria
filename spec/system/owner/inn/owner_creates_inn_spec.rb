@@ -107,7 +107,7 @@ describe '::Owner cadastra pousada' do
     end
   end
 
-  context 'e visualiza a pousada' do
+  context 'e visualiza' do
     it 'clicando em Minha Pousada' do
       # Arrange
       owner = Owner.create!(email: 'usuario@servidor.co.uk',
