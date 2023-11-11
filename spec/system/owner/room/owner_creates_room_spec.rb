@@ -38,6 +38,28 @@ describe '::Owner cadastra novo quarto' do
     expect(page).to have_button('Adicionar Quarto')
   end
 
+  it 'e falha na validação' do
+    # Arrange
+    # Act
+    click_on 'Adicionar Quarto'
+    fill_in 'Nome', with: 'Quartin'
+    fill_in 'Descrição', with: 'Quarto amplo, com varanda, para aproveitar ao máximo os dias'
+    fill_in 'Área', with: 'fs'
+    fill_in 'Hóspedes', with: '2'
+    fill_in 'Preço Base', with: '300'
+    check 'Banheiro'
+    check 'Varanda'
+    check 'Ar-condicionado'
+    uncheck 'TV'
+    check 'Guarda-roupas'
+    uncheck 'Acessível'
+    check 'Disponível'
+    click_on 'Adicionar Quarto'
+    # Assert]
+    expect(page).to have_content('Não foi possível adicionar o quarto.')
+    expect(page).to have_content('Nome não pode ficar em branco')
+  end
+
   it 'com sucesso' do
     # Arrange
     # Act

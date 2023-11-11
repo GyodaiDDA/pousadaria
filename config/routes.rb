@@ -4,8 +4,10 @@ Rails.application.routes.draw do
     registrations: 'users/registrations',
     sessions: 'users/sessions'
   }
-  get 'inns/cities', to: 'inns#cities'
-  resources :inns, only: %I[index show new create edit update]
+  get 'cities', to: 'inns#cities'
+  resources :inns, only: %I[index show new create edit update] do
+    get 'search', on: :collection
+  end
   resources :rooms, only: %I[show new create edit update] do
     resources :seasonals
   end

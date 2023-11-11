@@ -32,7 +32,7 @@
             <%= button_to "Home", root_path, method: :get %>
           </li>
           <li>
-            <%= button_to 'Cidades', inns_cities_path, method: :get %>
+            <%= button_to 'Cidades', cities_path, method: :get %>
           </li>
         <% end %>
         <% unless ['sessions', 'registrations'].include?(controller_name) || user_signed_in? %> <!-- Not logged in -->

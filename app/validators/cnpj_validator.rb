@@ -1,22 +1,23 @@
 class CnpjValidator < ActiveModel::Validator
   def validate(record)
-    @cnpj = record.vat_number.scan(/\d/).map!(&:to_i)
-    return false unless fourteen_digits(@cnpj, record)
+    return false unless fourteen_digits(record)
     return false unless valid_cnpj(record)
 
     true
   end
 
   def valid_cnpj(record)
-    return if verifying_digit(12) == @cnpj[12] && verifying_digit(13) == @cnpj[13]
+    cnpj = record.vat_number.scan(/\d/).map!(&:to_i)
+    return true if verifying_digit(cnpj, 12) == cnpj[12] && verifying_digit(cnpj, 13) == cnpj[13]
 
-    record.errors.add(:base, 'CNPJ inválido')
+    record.errors.add(:base, 'CNPJ inválido.')
   end
 
-  def fourteen_digits(cnpj, record)
-    return if cnpj.size == 14
+  def fourteen_digits(record)
+    cnpj = record.vat_number.scan(/\d/).map!(&:to_i)
+    return true if cnpj.size == 14
 
-    record.errors.add(:base, 'CNPJ não tem 14 dígitos')
+    record.errors.add(:base, 'CNPJ não tem 14 dígitos.')
   end
 
   def multiplier(cnpj, num)
@@ -26,8 +27,8 @@ class CnpjValidator < ActiveModel::Validator
     end.sum
   end
 
-  def verifying_digit(num)
-    soma = multiplier(@cnpj, num)
+  def verifying_digit(cnpj, num)
+    soma = multiplier(cnpj, num)
     if soma % 11 < 2
       0
     else

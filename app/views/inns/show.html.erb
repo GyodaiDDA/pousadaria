@@ -3,8 +3,8 @@
 
 <ul class="list">
   <% if @owner_view %>
-    <li><strong>Razão Social:</strong> <%= @inn.legal_name.upcase %></li>
-    <li><strong> CNPJ:</strong> <%= @inn.vat_number.upcase %></li>
+    <li><strong>Razão Social:</strong> <%= @inn.legal_name %></li>
+    <li><strong> CNPJ:</strong> <%= @inn.vat_number %></li>
   <% end %>
   <li><strong>Endereço:</strong> <%= [@inn.address, @inn.zone].compact.join(' - ') %></li>
   <li><strong>CEP:</strong> <%= @inn.postal_code %></li>
