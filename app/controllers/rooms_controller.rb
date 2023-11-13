@@ -1,8 +1,12 @@
 class RoomsController < ApplicationController
   before_action :set_room, only: %i[show edit update]
-  before_action :block_customers, only: %i[new create edit]
+  before_action only: %i[new create edit update] do
+    the_owner?(current_user.inn)
+  end
 
-  def index; end
+  def index
+    @rooms = Room.all
+  end
 
   def show; end
 
@@ -35,7 +39,7 @@ class RoomsController < ApplicationController
 
   def set_room
     @room = Room.find(params[:id])
-    check_ownership(@room.inn)
+    @owner_view = the_owner?(@room.inn)
   end
 
   def room_params

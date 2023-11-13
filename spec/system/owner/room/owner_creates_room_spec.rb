@@ -100,7 +100,7 @@ describe '::Owner cadastra novo quarto' do
     check 'Disponível'
     click_on 'Adicionar Quarto'
     # Assert]
-    expect(current_path).to eq(room_path('1'))
+    expect(current_path).to eq(room_path(Room.last.id))
     expect(page).to have_content('Quarto Orlindgans foi adicionado com sucesso!')
   end
 end

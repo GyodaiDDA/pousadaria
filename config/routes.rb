@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   }
   get 'cities', to: 'inns#cities'
   resources :inns, only: %I[index show new create edit update] do
+    get 'adv_search', on: :collection
     get 'search', on: :collection
   end
   resources :rooms, only: %I[show new create edit update] do

@@ -145,7 +145,7 @@ a {
   color: #dddddd;
 }
 
-.logins {
+.searching {
   right: auto;
 }
 
@@ -216,6 +216,10 @@ strong {
   display: inline-block;
 }
 
+.inline-item {
+  margin-right: 8px;
+  font-style: normal;
+}
 .inline {
   margin-bottom: 15px;
   font-size: small;

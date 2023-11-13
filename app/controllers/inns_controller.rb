@@ -1,13 +1,19 @@
 class InnsController < ApplicationController
   before_action :set_inn, only: %i[show edit update]
-  before_action :set_active_inns, only: %i[index search]
-  before_action :set_rooms, only: %i[show]
-  before_action :block_customers, only: %i[new create edit]
-  before_action :block_owners_with_inn, only: %i[new create]
+  before_action :set_active_inns, only: %i[index search adv_search]
+
+  before_action :no_inn, only: %i[new create]
+  before_action only: %i[edit update] do
+    the_owner?(@inn)
+  end
+
+  before_action :set_rooms, only: %i[show] # NECESSÁRIO?
 
   def index; end
 
-  def show; end
+  def show
+    set_rooms
+  end
 
   def new
     @inn = Inn.new
@@ -45,15 +51,29 @@ class InnsController < ApplicationController
       @active_inns.where('brand_name LIKE ? OR city LIKE ? OR zone LIKE ?', "%#{@key}%", "%#{@key}%", "%#{@key}%")
   end
 
+  def adv_search
+    @brand_name = params[:brand_name]
+    @zone = params[:zone]
+    @city = params[:city]
+    @state = params[:state]
+    @pet_friendly = "NULL"
+    @tv = params[:tv]
+    @bathroom = 0
+    # @active_inns = @active_inns.where('brand_name LIKE ? AND zone LIKE ? AND city LIKE ? AND state LIKE ?', "%#{@brand_name}%", "%#{@zone}%", "%#{@city}%", "%#{@state}%")
+    @active_inns = Inn.joins(:rooms).where("brand_name LIKE ? AND rooms.tv = ? OR inns.state = ?", "%#{@brand_name}%", false, @state).distinct
+
+  end
+
   private
 
-  def block_owners_with_inn
+  def no_inn
+    owners_only
     redirect_to inn_path(@inn), notice: 'Sua pousada já está cadastrada.' if @inn
   end
 
   def set_inn
     @inn = Inn.find(params[:id])
-    check_ownership(@inn)
+    @owner_view = the_owner?(@inn)
   end
 
   def set_active_inns

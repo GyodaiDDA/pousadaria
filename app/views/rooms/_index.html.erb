@@ -1,0 +1,31 @@
+<% owner_view = local_assigns[:owner_view] %>
+<% rooms = local_assigns[:rooms] %>
+
+<div id="rooms_list" class="list">
+  <% if owner_view %> <section class="owner-view">
+    <% rooms.each do |room| %>
+      <span class="inline"><%= room.name %> | </span> 
+      <span class="inline"><%= room.size %>m² | </span>
+      <span class="inline">R$ <%= room.base_price %> | </span>
+      <span class="inline"><%= room.available ? 'Disponível' : 'Indisponível' %></span>
+        <%= button_to 'Editar Quarto', edit_room_path(room), method: :get, form_class: "inline", class: "inline-button" %>
+        <%= button_to 'Ver', room_path(room), method: :get, form_class: "inline", class: "inline-button" %>
+      <br>
+    <% end %>
+  </section>
+  
+  <% else %> <section class="customer-view">
+    <% rooms.each do |room| %>
+      <% next unless room.available %>
+        <span class="inline, title"><%= link_to room.name, room_path(room) %></span><br>
+        <span class="inline, description"><%= room.description %><br>
+        <span class="inline"><%= room.size %>m² | R$ <%= room.base_price %> | Até <%= room.max_guests %> pessoas<br>
+        <% {Suíte: room.bathroom, Varanda: room.balcony, "Ar condicionado": room.air_conditioning, TV: room.tv, Armários: room.wardrobe, Cofre: room.safe, "quarto acessível": room.accessible}.each do |key, value| %>
+          <% if value %>
+            <span class="inline-item"><%= "#{key}✓" %></span>
+          <% end %>
+        <% end %></span><br>
+    <% end %>
+  <% end %>
+  </section>
+<div>

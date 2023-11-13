@@ -55,6 +55,7 @@ group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'capybara'
   gem 'debug', platforms: %i[mri windows]
+  gem 'faker'
   gem 'rspec-core'
   gem 'rspec-rails'
   gem 'rubocop', require: false
@@ -67,7 +68,6 @@ group :development do
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem 'rack-mini-profiler'
   gem 'factory_bot'
-  gem 'faker'
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem 'spring'
 end

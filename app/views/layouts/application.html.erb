@@ -45,12 +45,13 @@
     </td>
     <td>
       <% if user_signed_in? %>
-      <div class="search">
-        <%= form_with(url: search_inns_path, method: :get, class: 'login') do |f| %>
-          <%= f.label :search, 'busca:', class: 'login' %>
-          <%= f.text_field :search, class: 'login' %>
-          <%= f.submit '>', class: 'login' %>
+      <div>
+        <%= form_with(url: search_inns_path, method: :get) do |f| %>
+          <%= f.label :search, 'busca:' %>
+          <%= f.text_field :search %>
+          <%= f.submit '>' %>
         <% end %>
+        <%= button_to 'Busca Avançada', adv_search_inns_path, method: :get, class: 'searching' %>
       </div>
       <% end %>
     </td></tr></table>
@@ -58,5 +59,6 @@
     <span class="notice"><%= notice %></span>
     <span class="alert"><%= alert %></span>
     <%= yield %>
+    <button onclick="history.back()">Voltar</button>
   </body>
 </html>

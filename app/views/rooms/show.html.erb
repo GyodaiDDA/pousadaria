@@ -16,9 +16,12 @@
         <li><%= key %></li>
       <% end %>
     <% end %>
+  <% if @owner_view %>
   <li>
-    <%= @room.available ? 'Disponível' : 'Indisponível' %>
-</ul>
+    <%= @room.available ? 'Disponível' : 'Indisponível'%>
+  </li>
+  <% end %>
+  </ul>
 
 <% if @owner_view %>
   <%= render 'seasonals/index', :room => @room %>

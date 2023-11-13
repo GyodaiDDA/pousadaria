@@ -7,15 +7,16 @@ class ApplicationController < ActionController::Base
     I18n.locale = params[:locale] || I18n.default_locale
   end
 
-  def block_customers
-    return unless current_user
+  def owners_only
+    return false unless user_signed_in?
 
-    redirect_to root_path, notice: 'Página inacessível' unless current_user.user_type == 'Owner'
+    current_user.user_type == 'Owner'
   end
 
-  def check_ownership(inn)
+  def the_owner?(inn)
     return unless user_signed_in?
+    return unless owners_only
 
-    @owner_view = current_user.id == inn.user_id
+    current_user.id == inn.user_id
   end
 end

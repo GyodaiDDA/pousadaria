@@ -38,3 +38,4 @@
 *.code-workspace
 appmap.yml
 .vscode/extensions.json
+node_modules

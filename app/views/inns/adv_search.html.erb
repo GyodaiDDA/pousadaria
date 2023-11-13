@@ -1,0 +1,27 @@
+<h1> Busca Avançada </h1>
+<div class="inline">
+  <%= form_with(url: adv_search_inns_path, method: :get) do |f| %>
+    <%= f.label :brand_name %>
+    <%= f.text_field :brand_name %><br>
+    <%= f.label :zone %>
+    <%= f.text_field :zone %><br>
+    <%= f.label :city %>
+    <%= f.text_field :city %><br>
+    <%= f.label :state %>
+    <%= f.text_field :state %><br>
+    <%= f.label :pet_friendly %>
+    <%= f.check_box :pet_friendly %><br>
+    <%= f.label :bathroom %>
+    <%= f.check_box :bathroom %><br>
+    <%= f.label :tv %>
+    <%= f.check_box :tv %><br>
+
+    <%= f.submit '>' %>
+  <% end %>
+</div>
+<br>
+<%= @active_inns.each {|a| puts a} %>
+<h3><%= @active_inns.length %> pousadas encontradas </h3>
+  <%= render partial: 'inns/list_new_inns', locals: { items: @active_inns.length, pousadas: @active_inns } %>
+
+
