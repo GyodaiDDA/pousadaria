@@ -12,7 +12,7 @@ Metrics/BlockLength:
   ExcludedMethods: ['before', 'describe', 'context', 'it']
 
 Layout/LineLength:
-  Max: 120
+  Max: 180
 
 Style/ClassAndModuleChildren:
   Enabled: false

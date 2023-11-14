@@ -2,6 +2,7 @@ require 'rails_helper'
 
 describe '::Visitante vê a página da Pousada' do
   before(:each) do
+<<<<<<< Updated upstream
     owner = Owner.create!(email: 'usuario@servidor.co.uk',
                           password: '.SenhaSuper3',
                           user_type: 'Owner')
@@ -32,6 +33,16 @@ describe '::Visitante vê a página da Pousada' do
                      end_date: '2024-01-31',
                      special_price: 340,
                      room_id: room.id)
+=======
+    @owner = make_owner
+    @inn = make_inn(@owner)
+    make_rooms(@inn, 1, { tv: 1, safe: 1, available: 1 })
+    make_rooms(@inn, 1, { available: 0 })
+    @first_room = @inn.rooms.first
+    @last_room = @inn.rooms.last
+    @seasonal = make_seasonals(@first_room)
+    @seasonal = make_seasonals(@last_room)
+>>>>>>> Stashed changes
     visit root_path
   end
 

@@ -6,11 +6,25 @@
     <li><strong>Razão Social:</strong> <%= @inn.legal_name %></li>
     <li><strong> CNPJ:</strong> <%= @inn.vat_number %></li>
   <% end %>
-  <li><strong>Endereço:</strong> <%= [@inn.address, @inn.zone].compact.join(' - ') %></li>
+  <li><%= [@inn.city, @inn.state].compact.join(' / ') %> </li>
+  <% if @inn.address %>
+    <li><%= [@inn.address, @inn.zone]&.compact.join(' - ') %></li>
+  <% end %>
+  <% if @inn.phone %>
+    <li><strong>Telefone:</strong> <%= @inn.phone %></li>
+  <% end %>
+  <% if @inn.email%>
+    <li><strong>E-mail:</strong> <%= @inn.email %></li>
+  <% end %>
   <li><strong>CEP:</strong> <%= @inn.postal_code %></li>
-  <li><strong>Cidade/UF:</strong> <%= [@inn.city.presence, @inn.state.presence].compact.join(' / ') %></li>
-  <li><strong>Telefone:</strong> <%= @inn.phone %></li>
-  <li><strong>E-mail:</strong> <%= @inn.email %></li>
+  <li><strong>Check-In:</strong> <%= @inn.check_in&.strftime("%H:%M") %></li>
+  <li><strong>Check-Out:</strong> <%= @inn.check_out&.strftime("%H:%M") %></li>
+  <% if @inn.pet_friendly %>
+    <li><%= '🐱🐶 Aceita Pets' %></li>
+  <% end %>
+  <% if @inn.wheelchair_accessible %>
+    <li><%= '♿ Pousada com Acessíbilidade' %></li>
+  <% end %>
 </ul>
 
 <% if @owner_view %>

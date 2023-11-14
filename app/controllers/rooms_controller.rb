@@ -33,7 +33,7 @@ class RoomsController < ApplicationController
 
   private
 
-  def set_room
+  def set_room 
     @room = Room.find(params[:id])
     check_ownership(@room.inn)
   end

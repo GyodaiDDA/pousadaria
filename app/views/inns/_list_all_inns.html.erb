@@ -1,6 +1,8 @@
 <div id="all" class="list">
-  <% @active_inns.each_with_index do |inn, index| %>
-    <% next if index + 1 <= items %>
-    <p><%= link_to inn.brand_name, inn_path(inn.id)%><%= " - #{inn.city}/#{inn.state}" %></p>
-  <% end %><br>
+  <table>
+    <% pousadas.each_with_index do |inn, index| %>
+    <tr><td><%= link_to inn.brand_name, inn_path(inn.id)%><%= " - #{inn.city}/#{inn.state}" %></td></tr>
+    <!-- <%= ' 🐱🐶 ' if inn.pet_friendly %><%= ' ♿ ' if inn.wheelchair_accessible %> -->
+  <% end %>
+  </table>
 </div>

@@ -2,6 +2,7 @@ require 'rails_helper'
 
 describe '::Owner altera os dados da pousada' do
   before(:each) do
+<<<<<<< Updated upstream
     owner = Owner.create!(email: 'usuario@servidor.co.uk',
                           password: '.SenhaSuper3',
                           user_type: 'Owner')
@@ -13,13 +14,12 @@ describe '::Owner altera os dados da pousada' do
                 postal_code: '13200-000',
                 active: true,
                 user_id: owner.id)
+=======
+    @owner = make_owner
+    @inn = make_inn(@owner)
+>>>>>>> Stashed changes
     visit root_path
-    click_on 'Entrar'
-    fill_in 'E-mail', with: 'usuario@servidor.co.uk'
-    fill_in 'Senha', with: '.SenhaSuper3'
-    within('div.actions') do
-      click_on 'Entrar'
-    end
+    login(@owner)
     click_on 'Minha Pousada'
   end
 

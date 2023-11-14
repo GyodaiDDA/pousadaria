@@ -9,9 +9,9 @@
      Hóspedes: Até <%= @room.max_guests %> pessoas
   </li>
   <li>
-    Preço Base: R$ <%= @room.base_price %>
+    Preço Base: <%= number_to_currency(@room.base_price) %>
   </li>
-    <% {Suíte: @room.bathroom, Varanda: @room.balcony, "Ar condicionado": @room.air_conditioning, TV: @room.tv, Armários: @room.wardrobe, Cofre: @room.safe, "quarto acessível": @room.accessible}.each do |key, value| %>
+    <% {Suíte: @room.bathroom, Varanda: @room.balcony, "Ar condicionado": @room.air_conditioning, TV: @room.tv, Armários: @room.wardrobe, Cofre: @room.safe, "♿ Quarto Acessível": @room.accessible}.each do |key, value| %>
       <% if value %>
         <li><%= key %></li>
       <% end %>
@@ -21,6 +21,6 @@
 </ul>
 
 <% if @owner_view %>
-  <%= render 'seasonals/index', :room => @room %>
+  <%= render 'seasonals/index', :room => @room unless @room.seasonals.empty? %>
   <%= render 'submenu' %>
 <% end %>

@@ -64,6 +64,7 @@ describe '::Owner cria novo Período' do
     # Assert
     expect(current_path).to eq(room_seasonals_path(1))
     expect(page).to have_content('Não foi possível adicionar o período')
+    expect(page).to have_content('Já existem períodos para esta data neste quarto.')
   end
 
   it 'e falha por reversão de data' do
@@ -80,6 +81,7 @@ describe '::Owner cria novo Período' do
     # Assert
     expect(current_path).to eq(room_seasonals_path(1))
     expect(page).to have_content('Não foi possível adicionar o período')
+    expect(page).to have_content('A data final não pode ser menor que a data inicial.')
   end
 
   it 'e falha por superação de data' do
@@ -96,5 +98,6 @@ describe '::Owner cria novo Período' do
     # Assert
     expect(current_path).to eq(room_seasonals_path(1))
     expect(page).to have_content('Não foi possível adicionar o período')
+    expect(page).to have_content('As datas escolhidas já passaram.')
   end
 end
