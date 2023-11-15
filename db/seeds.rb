@@ -61,7 +61,7 @@ if Rails.env.development?
 
     inn = Inn.create!(
       brand_name: "Pousada #{Faker::Food.ingredients} #{Faker::Gender.type}",
-      legal_name: "#{Faker::Job.title} #{Faker::Lorem.words} #{Faker::Company.suffix}",
+      legal_name: "#{Faker::Job.title} #{Faker::Space.moon} #{Faker::Company.suffix}",
       vat_number: Faker::Company.brazilian_company_number,
       phone: Faker::PhoneNumber.phone_number,
       email: Faker::Internet.email,

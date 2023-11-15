@@ -4,7 +4,7 @@ describe '::Visitante reserva quarto de pousada' do
   context 'clicando no botão Reservar' do
     before(:each) do
       @inn = make_inn(make_owner)
-      @room = make_rooms(@inn, { tv: true, bathroom: true, safe: true, available: true })    
+      @room = make_rooms(@inn, { tv: true, bathroom: true, safe: true, available: true })
     end
 
     it 'e vê detalhes do quarto' do
@@ -15,7 +15,7 @@ describe '::Visitante reserva quarto de pousada' do
       click_on @room.name
       click_button 'Quero reservar'
       # Assert
-      expect(current_path).to eq(room_availability_path(@room.id))
+      expect(current_path).to eq(new_room_reservation_path(@room.id))
       expect(page).to have_field('Data de Entrada')
       expect(page).to have_field('Date de Saída')
       expect(page).to have_field('Quantidade de Hóspedes')
@@ -34,7 +34,7 @@ describe '::Visitante reserva quarto de pousada' do
       fill_in 'Quantidade de Hóspedes', with: rand(1..@room.max_guests)
       click_button 'Consultar'
       # Assert
-      expect(current_path).to eq(room_availability_path(@room.id))
+      expect(current_path).to eq(new_room_reservation_path(@room.id))
       expect(page).to have_content('Que pena! Quarto indisponível para esta reserva.')
     end
 
@@ -50,7 +50,7 @@ describe '::Visitante reserva quarto de pousada' do
       fill_in 'Quantidade de Hóspedes', with: rand(1..@room.max_guests)
       click_button 'Consultar'
       # Assert
-      expect(current_path).to eq(room_availability_path(@room.id))
+      expect(current_path).to eq(new_room_reservation_path(@room.id))
       expect(page).to have_content('Legal! Quarto disponível para esta reserva.')
       expect(page).to have_content('Valor da reserva')
       expect(page).to have_content('Valor da diária')

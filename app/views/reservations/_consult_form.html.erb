@@ -1,0 +1,14 @@
+<div class="box">
+<%= form_with(model: @room, @reservation) do |f| %>
+  <%= f.label :start_date %>
+  <%= f.text_field :start_date %><br>
+  <%= f.label :end_date %>
+  <%= f.text_field :end_date %><br>
+  <%= f.label :guests %>
+  <%= f.number_field :guests %><br>
+  
+  <%= f.hidden_field :room_id, value: params[:room_id] %>
+  <br>
+  <%= f.submit %>
+<% end %>
+</div>

@@ -55,16 +55,16 @@ group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'capybara'
   gem 'debug', platforms: %i[mri windows]
-<<<<<<< HEAD
-=======
+  gem 'erb-formatter', require: false
   gem 'erb_lint', '~> 0.5.0'
->>>>>>> bootstrap
   gem 'faker'
+  gem 'guard-rubycritic'
   gem 'rspec-core'
   gem 'rspec-rails'
   gem 'rubocop', require: false
   gem 'rubocop-rails', require: false
   gem 'rubycritic', require: false
+  
 end
 
 group :development do

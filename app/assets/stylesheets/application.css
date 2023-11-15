@@ -242,15 +242,9 @@ strong {
 }
 
 .inline-item {
-<<<<<<< HEAD
-  margin-right: 8px;
-  font-style: normal;
-}
-=======
   padding-right: 10px;
 }
 
->>>>>>> bootstrap
 .inline {
   margin-bottom: 15px;
   font-size: small;

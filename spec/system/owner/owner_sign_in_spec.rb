@@ -17,31 +17,6 @@ describe '::Owner clica no botão Entrar' do
     expect(page).to have_button('Entrar')
   end
 
-<<<<<<< HEAD
-  it 'e faz login com sucesso' do
-    # Arrange
-    @inn = Inn.create!(brand_name: 'Pousada Recanto do Sossego',
-                       legal_name: 'Recanto do Sossego Hospedagens LTDA',
-                       vat_number: '22333444000181',
-                       city: 'San Francisco',
-                       state: 'CA',
-                       postal_code: '13200-000',
-                       active: true,
-                       user_id: @owner.id)
-    # Act
-    fill_in 'E-mail', with: 'usuario@servidor.co.uk'
-    fill_in 'Senha', with: '.SenhaSuper3'
-    within('div.actions') do
-      click_on 'Entrar'
-    end
-    # Assert
-    expect(current_path).to eq(inn_path(@inn.id))
-    expect(page).to have_content('Olá! Seu login foi feito com sucesso.')
-    expect(page).to have_content('Pousada Recanto do Sossego')
-  end
-
-=======
->>>>>>> bootstrap
   it 'e falha ao fazer login' do
     # Arrange
     # Act

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_07_152741) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_15_124718) do
   create_table "inns", force: :cascade do |t|
     t.string "brand_name"
     t.string "legal_name"
@@ -35,6 +35,22 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_07_152741) do
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_inns_on_user_id"
     t.index ["vat_number"], name: "index_inns_on_vat_number", unique: true
+  end
+
+  create_table "reservations", force: :cascade do |t|
+    t.integer "room_id", null: false
+    t.integer "user_id", null: false
+    t.date "start_date"
+    t.date "end_date"
+    t.integer "guests"
+    t.string "code"
+    t.integer "status"
+    t.integer "value"
+    t.boolean "available"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["room_id"], name: "index_reservations_on_room_id"
+    t.index ["user_id"], name: "index_reservations_on_user_id"
   end
 
   create_table "rooms", force: :cascade do |t|
@@ -82,6 +98,8 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_07_152741) do
   end
 
   add_foreign_key "inns", "users"
+  add_foreign_key "reservations", "rooms"
+  add_foreign_key "reservations", "users"
   add_foreign_key "rooms", "inns"
   add_foreign_key "seasonals", "rooms"
 end

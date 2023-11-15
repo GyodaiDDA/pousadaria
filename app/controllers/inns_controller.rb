@@ -1,29 +1,19 @@
 class InnsController < ApplicationController
   before_action :set_inn, only: %i[show edit update]
-<<<<<<< HEAD
-  before_action :set_active_inns, only: %i[index search adv_search]
-
-  before_action :no_inn, only: %i[new create]
-  before_action only: %i[edit update] do
-    the_owner?(@inn)
-  end
-
-  before_action :set_rooms, only: %i[show] # NECESSÁRIO?
-=======
   before_action :set_inns, only: %i[index search]
   before_action :set_rooms, only: %i[show]
-  before_action :block_customers, only: %i[new create edit]
   before_action :inn_exists?, only: %i[new create]
->>>>>>> bootstrap
 
   def index; end
 
-  def show
-    set_rooms
-  end
+  def show; end
 
   def new
-    @inn = Inn.new
+    @inn = if inn_exists?
+             current_user.inn
+           else
+             Inn.new
+           end
   end
 
   def create
@@ -66,21 +56,13 @@ class InnsController < ApplicationController
     @pet_friendly = "NULL"
     @tv = params[:tv]
     @bathroom = 0
-    # @active_inns = @active_inns.where('brand_name LIKE ? AND zone LIKE ? AND city LIKE ? AND state LIKE ?', "%#{@brand_name}%", "%#{@zone}%", "%#{@city}%", "%#{@state}%")
-    @active_inns = Inn.joins(:rooms).where("brand_name LIKE ? AND rooms.tv = ? OR inns.state = ?", "%#{@brand_name}%", false, @state).distinct
-
+    @active_inns = Inn.joins(:rooms).where('brand_name LIKE ? AND rooms.tv = ? OR inns.state = ?', "%#{@brand_name}%", false, @state).distinct
   end
 
   private
 
-<<<<<<< HEAD
-  def no_inn
-    owners_only
-    redirect_to inn_path(@inn), notice: 'Sua pousada já está cadastrada.' if @inn
-=======
   def inn_exists?
-    redirect_to current_user.inn, alert: 'Sua pousada já está cadastrada.' if current_user.inn
->>>>>>> bootstrap
+    show if current_user.inn
   end
 
   def set_inn
@@ -89,13 +71,13 @@ class InnsController < ApplicationController
   end
 
   def set_inns
-    @active_inns = Inn.all.where('active = 1').order(:created_at).reverse
+    @active_inns = Inn.where('active = 1').order(:created_at).reverse if Inn.where('active = 1').order(:created_at).reverse
     @new_inns = @active_inns.first(3)
     @older_inns = @active_inns - @new_inns if @new_inns
   end
 
   def set_rooms
-    @rooms = Room.all.select { |room| room.inn_id == @inn.id }
+    @rooms = Room.select { |room| room.inn_id == @inn.id }
   end
 
   def inn_params

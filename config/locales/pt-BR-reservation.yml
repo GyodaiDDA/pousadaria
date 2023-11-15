@@ -1,0 +1,18 @@
+---
+pt-BR:
+  activerecord:
+    models:
+      reservation: Reserva
+    attributes:
+      reservation: Reserva
+        room_id: ID do quarto
+        user_id: ID do usuário
+        start_date: Data de Entrada
+        end_date: Data de Saída
+        guests: Hóspedes
+        code: Código
+        value: Valor
+        status: Status
+        available: Disponível
+        created_at: Criado em
+        updated_at: Atualizado em
