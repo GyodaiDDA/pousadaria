@@ -1,5 +1,6 @@
 class InnsController < ApplicationController
   before_action :set_inn, only: %i[show edit update]
+<<<<<<< HEAD
   before_action :set_active_inns, only: %i[index search adv_search]
 
   before_action :no_inn, only: %i[new create]
@@ -8,6 +9,12 @@ class InnsController < ApplicationController
   end
 
   before_action :set_rooms, only: %i[show] # NECESSÁRIO?
+=======
+  before_action :set_inns, only: %i[index search]
+  before_action :set_rooms, only: %i[show]
+  before_action :block_customers, only: %i[new create edit]
+  before_action :inn_exists?, only: %i[new create]
+>>>>>>> bootstrap
 
   def index; end
 
@@ -41,14 +48,14 @@ class InnsController < ApplicationController
   end
 
   def cities
-    @inns_by_city = Inn.order(:city).order(:brand_name).group_by(&:city)
-    @cities_list = @inns_by_city.keys
+    @inns_by_city = Inn.all.where('active = 1').order(:city).order(:brand_name).group_by(&:city)
+    # @cities_list = @inns_by_city.keys
   end
 
   def search
     @key = params[:search]
     @active_inns =
-      @active_inns.where('brand_name LIKE ? OR city LIKE ? OR zone LIKE ?', "%#{@key}%", "%#{@key}%", "%#{@key}%")
+      Inn.where('brand_name LIKE ? OR city LIKE ? OR zone LIKE ?', "%#{@key}%", "%#{@key}%", "%#{@key}%")
   end
 
   def adv_search
@@ -66,9 +73,14 @@ class InnsController < ApplicationController
 
   private
 
+<<<<<<< HEAD
   def no_inn
     owners_only
     redirect_to inn_path(@inn), notice: 'Sua pousada já está cadastrada.' if @inn
+=======
+  def inn_exists?
+    redirect_to current_user.inn, alert: 'Sua pousada já está cadastrada.' if current_user.inn
+>>>>>>> bootstrap
   end
 
   def set_inn
@@ -76,8 +88,10 @@ class InnsController < ApplicationController
     @owner_view = the_owner?(@inn)
   end
 
-  def set_active_inns
-    @active_inns = Inn.all.where('active = 1').order(:brand_name)
+  def set_inns
+    @active_inns = Inn.all.where('active = 1').order(:created_at).reverse
+    @new_inns = @active_inns.first(3)
+    @older_inns = @active_inns - @new_inns if @new_inns
   end
 
   def set_rooms

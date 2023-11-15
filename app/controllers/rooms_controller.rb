@@ -35,9 +35,13 @@ class RoomsController < ApplicationController
     end
   end
 
+  def available?
+    
+  end
+
   private
 
-  def set_room
+  def set_room 
     @room = Room.find(params[:id])
     @owner_view = the_owner?(@room.inn)
   end

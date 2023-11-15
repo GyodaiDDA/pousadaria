@@ -1,29 +1,40 @@
 <h1><%= @room.name %></h1>
-<h4><%= @room.description %></h4>
+<h4 class="list-item"><%= @room.description %></h4>
 
-<ul class="list">
-  <li>
+<div class="list">
+
+  <p class="list-item">
     Tamanho: <%= @room.size %>m²
-  </li>
-  <li>
+  </p><br>
+  <p class="list-item">
      Hóspedes: Até <%= @room.max_guests %> pessoas
-  </li>
-  <li>
-    Preço Base: R$ <%= @room.base_price %>
-  </li>
-    <% {Suíte: @room.bathroom, Varanda: @room.balcony, "Ar condicionado": @room.air_conditioning, TV: @room.tv, Armários: @room.wardrobe, Cofre: @room.safe, "quarto acessível": @room.accessible}.each do |key, value| %>
-      <% if value %>
-        <li><%= key %></li>
-      <% end %>
+  </p><br>
+  
+    <div> <% {Suíte: @room.bathroom, Varanda: @room.balcony, "Ar condicionado": @room.air_conditioning, TV: @room.tv, Armários: @room.wardrobe, Cofre: @room.safe, "♿ Quarto Acessível": @room.accessible}.each do |key, value| %>
+        <% if value %>
+          <p class="list-item"> ✓ <%= key if value %><br></p>
+        <% end %>
     <% end %>
+<<<<<<< HEAD
   <% if @owner_view %>
   <li>
     <%= @room.available ? 'Disponível' : 'Indisponível'%>
   </li>
   <% end %>
   </ul>
+=======
+  </div>
+  <br>
+  <p class="list-item">
+    Diária: <%= number_to_currency(@room.base_price) %>
+  </p>
+</div>
+
+<%= button_to 'Quero reservar', room_availability_path(@room), method: :get, form_class: "inline", class: "inline-button" %>
+>>>>>>> bootstrap
 
 <% if @owner_view %>
-  <%= render 'seasonals/index', :room => @room %>
+  <%= @room.available ? 'Disponível' : 'Indisponível' %>
+  <%= render 'seasonals/index', :room => @room unless @room.seasonals.empty? %>
   <%= render 'submenu' %>
 <% end %>

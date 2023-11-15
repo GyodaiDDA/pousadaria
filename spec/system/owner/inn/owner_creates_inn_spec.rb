@@ -8,13 +8,11 @@ describe '::Owner cadastra pousada' do
       visit root_path
       click_on 'Entrar'
       click_on 'Ainda não tem cadastro?'
-      within('section#owner-signup') do
-        fill_in 'E-mail', with: 'usuario@servidor.co.uk'
-        fill_in 'Senha', with: '.SenhaSuper3'
-        fill_in 'Confirme sua senha', with: '.SenhaSuper3'
-        click_on 'Cadastre-se'
-      end
-      # Act II
+      fill_in 'E-mail', with: 'usuario@servidor.co.uk'
+      fill_in 'Senha', with: '.SenhaSuper3'
+      fill_in 'Confirme sua senha', with: '.SenhaSuper3'
+      click_on 'Cadastre-se'
+      # Act II 
       fill_in 'Nome Fantasia', with: 'Pousada Recanto do Sossego'
       fill_in 'Razão Social', with: 'Recanto do Sossego Hospedagens LTDA'
       fill_in 'CNPJ', with: '11222333000181'

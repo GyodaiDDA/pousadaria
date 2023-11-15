@@ -1,2 +1,1 @@
-module RoomsHelper
-end
+module RoomsHelper; end

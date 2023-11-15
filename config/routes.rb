@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     get 'search', on: :collection
   end
   resources :rooms, only: %I[show new create edit update] do
-    resources :seasonals
+    resources :seasonals, only: %I[index show new create edit]
+    get 'availability', to: 'rooms#available?'
   end
 end

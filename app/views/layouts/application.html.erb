@@ -19,7 +19,7 @@
             <%= button_to "Home", root_path, method: :get %>
         </li>
         <li>
-            <%= button_to 'Cidades', cities_path, method: :get %>
+            <%= button_to 'Cidades', cities_path, method: :get unless Inn.all.empty? %>
         </li>
         <% if user_signed_in? %>
           <% if current_user.user_type == 'Owner' %> <!--  Inn Owner is logged -->

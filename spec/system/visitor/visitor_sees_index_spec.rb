@@ -2,41 +2,12 @@ require 'rails_helper'
 
 describe '::Visitante acessa o site' do
   before(:each) do
-    owner = Owner.create!(email: 'usuario@servidor.co.uk', password: '.SenhaSuper3', user_type: 'Owner')
-    Inn.create!(brand_name: 'Pousada Recanto do Sossego',
-                legal_name: 'Recanto do Sossego Hospedagens LTDA',
-                vat_number: '22333444000181',
-                city: 'Rio das Pedras',
-                state: 'MG',
-                postal_code: '37653-000',
-                active: true,
-                user_id: owner.id)
-    Inn.create!(brand_name: 'Pousada da Balada Roxa',
-                legal_name: 'José Fernandez Queiroz 89232120911',
-                vat_number: '22.325.669/0001-96',
-                city: 'Mandarucaia',
-                state: 'ES',
-                postal_code: '29260-000',
-                active: true,
-                user_id: owner.id)
-    Inn.create!(brand_name: 'Pousada Tremelengo',
-                legal_name: 'Tamoios Inc.',
-                vat_number: '00.580.370/0001-45',
-                city: 'São Sebastião',
-                state: 'SP',
-                postal_code: '11452-100',
-                active: true,
-                user_id: owner.id)
-    Inn.create!(brand_name: 'Pousada Atrasada',
-                legal_name: 'Tamoios Inc.',
-                vat_number: '44.401.318/0001-50',
-                city: 'Caraguatatuba',
-                state: 'SP',
-                postal_code: '11580-000',
-                active: true,
-                user_id: owner.id)
-    visit root_path
+    4.times do
+      @owner = make_owner
+      @inn = make_inn(@owner)
+    end
     @count = Inn.all.size
+    visit root_path
   end
 
   it 'e vê as pousadas mais recentes' do
@@ -47,12 +18,10 @@ describe '::Visitante acessa o site' do
     expect(current_path).to eq(root_path)
     expect(page).to have_content('POUSADARIA')
     within('#featured') do
-      expect(page).to have_content('Pousada Recanto do Sossego')
-      expect(page).to have_content('Rio das Pedras/MG')
-      expect(page).to have_content('Pousada da Balada Roxa')
-      expect(page).to have_content('Mandarucaia/ES')
-      expect(page).to have_content('Pousada Tremelengo')
-      expect(page).to have_content('São Sebastião/SP')
+      expect(page).to have_content(Inn.all[3].brand_name)
+      expect(page).to have_content(Inn.all[2].brand_name)
+      expect(page).to have_content(Inn.all[1].brand_name)
+      expect(page).not_to have_content(Inn.all[0].brand_name)
     end
   end
 
@@ -61,8 +30,8 @@ describe '::Visitante acessa o site' do
     # Act
     # Assert
     within('#all') do
-      expect(page).to have_content('Pousada Atrasada')
-      expect(page).to have_content('Caraguatatuba/SP')
+      expect(page).to have_content(Inn.all[0].brand_name)
+      expect(page).to have_content(Inn.all[0].city)
     end
   end
 end

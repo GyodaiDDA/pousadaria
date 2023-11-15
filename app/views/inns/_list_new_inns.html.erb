@@ -1,6 +1,6 @@
 <div class="featured list" id="featured">
-  <% @active_inns.each_with_index do |inn, index| %>
-    <% break if index + 1 > items %>
-    <p><%= link_to inn.brand_name, inn_path(inn.id)%><%= " - #{inn.city}/#{inn.state}" %></p>
+  <table><% pousadas.each do |inn| %>
+    <tr><td><%= link_to inn.brand_name, inn_path(inn.id)%><%= " - #{inn.city}/#{inn.state}" %></td></tr>
   <% end %>
+  </table>
 </div>
