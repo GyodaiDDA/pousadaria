@@ -2,22 +2,8 @@ require 'rails_helper'
 
 describe '::Owner altera os dados da pousada' do
   before(:each) do
-<<<<<<< Updated upstream
-    owner = Owner.create!(email: 'usuario@servidor.co.uk',
-                          password: '.SenhaSuper3',
-                          user_type: 'Owner')
-    Inn.create!(brand_name: 'Pousada Recanto do Sossego',
-                legal_name: 'Recanto do Sossego Hospedagens LTDA',
-                vat_number: '11.222.333/0001-81',
-                city: 'Saramandaia',
-                state: 'RJ',
-                postal_code: '13200-000',
-                active: true,
-                user_id: owner.id)
-=======
     @owner = make_owner
     @inn = make_inn(@owner)
->>>>>>> Stashed changes
     visit root_path
     login(@owner)
     click_on 'Minha Pousada'

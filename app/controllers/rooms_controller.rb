@@ -31,6 +31,10 @@ class RoomsController < ApplicationController
     end
   end
 
+  def available?
+    
+  end
+
   private
 
   def set_room 

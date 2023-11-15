@@ -1,10 +1,9 @@
 <% if active_inns %>
-  <%= 'rola' %>
   <% if new_inns %>
-    <%= render partial: 'inns/list_new_inns', locals: { pousadas: new_inns } if new_inns.length > 0 %>
+    <%= render partial: 'inns/list_new_inns', locals: { pousadas: new_inns } unless new_inns.empty? %>
   <% end %>
   <% if older_inns %>
-    <%= render partial: 'inns/list_all_inns', locals: { pousadas: older_inns } if older_inns.length > 0 %>
+    <%= render partial: 'inns/list_all_inns', locals: { pousadas: older_inns } unless older_inns.empty? %>
   <% end %>
 
 <% else %>

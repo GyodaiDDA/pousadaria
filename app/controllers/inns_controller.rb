@@ -1,20 +1,9 @@
 class InnsController < ApplicationController
   before_action :set_inn, only: %i[show edit update]
-<<<<<<< Updated upstream
-  before_action :set_active_inns, only: %i[index search]
+  before_action :set_inns, only: %i[index search]
   before_action :set_rooms, only: %i[show]
   before_action :block_customers, only: %i[new create edit]
-  before_action :block_owners_with_inn, only: %i[new create]
-=======
-  before_action :set_active_inns, only: %i[index search adv_search]
-
   before_action :inn_exists?, only: %i[new create]
-  before_action only: %i[edit update] do
-    redirect_to(root_path) unless the_owner?(@inn)
-  end
-
-  before_action :set_rooms, only: %i[show] # NECESSÁRIO?
->>>>>>> Stashed changes
 
   def index; end
 
@@ -53,18 +42,13 @@ class InnsController < ApplicationController
   def search
     @key = params[:search]
     @active_inns =
-      @active_inns.where('brand_name LIKE ? OR city LIKE ? OR zone LIKE ?', "%#{@key}%", "%#{@key}%", "%#{@key}%")
+      Inn.where('brand_name LIKE ? OR city LIKE ? OR zone LIKE ?', "%#{@key}%", "%#{@key}%", "%#{@key}%")
   end
 
   private
 
-<<<<<<< Updated upstream
-  def block_owners_with_inn
-    redirect_to inn_path(@inn), notice: 'Sua pousada já está cadastrada.' if @inn
-=======
   def inn_exists?
     redirect_to current_user.inn, alert: 'Sua pousada já está cadastrada.' if current_user.inn
->>>>>>> Stashed changes
   end
 
   def set_inn
@@ -72,7 +56,7 @@ class InnsController < ApplicationController
     check_ownership(@inn)
   end
 
-  def set_active_inns
+  def set_inns
     @active_inns = Inn.all.where('active = 1').order(:created_at).reverse
     @new_inns = @active_inns.first(3)
     @older_inns = @active_inns - @new_inns if @new_inns

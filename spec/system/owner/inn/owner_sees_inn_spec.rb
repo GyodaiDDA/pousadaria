@@ -6,11 +6,14 @@ describe '::Owner visualiza detalhes de uma pousada' do
     @owner = make_owner
     @inn = make_inn(@owner)
     make_rooms(@inn, 4)
+    @another_owner = make_owner
+    @another_inn = make_inn(@another_owner)
   end
 
   it 'que é a sua' do
     # Arrange
-    login_as(@owner)
+    visit root_path
+    login(@owner)
     # Act
     visit root_path
     click_on 'Minha Pousada'
@@ -23,9 +26,8 @@ describe '::Owner visualiza detalhes de uma pousada' do
 
   it 'que não é sua' do
     # Arrange
-    @another_owner = make_owner
-    @another_inn = make_inn(@another_owner)
-    login_as(@another_owner)
+    visit root_path
+    login(@another_owner)
     # Act
     visit root_path
     click_on 'Home'

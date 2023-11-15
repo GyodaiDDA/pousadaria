@@ -1,12 +1,37 @@
 <h2>Crie sua conta</h2>
+<br>
+<section class="box">
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
+    
+    <div class="field">
+      <%= f.label 'Tipo de cadastro:' %><br />
+      <%= f.select(:user_type, options_for_select([['Dono de Pousada',"Owner"],['Quero me hospedar',"Customer"]])) %>
+    </div>
 
-<section id="owner-signup">
-  <h3>Sou dono de pousada</h3>
-  <%= render 'owner' %>
+    <div class="field">
+      <%= f.label :email %><br />
+      <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :password %>
+      <% if @minimum_password_length %>
+      <em class="peq"><%= t('devise.shared.minimum_password_length.other', count: @minimum_password_length) %></em>
+      <% end %><br />
+      <%= f.password_field :password, autocomplete: "new-password" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :password_confirmation %><br />
+      <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+    </div>
+
+    
+
+    <div class="actions">
+      <%= f.submit I18n.t('devise.registrations.new.sign_up') %>
+    </div>
+    
+  <% end %>
 </section>
-<!--
-<section id="customer-signup">
-  <h3>Quero me hospedar</h3>
-  <%= render 'customer' %>
-</section>
--->

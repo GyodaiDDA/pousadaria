@@ -49,9 +49,9 @@
           <span class="inline, title"><%= link_to room.name, room_path(room) %></span><br>
           <span class="inline, description"><%= room.description %><br>
           <span class="inline"><%= room.size %>m² | R$ <%= room.base_price %> | Até <%= room.max_guests %> pessoas<br>
-            <% {Suíte: room.bathroom, Varanda: room.balcony, "Ar condicionado": room.air_conditioning, TV: room.tv, Armários: room.wardrobe, Cofre: room.safe, "quarto acessível": room.accessible}.each do |key, value| %>
+            <% {Suíte: room.bathroom, Varanda: room.balcony, "Ar condicionado": room.air_conditioning, TV: room.tv, Armários: room.wardrobe, Cofre: room.safe, "♿ Quarto Acessível": room.accessible}.each do |key, value| %>
               <% if value %>
-                <%= key %>
+                <span class="inline-item"><%= "#{key}✓" %></span>
               <% end %>
             <% end %>
           </span><br>

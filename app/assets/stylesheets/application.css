@@ -130,13 +130,33 @@ footer {
 }
 
 /* Containers ================================================================= */
+form.new_user{
+  width: 1000px;
+}
+
 .box {
   max-width: 1200px; 
-  margin: 0px; 
-  margin-top: 20px;
-  padding-left: 20px;
+  margin: 5px;
+  margin-top: 50px;
+  padding-left: 30px;
   padding: 10px;
-  background-color: #fdfdfd80;
+  border-radius: 5px;
+  background-color: #ffffff00;
+}
+
+.box:hover {
+  background-color: #ffffff10;
+}
+
+.box div.field {
+  padding-left: 8px;
+  padding-top: 15px;
+  max-width: 1200px;
+}
+.box div.actions {
+  padding-left: 8px;
+  padding-bottom: 15px;
+  padding-top: 5px;
 }
 
 .box,
@@ -200,6 +220,9 @@ strong {
   margin: 5px;
 }
 
+.list-item  {
+  padding: 0px 0px 0px 10px ;
+}
 .list table {
   margin: 0px;
   padding: 0px;
@@ -216,6 +239,10 @@ strong {
 /* Itens Inline ================================================================= */
 .inline, .inline-button {
   display: inline-block;
+}
+
+.inline-item {
+  padding-right: 10px;
 }
 
 .inline {
@@ -242,6 +269,10 @@ strong {
 .frozen {
   background-color: #535353;
   color: #000000;
+}
+
+em.peq {
+  font-size: small;
 }
 
 /* ================================================================= */

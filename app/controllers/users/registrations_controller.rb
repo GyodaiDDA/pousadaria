@@ -11,7 +11,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     if resource.user_type == 'Owner' && resource.inn.blank?
       new_inn_path
     else
-      new_session_path
+      root_path
     end
   end
 end

@@ -1,6 +1,12 @@
 require:
   - rubocop-rails
 
+
+AllCops:
+  Exclude:
+    - 'db/*'
+    - 'spec/support/*'
+
 Style/FrozenStringLiteralComment:
   Enabled: false
 
@@ -8,6 +14,10 @@ Style/Documentation:
   Enabled: false
 
 Metrics/BlockLength:
+  Max: 25
+  ExcludedMethods: ['before', 'describe', 'context', 'it']
+
+Metrics/MethodLength:
   Max: 25
   ExcludedMethods: ['before', 'describe', 'context', 'it']
 
