@@ -11,9 +11,9 @@
 
 -  **inn.rb:**
 
-  - estabelece relação 1<1 entre pousadas e usuários
+  - estabelece relação 1:1 entre pousadas e usuários
 
-  - estabelece relação 1 > * entre pousadas e quartos
+  - estabelece relação 1:* entre pousadas e quartos
 
   - valida presença para nomes, cnpj, cidade, UF e CEP
 
@@ -23,17 +23,19 @@
 
 -  **room.rb:**
 
-  - estabelece relação 1<1 entre quartos e pousadas
+  - estabelece relação *:1 entre quartos e pousadas
+
+  - estabelece relação *:1 entre quartos e períodos
 
   - valida presença para nome, área, qtd hóspedes e preço base
 
 -  **seasonal.rb**
 
-  - estabelece relação 1< * entre quartos e períodos
+  - estabelece relação *:1 entre quartos e períodos
 
   - valida presença para datas de início e término e preço especial
 
-  - faz validação customizada acessando *validators/dates_validator.rb* que roda três métodos para checar se
+  - faz validações para checar se
 
     - (1) as datas sobrepões outras no mesmo quarto,
 
@@ -43,23 +45,35 @@
 
 -  **owner.rb** e **customer.rb:** Permitem a criação de objetos específicos para cada tipo de usuário mas não acrescentam configuração extras
 
+-  **reservation.rb**
+
+  - estabelece relação *:1 entre reservas e quartos
+  - estabelece relação *:1 entre reservas e usuários
+  - faz validações para checar se
+
+    - (1) as datas sobrepões outras no mesmo quarto,
+
+    - (2) a data de início precede a de término e
+
+    - (3) se ambas as datas ainda estão por vir.
+
 
 ***Controllers Entregues ou Alterados***
 
 -  **application_controller.rb:**
 
-  - adicionado método `set_locale` para resolver problemas com i18n **¹**
-  - adicionado método `block_customer` para herança em outros controllers
-  - adicionado método `check_ownership` para verificar se o usuário é dono da Pousada associada
+  - adicionado método `set_locale` para resolver problemas com i18n
+  - adicionado método `owners_only` para verificar se o usuário é um dono de pousada
+  - adicionado método `the_owner?` para verificar se o usuário é dono da Pousada associada
 
 -  **home_controller.rb:**
 
-- método `index`
+- método `index` que define `@active_inns` ,`new_inns` e `older_inss` para a view
 
 -  **inns_controller.rb:**
 
   - métodos de recurso: `index` ,`show`, `new`, `create`, `edit`, `update`
-  - métodos privados: `set_inn`, `inn_params`, `set_active_inns`, `block_owners_with_inn`, `set_rooms`
+  - métodos privados: `inn_exists?`, `set_inn`, `inn_params`, `set_rooms`
 
   - método customizados
 	  - `cities` para exibir pousadas por cidade
@@ -67,11 +81,11 @@
 
 -  **rooms_controller.rb:**
 
-  - métodos de recurso: `index`**²**, `show`, `new`, `create`, `edit`, `update`
+  - métodos de recurso: `index`, `show`, `new`, `create`, `edit`, `update`
   - métodos privados: `set_room` e `room_params`, para definição de variáveis de quarto
 
 -  **seasonals_controller.rb:**
-  - métodos de recurso: `show`, `new`, `create`, `edit`, `update`**³**, `index` **²**
+  - métodos de recurso: `show`, `new`, `create`, `edit`, `update`, `index`
   - métodos privados: `set_seasonal`, `seasonal_params`, para definição de variáveis de período
   - método customizado: `set_room`,`room_seasonals`: busca lista de períodos no mesmo quarto
 
@@ -84,6 +98,11 @@
 
   - método `after_sign_in_path_for` para redirecionar donos de pousada sem pousada à `new_inn_path`
 
+-  **reservations_controller.rb**
+
+  - métodos de recurso: `index` ,`show`, `new`, `create`
+  - métodos privados: `set_reservation`, `set_room`, `consultation_params`
+
 ***Views e Navegação***
 
 -  **Devise**
@@ -93,44 +112,52 @@
 -  **Layouts**
 	-  *application.html.erb*: menu condicional (tipos de usuários e visitantes não logados)
 
+-  **Owners**
+	- *_submenu*
+
 -  **Inns**
-	-  *new*, *edit*, *show*, *cities*, *search* **²**
-	-  partials: *_errors*, *_form*, *_index*, *_submenu*, *_list_all_inns* e *_list_new_inns*
+	-  *new*, *edit*, *show*, *cities*, *search*
+	-  partials: *_errors*, *_form*, *_index*, *_list_all_inns* e *_list_new_inns*
 
 -  **Rooms**
-	-  *new*, *edit*, *show* e *index* **²**
-	-  partials: *_errors*, *_form*, *_submenu*
+	-  *new*, *edit*, *show* e *index*
+	-  partials: *_errors*, *_form*
 
 -  **Seasonals**
 	-  *new*
 	- *_index*, *_errors*, *_form*
 
+-  **Reservations**
+	-  *new*, *show*
+	-  partials: *_index*, *_consult_form*
+
 ***Routes***
   - Rotas de *seasonal* subordinadas em *rooms*
+  - Rotas de *reservation* subordinadas em *rooms*
   - Redirecionamento direto para página de Pousadas por Cidade
   - Especificação dos modelos *registrations* e *sessions* para o `devise`
-  - Rota para 'search' subordinada em *inns* **²**
-
-***Gems no Dev***: devise, puma, sqlite3, i18n
+  - Rota para 'search' subordinada em *inns*
 
 ***CSS***
   - Criado arquivo assets/stylesheets/application.css para formatação mínima
-  
+
 ***Acessos restritos***
-  - O acesso à páginas de edição está restrito nas views, checando a variável `@owner_view` do método `check_ownership`
+  - O acesso à páginas de edição está restrito nas views, checando a variável `@owner_view` do método `is_owner?`
 
 ***Testes de Sistema***
+
+- Automatização da criação de objetos, utilizando gem Faker no arquivo spec/support/fake.rb
 
 - Owner > Pousada > Altera
 	- Owner altera os dados da pousada com sucesso
 	- Owner altera os dados da pousada e falha por validação de CNPJ
-	- Owner altera os dados da pousada e falha por Razão Social vazia **²**
+	- Owner altera os dados da pousada e falha por Razão Social vazia
 - Owner > Pousada > Cria
 	- Owner cadastra pousada com sucesso clicando em Cadastrar Pousada
 	- Owner cadastra pousada com sucesso logo após criar sua conta.
 	- Owner cadastra pousada e falha na validação de CNPJ
-	- Owner cadastra pousada e falha por faltar Nome Fantasia **²**
-	- Owner cadastra pousada e visualiza clicando em Minha Pousada **²**
+	- Owner cadastra pousada e falha por faltar Nome Fantasia
+	- Owner cadastra pousada e visualiza clicando em Minha Pousada
 
 - Owner > Quarto > Altera
 	- Owner altera Quarto a partir da página de Pousada clicando em Editar
@@ -144,7 +171,7 @@
 	- Owner cadastra novo quarto clicando em Adicionar Quarto
 	- Owner cadastra novo quarto com sucesso
 	- Owner cadastra novo quarto e falha na validação de Área
- 	- Owner cadastra novo quarto e falha por falta do nome **²**
+ 	- Owner cadastra novo quarto e falha por falta do nome
 
 - Owner > Período > Cria
 	- Owner cría novo Período clicando em Períodos Especiais
@@ -172,17 +199,6 @@
 
 - Customer > Search
 	- Customer busca por pousadas e recebe resultados
-
-***Testes de Modelo*** em construção (previsão 13/11)
-
-***Gems nos testes***: faker, rspec, capybara
-
   
 
 -------------------------
-
->  ***notas:***
-
->  ***¹*** Mas deve retornar à configuração em initializers se o problema for resolvido.
->  ***²*** Acrescentado 11/11/2023
->  ***³*** Ainda falta criar *delete* e *destroy*.

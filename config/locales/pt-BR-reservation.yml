@@ -4,7 +4,7 @@ pt-BR:
     models:
       reservation: Reserva
     attributes:
-      reservation: Reserva
+      reservation:
         room_id: ID do quarto
         user_id: ID do usuário
         start_date: Data de Entrada

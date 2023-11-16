@@ -64,7 +64,6 @@ group :development, :test do
   gem 'rubocop', require: false
   gem 'rubocop-rails', require: false
   gem 'rubycritic', require: false
-  
 end
 
 group :development do

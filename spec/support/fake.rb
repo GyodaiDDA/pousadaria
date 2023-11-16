@@ -46,7 +46,7 @@ end
 
 def make_inn(owner, active = 1)
   Inn.create!(brand_name: "Pousada #{Faker::Food.ingredients} #{Faker::Gender.type}",
-              legal_name: "#{Faker::Job.title} #{Faker::Lorem.words} #{Faker::Company.suffix}",
+              legal_name: "#{Faker::Job.title} #{Faker::Space.moon} #{Faker::Company.suffix}",
               vat_number: Faker::Company.brazilian_company_number,
               phone: Faker::PhoneNumber.phone_number,
               email: Faker::Internet.email,
@@ -64,7 +64,7 @@ def make_inn(owner, active = 1)
               user_id: owner.id)
 end
 
-def make_rooms(inn, num = 1, features = { available: 1 })
+def make_rooms(inn, features = { available: 1 })
   Room.create!(name: "Quarto #{Faker::Color.color_name}",
               description: room_desc.sample,
               size: rand(15..40),
@@ -82,8 +82,7 @@ def make_rooms(inn, num = 1, features = { available: 1 })
   )
 end
 
-def make_seasonals(room, num = 1)
-  num.times do
+def make_seasonals(room)
     if room.seasonals.last
       start_date = room.seasonals.last.end_date + 10
     else 
@@ -95,5 +94,17 @@ def make_seasonals(room, num = 1)
                       end_date: end_date,
                       special_price: rand(room.base_price) + rand(-200..200),
                       room_id: room.id)
-  end
+end
+
+def consult_reservation(room, period = rand(10..20))
+    if room.reservations.last
+      start_date = room.reservations.last.end_date + 7
+    else 
+      start_date = Date.today + rand(10..20)
+    end
+    end_date = start_date + period
+    Reservation.create!(start_date: start_date,
+                        end_date: end_date,
+                        guests: rand(0..room.max_guests),
+                        room_id: room.id)
 end

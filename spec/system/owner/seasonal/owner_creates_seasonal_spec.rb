@@ -4,11 +4,11 @@ describe '::Owner cria novo Período' do
   before(:each) do
     @owner = make_owner
     @inn = make_inn(@owner)
-    @room = make_rooms(@inn, 4)
+    @room = make_rooms(@inn)
     login_as(@owner)
     visit root_path
     click_on 'Minha Pousada'
-    first('button', text: 'Ver').click
+    click_on @room.name
   end
 
   it 'clicando em Períodos Especiais' do
@@ -85,6 +85,6 @@ describe '::Owner cria novo Período' do
     # Assert
     expect(current_path).to eq(room_seasonals_path(@room.id))
     expect(page).to have_content('Não foi possível adicionar o período')
-    expect(page).to have_content('As datas escolhidas já passaram.')
+    expect(page).to have_content('A data escolhida já passou.')
   end
 end

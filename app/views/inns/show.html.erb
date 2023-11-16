@@ -1,9 +1,8 @@
-<h1><%= @inn.brand_name %></h1>
+<section id="inn">
+  <h1><%= @inn.brand_name %></h1>
 <h4><%= @inn.description %></h4>
-
 <ul class="list">
   <% if @owner_view %>
-    <%= render 'submenu' %><br>
     <strong>Razão Social:</strong> <%= @inn.legal_name %><br>
     <strong> CNPJ:</strong> <%= @inn.vat_number %><br><br>
   <% end %>
@@ -28,10 +27,12 @@
     <%= '♿ Pousada com Acessíbilidade' %><br>
   <% end %>
 </ul>
+</section>
 
 <section id="rooms-list">
   <% if @owner_view %>
-    <%= render partial: 'rooms/owner_index', locals: {rooms: @inn.rooms} %>
+    <%= render partial: 'rooms/index', locals: { rooms: @inn.rooms } %>
   <% else %>
-    <%= render partial: 'rooms/visit_index', locals: {rooms: @inn.rooms } %>
+    <%= render partial: 'rooms/index', locals: { rooms: @available_rooms } %>
   <% end %>
+</section>

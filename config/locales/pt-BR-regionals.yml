@@ -1,0 +1,11 @@
+pt_BR:
+  date:
+    formats:
+      default: "%d/%m/%Y" # 20/11/2023
+      long: "%d de %B de %Y"   # 25 de junho de 2015
+      short: "%d/%B"      # 25/jun
+  time:
+    formats:
+      default: "%HH:%MM" #
+      long: "%HH:%MM:%SS"
+      short: "%H:%M"

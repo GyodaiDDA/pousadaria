@@ -1,7 +1,7 @@
 class RoomsController < ApplicationController
   before_action :set_room, only: %i[show edit update]
   before_action only: %i[new create edit update] do
-    the_owner?(current_user.inn)
+    @owner_view = true if the_owner?(current_user.inn)
   end
 
   def index
@@ -33,10 +33,6 @@ class RoomsController < ApplicationController
       flash[:alert] = 'Não foi possível atualizar o quarto.'
       render 'edit'
     end
-  end
-
-  def available?
-    
   end
 
   private

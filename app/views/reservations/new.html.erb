@@ -25,9 +25,7 @@
   <br>
   <p class="list-item">
     Diária:
-    <%= @room.base_price %>
+    <%= number_to_currency(@room.base_price) %>
   </p>
-  <% if @owner_view %><p class="list-item"><%= @room.available ? "Disponível" : "Indisponível" %></p><% end %>
 </div>
-
 <%= render partial: 'consult_form', locals: {room: @room} %>

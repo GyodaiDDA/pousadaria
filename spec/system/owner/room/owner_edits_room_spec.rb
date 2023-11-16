@@ -6,7 +6,7 @@ describe '::Owner altera Quarto' do
     before(:each) do
       @owner = make_owner
       @inn = make_inn(@owner)
-      @room = make_rooms(@inn, 2)
+      @room = make_rooms(@inn)
       # @room = @inn.rooms.first
       login_as(@owner)
       visit root_path
@@ -73,7 +73,7 @@ describe '::Owner altera Quarto' do
                         active: true,
                         user_id: owner.id)
       @room = Room.create!(name: 'Quarto Orlindgans', size: 30, max_guests: 2,
-                   base_price: 300, available: true, inn_id: inn.id)
+                           base_price: 300, available: true, inn_id: inn.id)
       login_as(owner)
       visit root_path
       click_on 'Minha Pousada'
@@ -82,9 +82,7 @@ describe '::Owner altera Quarto' do
     it 'clicando em Editar Quarto' do
       # Arrange
       # Act
-      within 'div#rooms_list' do
-        click_on 'Ver'
-      end
+      click_on @room.name
       click_on 'Editar Quarto'
       # Assert
       expect(page).to have_field('Nome')
@@ -106,9 +104,7 @@ describe '::Owner altera Quarto' do
     it 'com sucesso' do
       # Arrange
       # Act
-      within 'div#rooms_list' do
-        click_on 'Ver'
-      end
+      click_on @room.name
       click_on 'Editar Quarto'
       fill_in 'Descrição', with: 'Quarto presidencial, suíte limpinha e cheirosa.'
       check 'Ar-condicionado'
@@ -121,9 +117,7 @@ describe '::Owner altera Quarto' do
     it 'e falha por validação' do
       # Arrange
       # Act
-      within 'div#rooms_list' do
-        click_on 'Ver'
-      end
+      click_on @room.name
       click_on 'Editar Quarto'
       fill_in 'Nome', with: 'Outro nome de Quarto'
       fill_in 'Preço Base', with: ''

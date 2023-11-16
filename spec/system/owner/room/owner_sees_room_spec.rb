@@ -5,7 +5,7 @@ describe '::Owner visualiza detalhes de um quarto' do
   before(:each) do
     @owner = make_owner
     @inn = make_inn(@owner)
-    make_rooms(@inn, 4)
+    make_rooms(@inn)
     @room = @inn.rooms.first
   end
 
@@ -15,7 +15,7 @@ describe '::Owner visualiza detalhes de um quarto' do
     # Act
     visit root_path
     click_on 'Minha Pousada'
-    first('button', text: 'Ver').click
+    click_on @room.name
     # Assert
     expect(current_path).to eq(room_path(@room.id))
     expect(page).to have_content(@room.name)

@@ -4,10 +4,8 @@ describe '::Visitante vê a página da Pousada' do
   before(:each) do
     @owner = make_owner
     @inn = make_inn(@owner)
-    make_rooms(@inn, 1, { tv: 1, safe: 1, available: 1 })
-    make_rooms(@inn, 1, { available: 0 })
-    @first_room = @inn.rooms.first
-    @last_room = @inn.rooms.last
+    @first_room = make_rooms(@inn, { tv: 1, safe: 1, available: 1 })
+    @last_room = make_rooms(@inn, { available: 0 })
     @seasonal = make_seasonals(@first_room)
     @seasonal = make_seasonals(@last_room)
     visit root_path

@@ -5,7 +5,7 @@ describe '::Owner visualiza detalhes de uma pousada' do
   before(:each) do
     @owner = make_owner
     @inn = make_inn(@owner)
-    make_rooms(@inn, 4)
+    make_rooms(@inn)
     @another_owner = make_owner
     @another_inn = make_inn(@another_owner)
   end

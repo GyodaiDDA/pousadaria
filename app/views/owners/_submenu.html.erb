@@ -1,0 +1,35 @@
+<table class="top-menu small" width="100%"><tr><td><nav>
+  <ul>
+  <% if @owner_view %>
+    <% if controller_name == 'inns' %>
+      <% if action_name == 'edit' %>
+      <li>
+        <%= button_to 'Voltar', inn_path(@inn), method: :get %>
+      </li>
+      <% elsif @inn %>
+      <li>
+        <%= button_to 'Editar Pousada', edit_inn_path(current_user.inn), method: :get %>
+      </li>
+      <li>
+        <%= button_to 'Adicionar Quarto', new_room_path, method: :get %>
+      </li>
+      <% end %>
+  </ul>
+  <ul>
+    <% elsif controller_name == 'rooms' %>
+      <% if action_name == 'edit' || action_name == 'new' %>
+      <li>
+        <%= button_to 'Voltar', inn_path(current_user.inn), method: :get %>
+      </li>
+      <% elsif action_name == 'show' %>
+      <li>
+        <%= button_to 'Editar Quarto', edit_room_path(@room), method: :get %>
+      </li>
+      <li>
+        <%= button_to 'Adicionar Período Especial', new_room_seasonal_path(room_id: @room.id), params: { room_id: @room.id }, method: :get %>
+      </li>      
+      <% end %>
+    <% end %>
+  <% end %>
+  </ul>
+</nav></td></tr></table>

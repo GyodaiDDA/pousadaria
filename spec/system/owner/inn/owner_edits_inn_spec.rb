@@ -21,15 +21,13 @@ describe '::Owner altera os dados da pousada' do
     expect(page).to have_content('Sua pousada foi atualizada com sucesso!')
   end
 
-  it 'e falha por validação de cpnj' do
+  it 'e não pode alterar o cpnj' do
     # Arrange
     # Act
     click_on 'Editar Pousada'
-    fill_in 'CNPJ', with: '1234567800911'
-    click_on 'Atualizar Pousada'
     # Assert
-    expect(current_path).to eq(inn_path(@inn.id))
-    expect(page).to have_content('Não foi possível atualizar a pousada.')
+    expect(current_path).to eq(edit_inn_path(@inn.id))
+    expect(page).not_to have_field('CNPJ')
   end
 
   it 'e falha por Razão Social vazia' do
