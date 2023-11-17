@@ -7,16 +7,19 @@ class ApplicationController < ActionController::Base
     I18n.locale = params[:locale] || I18n.default_locale
   end
 
-  def owners_only
-    return false unless user_signed_in?
-
-    current_user.user_type == 'Owner'
-  end
-
   def the_owner?(inn)
     return unless user_signed_in?
-    return unless owners_only
+    return unless current_user.user_type == 'Owner'
 
     current_user.id == inn.user_id
+  end
+
+  def cpf?
+    return unless user_signed_in?
+
+    redirect_to new_user_session_path, notice: 'Você precisa estar logado para poder continuar.'
+    return unless current_user.document.nil?
+
+    redirect_to edit_customer_document_path, notice: 'Você precisa completar seus dados com nome e CPF para poder prosseguir.'
   end
 end

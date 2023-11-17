@@ -1,17 +1,10 @@
 require 'rails_helper'
-require 'support/fake'
 
-describe '::Owner visualiza detalhes de uma pousada' do
-  before(:each) do
+describe '::Owner visualiza detalhes' do
+  it 'da sua pousada' do
+    # Arrange
     @owner = make_owner
     @inn = make_inn(@owner)
-    make_rooms(@inn)
-    @another_owner = make_owner
-    @another_inn = make_inn(@another_owner)
-  end
-
-  it 'que é a sua' do
-    # Arrange
     visit root_path
     login(@owner)
     # Act
@@ -24,8 +17,12 @@ describe '::Owner visualiza detalhes de uma pousada' do
     expect(page).to have_button('Adicionar Quarto')
   end
 
-  it 'que não é sua' do
+  it 'da pousada de outrem' do
     # Arrange
+    @owner = make_owner
+    @inn = make_inn(@owner)
+    @another_owner = make_owner
+    @another_inn = make_inn(@another_owner)
     visit root_path
     login(@another_owner)
     # Act

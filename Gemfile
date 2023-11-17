@@ -64,6 +64,7 @@ group :development, :test do
   gem 'rubocop', require: false
   gem 'rubocop-rails', require: false
   gem 'rubycritic', require: false
+  gem 'solargraph'
 end
 
 group :development do

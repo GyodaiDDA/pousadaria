@@ -32,7 +32,7 @@ describe '::Customer busca por pousadas' do
     Inn.create!(brand_name: 'Pousada Atrasada',
                 legal_name: 'Tamoios Inc.',
                 vat_number: '44.401.318/0001-50',
-                city: 'Caraguatatuba',
+                city: 'São Pedro do Passa Quatro',
                 state: 'SP',
                 postal_code: '11580-000',
                 active: true,
@@ -41,7 +41,7 @@ describe '::Customer busca por pousadas' do
     visit root_path
   end
 
-  it 'e recebe resultados' do
+  it 'e recebe resultados por nome' do
     # Arrange
     # Act
     visit root_path
@@ -51,5 +51,19 @@ describe '::Customer busca por pousadas' do
     expect(page).to have_content('2 pousadas encontradas')
     expect(page).to have_content('Pousada da Balada Roxa')
     expect(page).to have_content('Pousada Recanto do Sossego')
+    expect(page).not_to have_content('Pousada Atrasada')
+  end
+
+  it 'e recebe resultados por cidade' do
+    # Arrange
+    # Act
+    visit root_path
+    fill_in 'busca:', with: 'São'
+    click_on '>'
+    # Assert
+    expect(page).to have_content('2 pousadas encontradas')
+    expect(page).to have_content('Pousada Tremelengo')
+    expect(page).to have_content('Pousada Atrasada')
+    expect(page).not_to have_content('Recanto')
   end
 end

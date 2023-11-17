@@ -1,19 +1,14 @@
 require 'rails_helper'
-require 'support/fake'
 
 describe '::Owner visualiza detalhes de um quarto' do
-  before(:each) do
-    @owner = make_owner
-    @inn = make_inn(@owner)
-    make_rooms(@inn)
-    @room = @inn.rooms.first
-  end
-
   it 'da sua pousada' do
     # Arrange
-    login_as(@owner)
-    # Act
+    @owner = make_owner
+    @inn = make_inn(@owner)
+    @room = make_room(@inn)
     visit root_path
+    login(@owner)
+    # Act
     click_on 'Minha Pousada'
     click_on @room.name
     # Assert
@@ -25,11 +20,14 @@ describe '::Owner visualiza detalhes de um quarto' do
 
   it 'de outra pousada' do
     # Arrange
+    @owner = make_owner
+    @inn = make_inn(@owner)
+    @room = make_room(@inn)
     @another_owner = make_owner
     @another_inn = make_inn(@another_owner)
-    login_as(@another_owner)
-    # Act
     visit root_path
+    login(@another_owner)
+    # Act
     click_on 'Home'
     click_on(@inn.brand_name)
     # click_on(@room.name)

@@ -1,13 +1,16 @@
 require 'rails_helper'
 
-describe '::Visitante consulta reserva de quarto' do
+describe '::Customer consulta reserva de quarto' do
   it 'e não há disponibilidade de data' do
     # Arrange
-    @inn = make_inn(make_owner)
+    @owner = make_owner
+    @inn = make_inn(@owner)
     @room = make_room(@inn)
     @reservation = consult_reservation(@room, 3)
+    @customer = make_customer
     # Act
     visit root_path
+    login(@customer)
     click_on @inn.brand_name
     click_on @room.name
     click_on 'Quero reservar'
@@ -22,10 +25,13 @@ describe '::Visitante consulta reserva de quarto' do
 
   it 'e há disponibilidade' do
     # Arrange
-    @inn = make_inn(make_owner)
+    @owner = make_owner
+    @inn = make_inn(@owner)
     @room = make_room(@inn)
+    @customer = make_customer
     # Act
     visit root_path
+    login(@customer)
     click_on @inn.brand_name
     click_on @room.name
     click_on 'Quero reservar'

@@ -1,11 +1,9 @@
 require 'rails_helper'
 
 describe '::Owner clica no botão Entrar' do
-  before(:each) do
-    @owner = make_owner
-  end
   it 'e vê a página de login' do
     # Arrange
+    @owner = make_owner
     # Act
     visit root_path
     click_on 'Entrar'
@@ -19,6 +17,7 @@ describe '::Owner clica no botão Entrar' do
 
   it 'e falha ao fazer login' do
     # Arrange
+    @owner = make_owner
     # Act
     visit root_path
     click_on 'Entrar'
@@ -34,6 +33,7 @@ describe '::Owner clica no botão Entrar' do
   context 'e faz login com sucesso' do
     it 'tendo pousada' do
       # Arrange
+      @owner = make_owner
       @inn = make_inn(@owner)
       # Act
       visit root_path
@@ -44,13 +44,14 @@ describe '::Owner clica no botão Entrar' do
         click_on 'Entrar'
       end
       # Assert
-      expect(current_path).to eq(inn_path(1))
+      expect(current_path).to eq(inn_path(@inn.id))
       expect(page).to have_content('Olá! Seu login foi feito com sucesso.')
       expect(page).to have_content(@inn.brand_name)
     end
 
     it 'sem ter pousada' do
       # Arrange
+      @owner = make_owner
       # Act
       visit root_path
       click_on 'Entrar'

@@ -68,15 +68,12 @@ describe '::Owner cadastra pousada' do
   end
 
   context 'e falha' do
-    before(:each) do
+    it 'na validação de CNPJ' do
+      # Arrange
       owner = Owner.create(email: 'usuario@servidor.co.uk', password: '.SenhaSuper3', user_type: 'Owner')
       login_as(owner)
       visit root_path
       click_on('Cadastrar Pousada')
-    end
-
-    it 'na validação de CNPJ' do
-      # Arrange
       # Act
       fill_in 'Nome Fantasia', with: 'Pousada Recanto do Sossego'
       fill_in 'Razão Social', with: 'Recanto do Sossego Hospedagens LTDA'
@@ -92,6 +89,10 @@ describe '::Owner cadastra pousada' do
 
     it 'por faltar Nome Fantasia' do
       # Arrange
+      owner = Owner.create(email: 'usuario@servidor.co.uk', password: '.SenhaSuper3', user_type: 'Owner')
+      login_as(owner)
+      visit root_path
+      click_on('Cadastrar Pousada')
       # Act
       fill_in 'Razão Social', with: 'Recanto do Sossego Hospedagens LTDA'
       fill_in 'CNPJ', with: '11222333000182'

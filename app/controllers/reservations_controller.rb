@@ -1,6 +1,7 @@
 class ReservationsController < ApplicationController
-  before_action :set_reservation, only: %i[show]
+  before_action :set_reservation, only: %i[show edit update]
   before_action :set_room, only: %i[index new]
+  before_action :cpf?, only: %i[edit update]
 
   def index
     room_reservations
@@ -29,6 +30,17 @@ class ReservationsController < ApplicationController
     end
   end
 
+  def edit; end
+
+  def update
+    if @reservation.update(confirmation_params)
+      redirect_to room_reservation_path(@reservation.room, @reservation), notice: "Sua reserva foi realizada. Em breve, a #{@reservation.room.inn.brand_name} entrará em contato com você."
+    else
+      flash[:notice] = 'Não foi possível confirmar sua reserva.'
+      render edit
+    end
+  end
+
   private
 
   def set_reservation
@@ -47,6 +59,6 @@ class ReservationsController < ApplicationController
 
   def confirmation_params
     params.require(:reservation)
-          .permit(:code, :guests, :value, :user_id)
+          .permit(:code, :guests, :value, :user_id, :status)
   end
 end

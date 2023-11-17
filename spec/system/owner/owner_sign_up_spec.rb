@@ -1,14 +1,11 @@
 require 'rails_helper'
 
 describe '::Usuário cria uma nova conta' do
-  before(:each) do
+  it 'mas falha na confirmação de senha' do
+    # Arrange
     visit root_path
     click_on 'Entrar'
     click_on 'Ainda não tem cadastro?'
-  end
-
-  it 'mas falha na confirmação de senha' do
-    # Arrange
     # Act
     fill_in 'E-mail', with: 'usuario@servidor.co.uk'
     fill_in 'Senha', with: '.SenhaSuper3'
@@ -21,6 +18,9 @@ describe '::Usuário cria uma nova conta' do
 
   it 'mas email já está em uso como Owner' do
     # Arrange
+    visit root_path
+    click_on 'Entrar'
+    click_on 'Ainda não tem cadastro?'
     User.create!(email: 'usuario@servidor.co.uk',
                  password: '123456',
                  user_type: 'Owner')
@@ -36,6 +36,9 @@ describe '::Usuário cria uma nova conta' do
 
   it 'mas email já está em uso como Customer' do
     # Arrange
+    visit root_path
+    click_on 'Entrar'
+    click_on 'Ainda não tem cadastro?'
     User.create!(email: 'usuario@servidor.co.uk',
                  password: '123456',
                  user_type: 'Customer')
@@ -51,6 +54,9 @@ describe '::Usuário cria uma nova conta' do
 
   it 'com sucesso e é levado para criar a pousada' do
     # Arrange
+    visit root_path
+    click_on 'Entrar'
+    click_on 'Ainda não tem cadastro?'
     # Act
     fill_in 'E-mail', with: 'usuario@servidor.co.uk'
     fill_in 'Senha', with: '.SenhaSuper3'

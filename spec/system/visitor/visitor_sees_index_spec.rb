@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe '::Visitante acessa o site' do
   before(:each) do
-    4.times do
+    6.times do
       @owner = make_owner
       @inn = make_inn(@owner)
     end
@@ -14,14 +14,13 @@ describe '::Visitante acessa o site' do
     # Arrange
     # Act
     # Assert
-    expect(@count).to eq 4
     expect(current_path).to eq(root_path)
     expect(page).to have_content('POUSADARIA')
     within('#featured') do
-      expect(page).to have_content(Inn.all[3].brand_name)
-      expect(page).to have_content(Inn.all[2].brand_name)
-      expect(page).to have_content(Inn.all[1].brand_name)
-      expect(page).not_to have_content(Inn.all[0].brand_name)
+      expect(page).to have_content(Inn.all[@count - 1].brand_name)
+      expect(page).to have_content(Inn.all[@count - 2].brand_name)
+      expect(page).to have_content(Inn.all[@count - 3].brand_name)
+      expect(page).not_to have_content(Inn.all[@count - 4].brand_name)
     end
   end
 
@@ -30,8 +29,9 @@ describe '::Visitante acessa o site' do
     # Act
     # Assert
     within('#all') do
-      expect(page).to have_content(Inn.all[0].brand_name)
-      expect(page).to have_content(Inn.all[0].city)
+      expect(page).to have_content(Inn.all[@count - 4].brand_name)
+      expect(page).to have_content(Inn.all[@count - 5].brand_name)
+      expect(page).to have_content(Inn.all[@count - 6].brand_name)
     end
   end
 end

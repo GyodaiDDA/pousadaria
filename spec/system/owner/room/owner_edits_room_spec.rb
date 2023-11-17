@@ -1,20 +1,15 @@
 require 'rails_helper'
-require 'support/fake'
 
 describe '::Owner altera Quarto' do
   context 'a partir da página de Pousada' do
-    before(:each) do
-      @owner = make_owner
-      @inn = make_inn(@owner)
-      @room = make_rooms(@inn)
-      # @room = @inn.rooms.first
-      login_as(@owner)
-      visit root_path
-      click_on 'Minha Pousada'
-    end
-
     it 'clicando em Editar' do
       # Arrange
+      @owner = make_owner
+      @inn = make_inn(@owner)
+      @room = make_room(@inn)
+      visit root_path
+      login(@owner)
+      click_on 'Minha Pousada'
       # Act
       first('button', text: 'Editar Quarto').click
       # Assert
@@ -36,6 +31,12 @@ describe '::Owner altera Quarto' do
 
     it 'com sucesso' do
       # Arrange
+      @owner = make_owner
+      @inn = make_inn(@owner)
+      @room = make_room(@inn)
+      login_as(@owner)
+      visit root_path
+      click_on 'Minha Pousada'
       # Act
       first('button', text: 'Editar Quarto').click
       fill_in 'Descrição', with: 'Quarto presidencial, suíte limpinha e cheirosa.'
@@ -48,6 +49,12 @@ describe '::Owner altera Quarto' do
 
     it 'e falha por validação' do
       # Arrange
+      @owner = make_owner
+      @inn = make_inn(@owner)
+      @room = make_room(@inn)
+      visit root_path
+      login(@owner)
+      click_on 'Minha Pousada'
       # Act
       first('button', text: 'Editar Quarto').click
       fill_in 'Nome', with: 'Outro nome de Quarto'
@@ -60,27 +67,14 @@ describe '::Owner altera Quarto' do
   end
 
   context 'a partir da página de Quarto' do
-    before(:each) do
-      owner = Owner.create!(email: 'usuario@servidor.co.uk',
-                            password: '.SenhaSuper3',
-                            user_type: 'Owner')
-      inn = Inn.create!(brand_name: 'Pousada Recanto do Sossego',
-                        legal_name: 'Recanto do Sossego Hospedagens LTDA',
-                        vat_number: '22333444000181',
-                        city: 'Arruaces',
-                        state: 'AC',
-                        postal_code: '13200-000',
-                        active: true,
-                        user_id: owner.id)
-      @room = Room.create!(name: 'Quarto Orlindgans', size: 30, max_guests: 2,
-                           base_price: 300, available: true, inn_id: inn.id)
-      login_as(owner)
-      visit root_path
-      click_on 'Minha Pousada'
-    end
-
     it 'clicando em Editar Quarto' do
       # Arrange
+      @owner = make_owner
+      @inn = make_inn(@owner)
+      @room = make_room(@inn)
+      visit root_path
+      login(@owner)
+      click_on 'Minha Pousada'
       # Act
       click_on @room.name
       click_on 'Editar Quarto'
@@ -103,6 +97,12 @@ describe '::Owner altera Quarto' do
 
     it 'com sucesso' do
       # Arrange
+      @owner = make_owner
+      @inn = make_inn(@owner)
+      @room = make_room(@inn)
+      visit root_path
+      login(@owner)
+      click_on 'Minha Pousada'
       # Act
       click_on @room.name
       click_on 'Editar Quarto'
@@ -111,11 +111,17 @@ describe '::Owner altera Quarto' do
       click_on 'Atualizar Quarto'
       # Assert]
       expect(current_path).to eq(room_path(@room.id))
-      expect(page).to have_content 'Quarto Orlindgans foi atualizado com sucesso!'
+      expect(page).to have_content "#{@room.name} foi atualizado com sucesso!"
     end
 
     it 'e falha por validação' do
       # Arrange
+      @owner = make_owner
+      @inn = make_inn(@owner)
+      @room = make_room(@inn)
+      visit root_path
+      login(@owner)
+      click_on 'Minha Pousada'
       # Act
       click_on @room.name
       click_on 'Editar Quarto'

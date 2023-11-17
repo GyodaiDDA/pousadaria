@@ -1,24 +1,14 @@
 require 'rails_helper'
 
 describe '::Owner cadastra novo quarto' do
-  before(:each) do
-    owner = Owner.create!(email: 'usuario@servidor.co.uk', password: '.SenhaSuper3', user_type: 'Owner')
-    Inn.create!(brand_name: 'Pousada Recanto do Sossego',
-                legal_name: 'Recanto do Sossego Hospedagens LTDA',
-                vat_number: '22333444000181',
-                city: 'Rublas Gaúchas',
-                state: 'RS',
-                postal_code: '13200-000',
-                active: true,
-                user_id: owner.id)
-    login_as(owner)
-    visit root_path
-    click_on 'Minha Pousada'
-  end
-
   it 'clicando em Adicionar Quarto' do
     # Arrange
+    @owner = make_owner
+    @inn = make_inn(@owner)
+    visit root_path
+    login(@owner)
     # Act
+    click_on 'Minha Pousada'
     click_on 'Adicionar Quarto'
     # Assert]
     expect(current_path).to eq(new_room_path)
@@ -40,7 +30,12 @@ describe '::Owner cadastra novo quarto' do
 
   it 'e falha na validação de Área' do
     # Arrange
+    @owner = make_owner
+    @inn = make_inn(@owner)
+    visit root_path
+    login(@owner)
     # Act
+    click_on 'Minha Pousada'
     click_on 'Adicionar Quarto'
     fill_in 'Nome', with: 'Quarto Orlindgans'
     fill_in 'Descrição', with: 'Quarto amplo, com varanda, para aproveitar ao máximo os dias'
@@ -62,7 +57,12 @@ describe '::Owner cadastra novo quarto' do
 
   it 'e falha por falta do nome' do
     # Arrange
+    @owner = make_owner
+    @inn = make_inn(@owner)
+    visit root_path
+    login(@owner)
     # Act
+    click_on 'Minha Pousada'
     click_on 'Adicionar Quarto'
     fill_in 'Nome', with: ''
     fill_in 'Descrição', with: 'Quarto amplo, com varanda, para aproveitar ao máximo os dias'
@@ -84,7 +84,12 @@ describe '::Owner cadastra novo quarto' do
 
   it 'com sucesso' do
     # Arrange
+    @owner = make_owner
+    @inn = make_inn(@owner)
+    visit root_path
+    login(@owner)
     # Act
+    click_on 'Minha Pousada'
     click_on 'Adicionar Quarto'
     fill_in 'Nome', with: 'Quarto Orlindgans'
     fill_in 'Descrição', with: 'Quarto amplo, com varanda, para aproveitar ao máximo os dias'

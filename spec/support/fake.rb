@@ -44,6 +44,34 @@ def make_owner
   )
 end
 
+def make_customer(cpf = '')
+  if cpf.include?('cpf')
+    User.create!(
+    email: Faker::Internet.email,
+    document: Faker::IDNumber.brazilian_citizen_number,
+    password: 'password',
+    password_confirmation: 'password',
+    user_type: 'Customer'
+  )
+  else
+    User.create!(
+    email: Faker::Internet.email,
+    password: 'password',
+    password_confirmation: 'password',
+    user_type: 'Customer'
+  )
+  end
+  
+end
+
+def make_cpf(user = nil)
+  if user.nil?
+    Faker::IDNumber.brazilian_citizen_number
+  else
+    user.document = Faker::IDNumber.brazilian_citizen_number
+  end
+end
+
 def make_inn(owner, active = 1)
   Inn.create!(brand_name: "Pousada #{Faker::Food.ingredients} #{Faker::Gender.type}",
               legal_name: "#{Faker::Job.title} #{Faker::Space.moon} #{Faker::Company.suffix}",
@@ -64,11 +92,11 @@ def make_inn(owner, active = 1)
               user_id: owner.id)
 end
 
-def make_rooms(inn, features = { available: 1 })
+def make_room(inn, max_guests = rand(1..5), features = { available: 1 })
   Room.create!(name: "Quarto #{Faker::Color.color_name}",
               description: room_desc.sample,
               size: rand(15..40),
-              max_guests: rand(1..5),
+              max_guests: max_guests,
               base_price: rand(100..500),
               bathroom: features[:bathroom] ? features[:bathroom] : [true, true, true, false].sample,
               balcony: features[:balcony] ? features[:balcony] : [true, false].sample,
