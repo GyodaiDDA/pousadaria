@@ -13,7 +13,7 @@ describe '::Visitante vê a página da Pousada' do
     # Act
     click_on @inn.brand_name
     # Assert
-    expect(current_path).to eq(inn_path(@inn.id))
+    expect(current_path).to eq(inn_path(@room1.id))
     expect(page).to have_content(@room1.name)
     expect(page).to have_content(@room1.description)
     expect(page).not_to have_content(@room2.name)

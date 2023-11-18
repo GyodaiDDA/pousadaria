@@ -92,11 +92,11 @@ def make_inn(owner, active = 1)
               user_id: owner.id)
 end
 
-def make_room(inn, max_guests = rand(1..5), features = { available: 1 })
+def make_room(inn, features = {available: 1} )
   Room.create!(name: "Quarto #{Faker::Color.color_name}",
               description: room_desc.sample,
               size: rand(15..40),
-              max_guests: max_guests,
+              max_guests: [1,2,2,3,3,3,4,4,5].sample,
               base_price: rand(100..500),
               bathroom: features[:bathroom] ? features[:bathroom] : [true, true, true, false].sample,
               balcony: features[:balcony] ? features[:balcony] : [true, false].sample,
@@ -106,7 +106,7 @@ def make_room(inn, max_guests = rand(1..5), features = { available: 1 })
               safe: features[:safe] ? features[:safe] : [true, false].sample,
               accessible: features[:accessible] ? features[:accessible] : [true, false, false].sample,
               available: features[:available],
-              inn:
+              inn_id: inn.id
   )
 end
 

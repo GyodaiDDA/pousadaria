@@ -8,7 +8,9 @@ class RoomsController < ApplicationController
     @rooms = Room.all
   end
 
-  def show; end
+  def show
+    clean_session_codes
+  end
 
   def new
     @room = Room.new
@@ -37,7 +39,7 @@ class RoomsController < ApplicationController
 
   private
 
-  def set_room 
+  def set_room
     @room = Room.find(params[:id])
     @owner_view = the_owner?(@room.inn)
   end

@@ -1,7 +1,6 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: %i[create]
   before_action :configure_update_params, only: %i[document_edit document_update]
-  before_action @user = current_user, only: %i[document_edit document_update]
 
   def document_edit
     @user = current_user

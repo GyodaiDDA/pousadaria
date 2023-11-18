@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_17_084629) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_18_073844) do
   create_table "inns", force: :cascade do |t|
     t.string "brand_name"
     t.string "legal_name"
@@ -45,7 +45,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_17_084629) do
     t.integer "guests"
     t.string "code"
     t.integer "status"
-    t.integer "value"
+    t.integer "total_value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["room_id"], name: "index_reservations_on_room_id"

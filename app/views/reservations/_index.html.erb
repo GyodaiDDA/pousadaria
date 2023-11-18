@@ -1,3 +1,7 @@
-<%= 'Eita!' %>
-<%= @reservations %>
-<%= room %>
+<div id="all" class="list">
+  <% reservations.each_with_index do |reservation| %>
+    <% if reservation.status == 'available' %>
+      Código da Reserva: <%= link_to reservation.code, room_reservation_path(room, reservation) %><%= " (de #{l(reservation.start_date)} a #{l(reservation.end_date)}, #{reservation.guests} hóspedes.)" %><br>
+    <% end %>
+  <% end %>
+</div>

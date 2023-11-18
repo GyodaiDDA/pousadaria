@@ -1,69 +1,69 @@
-<%= controller_name %>
-<%= action_name %>
-<%= request.path %>
 <div class="list">
-  <table><tr><td>
-    <h3><%= @room.name %></h3>
-    <p class="list-item">
-      Tamanho:
-      <%= @room.size %>m²
-    </p>
-    <p class="list-item">
-      Hóspedes: Até
-      <%= @room.max_guests %>
-      pessoas
-    </p>
-    <% {Suíte: @room.bathroom, Varanda: @room.balcony, "Ar condicionado": @room.air_conditioning, TV: @room.tv, Armários: @room.wardrobe, Cofre: @room.safe, "♿ Quarto Acessível": @room.accessible}.each do |key, value| %>
-      <% if value %>
+  <table>
+    <tr>
+      <td colspan=3>
+        <h4><%= "código da reserva: #{@reservation.code}" %></h4>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <h3><%= link_to @room.name, room_path(@room) %></h3>
         <p class="list-item">
-          ✓
-          <%= key if value %><br></p>
-      <% end %>
-    <% end %>
-  </div>
-</td>
-<td>  
-  <p class="list-item">
-    <h3>Consulta de Reserva</h3>
-    <% value = (@reservation.end_date - @reservation.start_date) * @room.base_price %>
-    <% days = (@reservation.end_date - @reservation.start_date).to_i %>
-    <% daily_value = value.fdiv(days) %>
-    <% value_per_guest = value / @reservation.guests %>
-  </p>
-  <p class="list-item">
-    Data de Entrada: <%= l(@reservation.start_date) %>
-  </p>
-  <p class="list-item">
-    Data de Saída: <%= l(@reservation.end_date) %>
-  </p>
-  <p class="list-item">
-    Número de diárias: <%= days %>
-  </p>
-  <p class="list-item">
-    Hóspedes: <%= @reservation.guests %>
-  </p>
-</td>
-<td>
-  <p class="list-item">
-    <h3>Confirme sua reserva: </h3>
-  </p>
-  <p class="list-item">
-    Valor total: <%= number_to_currency(value) %>
-  </p>
+          Tamanho:
+          <%= @room.size %>m²
+        </p>
+        <p class="list-item">
+          Hóspedes: Até
+          <%= @room.max_guests %>
+          pessoas
+        </p>
+        <% {Suíte: @room.bathroom, Varanda: @room.balcony, "Ar condicionado": @room.air_conditioning, TV: @room.tv, Armários: @room.wardrobe, Cofre: @room.safe, "♿ Quarto Acessível": @room.accessible}.each do |key, value| %>
+          <% if value %>
+            <p class="list-item">
+              ✓
+              <%= key if value %><br></p>
+          <% end %>
+        <% end %>
+      </td>
+      <td>  
+        <p class="list-item">
+          <h3>Consulta de Reserva</h3>
+          <% days = (@reservation.end_date - @reservation.start_date).to_i %>
+          <% daily_value = @reservation.total_value.fdiv(days) %>
+          <% value_per_guest = @reservation.total_value / @reservation.guests %>
+        </p>
+        <p class="list-item">
+          Data de Entrada: <%= l(@reservation.start_date) %>
+        </p>
+        <p class="list-item">
+          Data de Saída: <%= l(@reservation.end_date) %>
+        </p>
+        <p class="list-item">
+          Número de diárias: <%= days %>
+        </p>
+        <p class="list-item">
+          Hóspedes: <%= @reservation.guests %>
+        </p>
+      </td>
+      <td>
+        <p class="list-item">
+          <h3>Confirme sua reserva: </h3>
+        </p>
+        <p class="list-item">
+          Valor total: <%= number_to_currency(@reservation.total_value) %>
+        </p>
 
-  <p class="list-item">
-    Valor por diária: <%= number_to_currency(daily_value) %>
-  </p>
-  <p class="list-item">
-    Valor por pessoa: <%= number_to_currency(value_per_guest) %>
-  </p>
-  <%= button_to "Efetivar reserva", edit_room_reservation_path(@room, @reservation), class: 'inline-button' %>
-  
+        <p class="list-item">
+          Valor por diária: <%= number_to_currency(daily_value) %>
+        </p>
+        <p class="list-item">
+          Valor por pessoa: <%= number_to_currency(value_per_guest) %>
+        </p>
+        <%= button_to "Efetivar reserva", edit_room_reservation_path(@room, @reservation), class: 'inline-button' %>
+        
 
-</td></tr></table>
+      </td>
+    </tr>
+  </table>
 </div>
-<% if @owner_view %>
-  <%= render 'seasonals/index', room: @room unless @room.seasonals.empty? %>
-<% else %>
-  <%= button_to "Quero reservar", new_room_reservation_path(@room), method: :get, class: "inline-button" %>
-<% end %>
+<%= render partial: 'reservations/index', locals: { room: @room, reservations: @room.reservations } unless @room.reservations.empty? %>

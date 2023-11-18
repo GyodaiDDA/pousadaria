@@ -3,6 +3,14 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def clean_session_codes
+    return unless session[:codes]
+
+    valid_codes = Reservation.where('status = ? AND created_at > ?', 'available', Time.zone.now - 48.hours).pluck(:code)
+    session[:codes].delete_if { |code| !valid_codes.include?(code) }
+    session[:codes]
+  end
+
   def set_locale
     I18n.locale = params[:locale] || I18n.default_locale
   end

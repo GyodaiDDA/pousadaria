@@ -5,6 +5,8 @@ class Reservation < ApplicationRecord
   validate :guest_count
   validates_with DatesPeriodValidator
 
+  before_create :generate_code
+
   enum status: { unavailable: 0, available: 1, challenged: 2, confirmed: 3, executed: 5, closed: 7 }
 
   def self.available?(params)
@@ -17,6 +19,16 @@ class Reservation < ApplicationRecord
   end
 
   private
+
+  def generate_code
+    try_code = SecureRandom.alphanumeric(8).upcase
+    loop do
+      break unless Reservation.where(code: try_code).exists?
+
+      try_code = SecureRandom.alphanumeric(8).upcase
+    end
+    self.code = try_code
+  end
 
   def guest_count
     return if room.nil?

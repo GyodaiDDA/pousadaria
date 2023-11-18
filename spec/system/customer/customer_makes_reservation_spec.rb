@@ -6,7 +6,7 @@ describe '::Customer faz reserva de quarto' do
     @owner = make_owner
     @inn = make_inn(@owner)
     @room = make_room(@inn)
-    @customer = make_customer
+    @customer = make_customer('cpf')
     # Act
     visit root_path
     login(@customer)
@@ -19,7 +19,7 @@ describe '::Customer faz reserva de quarto' do
     click_button 'Fazer Reserva'
     click_button 'Efetivar reserva'
     # Assert
-    expect(current_path).to eq(room_reservation_path(@room.id, @customer.reservation.last))
+    expect(current_path).to eq(edit_room_reservation_path(@room.id, 1))
     expect(page).to have_content("Sua reserva foi realizada. Em breve, a #{@inn.brand_name} entrará em contato com você.")
   end
 

@@ -29,7 +29,7 @@
   </p>
   <% if @owner_view %><p class="list-item"><%= @room.available ? "Disponível" : "Indisponível" %></p><% end %>
 </div>
-
+  <%= render partial: 'reservations/index', locals: { room: @room, reservations: @room.reservations } unless @room.reservations.empty? %>
 <% if @owner_view %>
   <%= render 'seasonals/index', room: @room unless @room.seasonals.empty? %>
 <% else %>

@@ -28,4 +28,5 @@
     <%= number_to_currency(@room.base_price) %>
   </p>
 </div>
-<%= render partial: 'consult_form', locals: {room: @room} %>
+<%= render partial: 'reservations/index', locals: { room: @room, reservations: @room.reservations } unless @room.reservations.empty? %>
+<%= render partial: 'consult_form', locals: { room: @room } %>
