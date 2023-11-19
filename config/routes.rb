@@ -5,17 +5,18 @@ Rails.application.routes.draw do
     sessions: 'users/sessions'
   }
   devise_scope :user do
-    get 'users/document_edit', to: 'users/registrations#document_edit', as: :edit_customer_document
-    patch 'users/document_update', to: 'users/registrations#document_update', as: :update_customer_document
+    get 'users/edit_document', to: 'users/registrations#edit_document', as: :edit_customer_document
+    patch 'users/update_document', to: 'users/registrations#update_document', as: :update_customer_document
   end
 
-  get 'cities', to: 'inns#cities'
   resources :inns, only: %i[index show new create edit update] do
     get 'search', on: :collection
   end
+  get 'cities', to: 'inns#cities'
 
   resources :rooms, only: %i[show new create edit update] do
     resources :seasonals, only: %i[index show new create edit]
     resources :reservations, only: %i[show new create edit update]
   end
+  get 'reservations/retrieve', to: 'reservations#retrieve'
 end

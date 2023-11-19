@@ -17,9 +17,9 @@ describe '::Customer faz reserva de quarto' do
     fill_in 'Data de Saída', with: Time.zone.today + 3.days
     select rand(1..@room.max_guests).to_s, from: 'Hóspedes'
     click_button 'Fazer Reserva'
-    click_button 'Efetivar reserva'
+    click_button 'Confirmar Reserva'
     # Assert
-    expect(current_path).to eq(edit_room_reservation_path(@room.id, 1))
+    expect(current_path).to eq(room_reservation_path(@room.id, 1))
     expect(page).to have_content("Sua reserva foi realizada. Em breve, a #{@inn.brand_name} entrará em contato com você.")
   end
 
@@ -39,14 +39,16 @@ describe '::Customer faz reserva de quarto' do
     fill_in 'Data de Saída', with: Time.zone.today + 3.days
     select rand(1..@room.max_guests).to_s, from: 'Hóspedes'
     click_button 'Fazer Reserva'
-    click_button 'Efetivar reserva'
     # Assert
-    expect(current_path).to eq('Adicionar CPF')
+    expect(current_path).to eq(room_reservation_path(@room.id, 1))
+    expect(page).not_to have_button('Confirmar Reserva')
+    expect(page).to have_content('Para confirmar sua reserva, complete os dados do seu cadastro usando o formulário ao lado.')
+    expect(page).to have_field('Nome completo')
     expect(page).to have_field('CPF')
-    expect(page).to have_button('Completar cadastro')
+    expect(page).to have_button('Atualizar')
   end
 
-  it 'depois de cadastrar CPF' do
+  it 'e atualiza cadastro' do
     # Arrange
     @owner = make_owner
     @inn = make_inn(@owner)
@@ -62,11 +64,11 @@ describe '::Customer faz reserva de quarto' do
     fill_in 'Data de Saída', with: Time.zone.today + 3.days
     select rand(1..@room.max_guests).to_s, from: 'Hóspedes'
     click_button 'Fazer Reserva'
-    click_button 'Efetivar reserva'
+    fill_in 'Nome completo', with: 'Teodoro Ruzivelt'
     fill_in 'CPF', with: make_cpf
-    click_on 'Completar cadastro'
+    click_on 'Atualizar'
     # Assert
     expect(current_path).to eq(room_reservation_path(@room.id, @customer.reservation.last.id))
-    expect(page).to have_content("Sua reserva foi realizada. Em breve, a #{@inn.brand_name} entrará em contato com você.")
+    expect(page).to have_content('Seu cadastrado foi atualizado.')
   end
 end

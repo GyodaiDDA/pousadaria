@@ -47,6 +47,7 @@ end
 def make_customer(cpf = '')
   if cpf.include?('cpf')
     User.create!(
+    full_name: Faker::Name.name,
     email: Faker::Internet.email,
     document: Faker::IDNumber.brazilian_citizen_number,
     password: 'password',
@@ -55,6 +56,7 @@ def make_customer(cpf = '')
   )
   else
     User.create!(
+    full_name: Faker::Name.name,
     email: Faker::Internet.email,
     password: 'password',
     password_confirmation: 'password',

@@ -1,12 +1,14 @@
 <div class="list">
-  <strong><p class="list_item"> <%= "Reserve já o #{room.name}" %></p></strong><br>
+  <strong><p class="list_item"> <%= "Reserve já o #{@room.name}" %></p></strong><br>
   <%= form_with(model: [@room, @reservation]) do |f| %>
     <%= f.label :start_date, class: 'inline' %>
-    <%= f.date_field :start_date, class: 'inline' %><br>
+    <%= f.date_field :start_date, class: 'inline', readonly: true %><br>
     <%= f.label :end_date, class: 'inline' %>
-    <%= f.date_field :end_date, class: 'inline' %><br>
+    <%= f.date_field :end_date, class: 'inline', readonly: true %><br>
     <%= f.label :guests, class: 'inline' %>
     <%= f.select :guests, 1..@room.max_guests, {}, class: 'inline' %>
+    <%= f.hidden_field :status, value: 3 %>
+    
     <%= f.hidden_field :room_id, value: params[:room_id] %>
     <br>
     <%= f.submit 'Fazer Reserva', class: 'inline-button' %>

@@ -1,0 +1,36 @@
+<h2>Informe seu CPF</h2>
+<div class="list">
+<%= form_for(resource, as: resource_name, url: update_customer_document_path(resource_name), html: { method: :patch }) do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
+  <p>
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", readonly: true , class: 'inline' %>
+  </p>
+
+  <p>
+    <%= f.label :full_name %><br />
+    <%= f.text_field :full_name, autocomplete: "Nome Completo", readonly: false, class: 'inline' %>
+  </p>
+  <p>
+    <%= f.label :document %><br />
+    <%= f.text_field :document, autocomplete: "CPF", readonly: false, class: 'inline' %>
+  </p>
+
+  <p>
+    <%= f.hidden_field :password, autocomplete: "new-password" %>
+  </p>
+
+  <p>
+    <%= f.hidden_field :password_confirmation, autocomplete: "new-password" %>
+  </p>
+
+  <p>
+    <%= f.label 'Sua senha' %><br />
+    <%= f.password_field :current_password, autocomplete: "current-password", class: 'inline' %>
+  </p>
+
+  <p>
+    <%= f.submit "Atualizar", class: 'inline-button' %>
+  </p>
+<% end %>
+</div>

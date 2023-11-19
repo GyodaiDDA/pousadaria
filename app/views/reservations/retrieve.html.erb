@@ -1,0 +1,18 @@
+<h5> Olá, achamos que algum destes processos de reserva poderia te interessar.<br>Quer continuar com algum deles? </h5>
+
+<div id="all" class="list">
+  <ul>
+    
+  <% @session_reservations.each do |reservation| %>
+    <% if reservation.status == 'available' && reservation.created_at > (Time.zone.now - 48.hours) %>
+    
+    <table>
+      <tr><th><span><%= reservation.code %></span></th><th><%= button_to 'continuar', edit_room_reservation_path(reservation.room, reservation, method: :get) %></th></tr>
+      <tr><td class="peq"><%= "#{reservation.room.inn.city}/#{reservation.room.inn.state}" %></td></tr>
+      <tr><td class="peq uppercase"><%= reservation.room.inn.brand_name %> / <%= reservation.room.name %></td></tr>
+      <tr><td class="peq"><%= number_to_currency(reservation.total_value) %><%= " para o período de #{l(reservation.start_date)} a #{l(reservation.end_date)}" %></td></tr>
+    </table>
+    <% end %>
+  <% end %>
+  </ul>
+</div>

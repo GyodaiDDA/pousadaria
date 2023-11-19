@@ -1,25 +1,25 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: %i[create]
-  before_action :configure_update_params, only: %i[document_edit document_update]
+  before_action :configure_update_params, only: %i[edit_document update_document]
 
-  def document_edit
-    @user = current_user
+  def edit_document
+    @resource = current_user
   end
 
-  def document_update
-    @user = current_user
-    if @user.update(document_params)
-      redirect_to request.referer, notice: 'Seus dados foram cadastrados'
+  def update_document
+    @resource = current_user
+    if @resource.update(document_params)
+      redirect_to request.referer, notice: 'Seu cadastrado foi atualizado.'
     else
-      flash[:notice] = 'Não foi possível cadastrar os dados'
-      render document_edit
+      flash[:notice] = 'Não foi possível atualizar seu cadastro.'
+      render edit_document
     end
   end
 
   private
 
   def document_params
-    params.require(:user).permit(:full_name, :cpf)
+    params.require(:Customer).permit(:full_name, :document)
   end
 
   protected

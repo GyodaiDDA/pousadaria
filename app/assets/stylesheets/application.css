@@ -163,10 +163,11 @@ h6 {
 /* Tabelas ================================================================= */
 table {
   border-collapse: collapse;
-  border-spacing: 0;
+  border-spacing: 0px;
+  margin: 0px;
 }
 
-dt {
+th {
   font-weight: bold;
 }
 
@@ -208,12 +209,13 @@ footer {
 }
 
 /* Containers ================================================================= */
-form.new_user{
-  width: 1000px;
+form.new_user,
+form.edit_Customer{
+  width: 100%;
 }
 
 .box {
-  max-width: 1200px; 
+  max-width: 1500px; 
   margin: 5px;
   margin-top: 50px;
   padding-left: 30px;
@@ -229,7 +231,7 @@ form.new_user{
 .box div.field {
   padding-left: 8px;
   padding-top: 15px;
-  max-width: 1200px;
+  max-width: 1400px;
 }
 .box div.actions {
   padding-left: 8px;
@@ -290,8 +292,8 @@ strong {
 }
 
 /* Listagens ================================================================= */
-.list {
-  padding: 30px 0px 30px 30px;
+div.list{
+  padding: 30px 30px 30px 30px;
   white-space: nowrap;
   background-color: #f4f4f410;
   border-radius: 5px;
@@ -301,13 +303,26 @@ strong {
 .list-item  {
   padding: 0px 0px 0px 10px ;
 }
+
+.list table, tr,  th, td {
+  padding: 0px 0px 5px 10px;
+  text-align: left;
+}
+
 .list table {
   margin: 0px;
   padding: 0px;
 }
 
-.list table, tr td{
-  padding: 10px 100px 10px 10px;
+.list th span{
+  font-weight: bold;
+  padding-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.list td {
+  font-weight: normal;
+  padding-left: 30px;
 }
 
 .featured {
@@ -330,7 +345,27 @@ strong {
   vertical-align: middle;
 }
 
-.inline-button {
+/* Formulários =================================================================  */
+
+input.inline, select.inline, textarea.inline {
+  margin-bottom: 15px;
+  margin-left: 5px;
+  font-size: small;
+  text-transform: uppercase;
+  vertical-align: middle;
+  font-size: x-small;
+}
+
+input:read-only {
+  font-size: 13px;
+  vertical-align: middle !important;
+  text-transform: uppercase;
+  background-color: #53535300;
+  color: #ffffff;
+  border-style: hidden;
+}
+
+input.inline-button {
   margin-top: 10px;
   vertical-align: middle;
   background-color: #f4f4f400;
@@ -342,25 +377,16 @@ strong {
   padding: 5px;
 }
 
-input.inline, select.inline, textarea.inline {
-  margin-bottom: 15px;
-  margin-left: 5px;
-  font-size: small;
-  text-transform: uppercase;
-  vertical-align: middle;
-  font-size: x-small;
-
-}
-
-/* Formulários =================================================================  */
-
 
 .frozen {
   background-color: #535353;
   color: #000000;
 }
 
-em.peq {
+.uppercase {
+  text-transform: uppercase;
+}
+.peq {
   font-size: small;
 }
 

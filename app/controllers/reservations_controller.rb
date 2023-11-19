@@ -27,14 +27,16 @@ class ReservationsController < ApplicationController
       end
     else
       flash[:alert] = 'Ocorreu um problema no processamento da sua consulta.'
-      render 'new'
+      render 'edit'
     end
   end
 
-  def edit; end
+  def edit
+    reclaim
+  end
 
   def update
-    if @reservation.update(confirmation_params)
+    if @reservation.update(status: 'confirmed')
       redirect_to room_reservation_path(@reservation.room, @reservation), notice: "Sua reserva foi realizada. Em breve, a #{@reservation.room.inn.brand_name} entrará em contato com você."
     else
       flash[:notice] = 'Não foi possível confirmar sua reserva.'
@@ -42,20 +44,31 @@ class ReservationsController < ApplicationController
     end
   end
 
+  def retrieve
+    @session_reservations = session[:codes].present? ? Reservation.where(code: session[:codes]) : []
+  end
+
+  def reclaim
+    return unless @reservation.user_id.nil?
+
+    cpf? if current_user.document.nil?
+
+    @reservation.user_id = current_user.id
+    @reservation.update
+  end
+
   private
 
   def save_to_session_if_user_unknown
     return unless @reservation
-    return unless @reservation.user_id
+    return if @reservation.user_id
 
     session[:codes] = [] unless session[:codes]
     session[:codes] << @reservation.code
   end
 
   def set_reservations
-    user_reservations = current_user ? Reservation.where(user_id: current_user.id, room_id: @room.id, status: 'available') : []
-    session_reservations = session[:codes].present? ? Reservation.where(code: session[:codes], room_id: @room.id) : []
-    (user_reservations + session_reservations).uniq
+    @reservations = Reservation.where(user_id: current_user.id, room_id: @room.id, status: 'available')
   end
 
   def set_reservation
@@ -78,6 +91,6 @@ class ReservationsController < ApplicationController
 
   def confirmation_params
     params.require(:reservation)
-          .permit(:code, :guests, :value, :user_id, :status)
+          .permit(:status)
   end
 end

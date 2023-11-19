@@ -6,6 +6,8 @@ class Users::SessionsController < Devise::SessionsController
       new_inn_path
     elsif resource.user_type == 'Owner'
       inn_path(Inn.find_by(user_id: current_user.id))
+    elsif resource.user_type == 'Customer' && session[:codes]
+      reservations_retrieve_path
     else
       root_path
     end

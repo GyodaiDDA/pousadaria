@@ -1,13 +1,20 @@
 <div class="list">
-  <table>
+  <table>    
     <tr>
-      <td colspan=3>
-        <h4><%= "código da reserva: #{@reservation.code}" %></h4>
+      <td>
+        <h3><%= "#{@room.name}" %></h3>
       </td>
+      <td>
+        <h3><%= "Reserva #{@reservation.code}" %></h3>
+      </td>
+      <% if current_user && (current_user.document.nil? || current_user.full_name.nil?) %>
+        <td rowspan="3">
+          <%= render partial: 'devise/registrations/edit_document', locals: { resource: current_user, resource_name: current_user.user_type } %>
+        </td>
+      <% end %>
     </tr>
     <tr>
       <td>
-        <h3><%= link_to @room.name, room_path(@room) %></h3>
         <p class="list-item">
           Tamanho:
           <%= @room.size %>m²
@@ -27,7 +34,6 @@
       </td>
       <td>  
         <p class="list-item">
-          <h3>Consulta de Reserva</h3>
           <% days = (@reservation.end_date - @reservation.start_date).to_i %>
           <% daily_value = @reservation.total_value.fdiv(days) %>
           <% value_per_guest = @reservation.total_value / @reservation.guests %>
@@ -42,28 +48,25 @@
           Número de diárias: <%= days %>
         </p>
         <p class="list-item">
-          Hóspedes: <%= @reservation.guests %>
-        </p>
-      </td>
-      <td>
-        <p class="list-item">
-          <h3>Confirme sua reserva: </h3>
+          <%= form_with(model: [@room, @reservation]) do |f| %>
+            <%= f.label :guests, class: 'list-item' %>
+            <%= f.select :guests, 1..@room.max_guests, {}, class: 'list-item' %>
+            
         </p>
         <p class="list-item">
           Valor total: <%= number_to_currency(@reservation.total_value) %>
         </p>
-
-        <p class="list-item">
-          Valor por diária: <%= number_to_currency(daily_value) %>
-        </p>
-        <p class="list-item">
-          Valor por pessoa: <%= number_to_currency(value_per_guest) %>
-        </p>
-        <%= button_to "Efetivar reserva", edit_room_reservation_path(@room, @reservation), class: 'inline-button' %>
-        
-
+        <p>
+            <% if current_user && (current_user.document.nil? || current_user.full_name.nil?) %>
+              <p class="alert"><%= 'Para confirmar sua reserva, complete os dados do seu cadastro usando o formulário ao lado.'%></p>
+            <% else %>
+              <%= f.hidden_field :room_id, value: params[:room_id] %>
+              <%= f.submit 'Confirmar Reserva', class: 'inline-button', method: :get %>
+            <% end %>
+          <% end %>
       </td>
     </tr>
   </table>
+  
 </div>
 <%= render partial: 'reservations/index', locals: { room: @room, reservations: @room.reservations } unless @room.reservations.empty? %>

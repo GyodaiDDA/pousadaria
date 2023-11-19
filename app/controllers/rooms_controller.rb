@@ -8,9 +8,7 @@ class RoomsController < ApplicationController
     @rooms = Room.all
   end
 
-  def show
-    clean_session_codes
-  end
+  def show; end
 
   def new
     @room = Room.new
