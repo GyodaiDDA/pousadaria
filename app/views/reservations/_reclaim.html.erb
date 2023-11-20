@@ -1,0 +1,5 @@
+<%= form_with(model: [room, reservation]) do |f| %>
+  <%= f.hidden_field :user_id, value: params[:user_id] %>
+  <br>
+  <%= f.submit 'Continuar Reserva', class: 'inline-button' %>
+<% end %>

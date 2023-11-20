@@ -27,11 +27,14 @@
     Diária:
     <%= number_to_currency(@room.base_price) %>
   </p>
-  <% if @owner_view %><p class="list-item"><%= @room.available ? "Disponível" : "Indisponível" %></p><% end %>
+  <% if @owner_view %>
+    <p class="list-item"><%= @room.available ? "Disponível" : "Indisponível" %></p>
+  <% end %>
 </div>
-  <%= render partial: 'reservations/index', locals: { room: @room, reservations: @room.reservations } unless @room.reservations.empty? %>
+
+
 <% if @owner_view %>
   <%= render 'seasonals/index', room: @room unless @room.seasonals.empty? %>
 <% else %>
-  <%= button_to "Quero reservar", new_room_reservation_path(@room), method: :get, class: "inline-button" %>
+  <div class="list"><%= button_to "Quero reservar", new_room_reservation_path(@room), method: :get, class: "inline-button" %></div>
 <% end %>

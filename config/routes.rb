@@ -19,4 +19,5 @@ Rails.application.routes.draw do
     resources :reservations, only: %i[show new create edit update]
   end
   get 'reservations/retrieve', to: 'reservations#retrieve'
+  patch 'rooms/:room.id/reservations/:id', to: 'reservations#reclaim'
 end

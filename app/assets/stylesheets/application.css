@@ -345,6 +345,28 @@ div.list{
   vertical-align: middle;
 }
 
+button.inline-button {
+  margin-top: 5px;
+  vertical-align: middle;
+  background-color: #f4f4f400;
+  border-radius: 5px;
+  border-style: solid;
+  border-color: #ffffff;
+  border-width: 1px;
+  color: #f4f4f4;
+  padding: 5px;
+}
+
+button.inline-button:hover {
+  background-color: #f4f4f440;
+}
+
+button.inline-button:disabled {
+  color: #f4f4f440;
+  border-color: #f4f4f420;
+  pointer-events: none;
+}
+
 /* Formulários =================================================================  */
 
 input.inline, select.inline, textarea.inline {
@@ -388,6 +410,14 @@ input.inline-button {
 }
 .peq {
   font-size: small;
+}
+
+.footnote {
+  font-size: smaller;
+  color: #f4f4f430;
+  max-width: min-content;
+  padding: 0px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
 }
 
 /* ================================================================= */

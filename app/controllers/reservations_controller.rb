@@ -49,12 +49,13 @@ class ReservationsController < ApplicationController
   end
 
   def reclaim
-    return unless @reservation.user_id.nil?
-
-    cpf? if current_user.document.nil?
-
-    @reservation.user_id = current_user.id
-    @reservation.update
+    @reservation.user_id = params[:user_id]
+    if @reservation.update
+      redirect_to room_reservation_path(@reservation.room, @reservation)
+    else
+      flash[:notice] = 'Não foi possível confirmar sua reserva.'
+      render retrieve
+    end
   end
 
   private
@@ -91,6 +92,6 @@ class ReservationsController < ApplicationController
 
   def confirmation_params
     params.require(:reservation)
-          .permit(:status)
+          .permit(:guests, :status)
   end
 end

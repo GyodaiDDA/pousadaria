@@ -1,33 +1,36 @@
 <section id="inn">
   <h1><%= @inn.brand_name %></h1>
-<h4><%= @inn.description %></h4>
-<ul class="list">
-  <% if @owner_view %>
-    <strong>Razão Social:</strong> <%= @inn.legal_name %><br>
-    <strong> CNPJ:</strong> <%= @inn.vat_number %><br><br>
-  <% end %>
-  
-  <%= [@inn.city, @inn.state].compact.join(' / ') %> <br><br>
-  <% if @inn.address %>
-    <%= [@inn.address, @inn.zone]&.compact.join(' - ') %><br>
-  <% end %>
-  <% if @inn.phone %>
-    <strong>Telefone:</strong> <%= @inn.phone %><br>
-  <% end %>
-  <% if @inn.email%>
-    <strong>E-mail:</strong> <%= @inn.email %><br>
-  <% end %>
-  <strong>CEP:</strong> <%= @inn.postal_code %><br>
-  <strong>Check-In:</strong> <%= @inn.check_in&.strftime("%H:%M") %><br>
-  <strong>Check-Out:</strong> <%= @inn.check_out&.strftime("%H:%M") %><br>
-  <% if @inn.pet_friendly %>
-    <%= '🐱🐶 Aceita Pets' %><br>
-  <% end %>
-  <% if @inn.wheelchair_accessible %>
-    <%= '♿ Pousada com Acessíbilidade' %><br>
-  <% end %>
-</ul>
+  <h4><%= @inn.description %></h4>
+  <div class="list">
+    <ul>
+      <% if @owner_view %>
+        <strong>Razão Social:</strong> <%= @inn.legal_name %><br>
+        <strong> CNPJ:</strong> <%= @inn.vat_number %><br><br>
+      <% end %>
+      
+      <%= [@inn.city, @inn.state].compact.join(' / ') %> <br><br>
+      <% if @inn.address %>
+        <%= [@inn.address, @inn.zone]&.compact.join(' - ') %><br>
+      <% end %>
+      <% if @inn.phone %>
+        <strong>Telefone:</strong> <%= @inn.phone %><br>
+      <% end %>
+      <% if @inn.email%>
+        <strong>E-mail:</strong> <%= @inn.email %><br>
+      <% end %>
+      <strong>CEP:</strong> <%= @inn.postal_code %><br>
+      <strong>Check-In:</strong> <%= @inn.check_in&.strftime("%H:%M") %><br>
+      <strong>Check-Out:</strong> <%= @inn.check_out&.strftime("%H:%M") %><br>
+      <% if @inn.pet_friendly %>
+        <%= '🐱🐶 Aceita Pets' %><br>
+      <% end %>
+      <% if @inn.wheelchair_accessible %>
+        <%= '♿ Pousada com Acessíbilidade' %><br>
+      <% end %>
+    </ul>
+  </div>
 </section>
+
 
 <section id="rooms-list">
   <% if @owner_view %>

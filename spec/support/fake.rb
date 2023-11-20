@@ -45,7 +45,7 @@ def make_owner
 end
 
 def make_customer(cpf = '')
-  if cpf.include?('cpf')
+  if cpf.include?('cpf') || cpf.include?('CPF')
     User.create!(
     full_name: Faker::Name.name,
     email: Faker::Internet.email,

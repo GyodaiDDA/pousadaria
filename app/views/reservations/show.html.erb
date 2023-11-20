@@ -4,34 +4,40 @@
       <td>
         <h3><%= "#{@room.name}" %></h3>
       </td>
+
       <td>
         <h3><%= "Reserva #{@reservation.code}" %></h3>
       </td>
-      <% if current_user && (current_user.document.nil? || current_user.full_name.nil?) %>
-        <td rowspan="3">
-          <%= render partial: 'devise/registrations/edit_document', locals: { resource: current_user, resource_name: current_user.user_type } %>
-        </td>
-      <% end %>
+
+      <td rowspan="3">
+        <% if user_signed_in? && (current_user.document.nil? || current_user.full_name.nil?) %>
+            <p class="alert"><%= 'Complete seu cadastro e garanta sua reserva.' %></p>
+            <%= render partial: 'devise/registrations/edit_document', locals: { resource: current_user, resource_name: current_user.user_type } %>
+        <% elsif !user_signed_in? %>
+            <p class="alert"><%= 'Garanta sua reserva fazendo login no site.' %></p>
+            <%= render partial: 'devise/sessions/login', locals: { resource: User.new, resource_name: 'user' } %>         
+        <% end %>
+      </td>
     </tr>
+
     <tr>
       <td>
         <p class="list-item">
-          Tamanho:
-          <%= @room.size %>m²
+          Tamanho: <%= @room.size %>m²
         </p>
         <p class="list-item">
-          Hóspedes: Até
-          <%= @room.max_guests %>
-          pessoas
+          Hóspedes: Até <%= @room.max_guests %> pessoas
         </p>
         <% {Suíte: @room.bathroom, Varanda: @room.balcony, "Ar condicionado": @room.air_conditioning, TV: @room.tv, Armários: @room.wardrobe, Cofre: @room.safe, "♿ Quarto Acessível": @room.accessible}.each do |key, value| %>
           <% if value %>
             <p class="list-item">
               ✓
-              <%= key if value %><br></p>
+              <%= key if value %><br>
+            </p>
           <% end %>
         <% end %>
       </td>
+
       <td>  
         <p class="list-item">
           <% days = (@reservation.end_date - @reservation.start_date).to_i %>
@@ -51,22 +57,24 @@
           <%= form_with(model: [@room, @reservation]) do |f| %>
             <%= f.label :guests, class: 'list-item' %>
             <%= f.select :guests, 1..@room.max_guests, {}, class: 'list-item' %>
-            
+            <%= f.hidden_field :room_id, value: params[:room_id] %>
         </p>
         <p class="list-item">
           Valor total: <%= number_to_currency(@reservation.total_value) %>
         </p>
-        <p>
-            <% if current_user && (current_user.document.nil? || current_user.full_name.nil?) %>
-              <p class="alert"><%= 'Para confirmar sua reserva, complete os dados do seu cadastro usando o formulário ao lado.'%></p>
-            <% else %>
-              <%= f.hidden_field :room_id, value: params[:room_id] %>
+        <div class="list-item">
+            <% if @reservation.status == 'confirmed' %>
+              <br><h4><%= 'Reserva confirmada!' %></h4><br>
+            <% elsif user_signed_in? && current_user.document && current_user.full_name %>
               <%= f.submit 'Confirmar Reserva', class: 'inline-button', method: :get %>
+            <% else %>
+              <%= button_tag 'Confirmar Reserva', class: 'inline-button', disabled: true %><br>
             <% end %>
           <% end %>
+        </div>
       </td>
     </tr>
   </table>
   
 </div>
-<%= render partial: 'reservations/index', locals: { room: @room, reservations: @room.reservations } unless @room.reservations.empty? %>
+<%= render partial: 'reservations/index', locals: { scope: :recent } unless @room.reservations.empty? %>
