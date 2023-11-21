@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resources :inns, only: %i[index show new create edit update] do
     get 'search', on: :collection
   end
+  get 'inn_reservations', to: 'inns#reservations'
   get 'cities', to: 'inns#cities'
 
   resources :rooms, only: %i[show new create edit update] do
@@ -20,4 +21,5 @@ Rails.application.routes.draw do
   end
   get 'reservations/retrieve', to: 'reservations#retrieve'
   patch 'rooms/:room.id/reservations/:id', to: 'reservations#reclaim'
+  get 'reservations/list', to: 'reservations#list'
 end

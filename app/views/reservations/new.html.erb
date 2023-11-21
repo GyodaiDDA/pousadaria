@@ -29,7 +29,7 @@
   </p>
 </div>
 <% if session[:codes].present? %>
-  <%= render partial: 'index', locals: { scope: :recent } %>
+  <%= render 'index' %>
 <% end %>
 <%= render partial: 'consult_form', locals: { room: @room } %>
 <%= session[:codes] if session[:codes] %>

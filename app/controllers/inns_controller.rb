@@ -1,7 +1,6 @@
 class InnsController < ApplicationController
   before_action :set_inn, only: %i[show edit update]
   before_action :set_rooms, only: %i[show]
-  before_action :inn_exists?, only: %i[new create]
 
   def index; end
 
@@ -43,18 +42,22 @@ class InnsController < ApplicationController
       Inn.where('brand_name LIKE ? OR city LIKE ? OR zone LIKE ?', "%#{@key}%", "%#{@key}%", "%#{@key}%")
   end
 
-  private
-
-  def inn_exists?
-    return unless current_user.inn
+  def reservations
+    return unless user_signed_in?
 
     @inn = current_user.inn
-    redirect_to inn_path(@inn)
+    @reservations = Reservation.where(room: @inn.rooms)
   end
 
+  private
+
   def set_inn
-    @inn = Inn.find(params[:id])
-    @owner_view = the_owner?(@inn)
+    if params[:id].present?
+      @inn = Inn.find(params[:id])
+      @owner_view = the_owner?(@inn)
+    elsif current_user.present?
+      @inn = current_user.inn
+    end
   end
 
   def set_rooms

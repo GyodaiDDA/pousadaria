@@ -73,6 +73,12 @@ describe '::quer fazer reserva' do
     # Assert
     expect(current_path).to eq(room_reservation_path(@room.id, Reservation.last.id))
     expect(page).to have_content('Seu cadastrado foi atualizado.')
+    expect(page).to have_content("até as #{I18n.localize(Reservation.last.room.inn.check_in)}")
+    expect(page).to have_content("até as #{I18n.localize(Reservation.last.room.inn.check_out)}")
+    expect(page).to have_content("Check-in: #{I18n.localize(Reservation.last.start_date)}")
+    expect(page).to have_content("Check-out: #{I18n.localize(Reservation.last.end_date)}")
+    expect(page).to have_content("Acomodações: #{Reservation.last.room.name}")
+    expect(page).to have_content("Valor total: R$ #{Reservation.last.total_value},00")
     expect(page).to have_button('Confirmar Reserva')
   end
 

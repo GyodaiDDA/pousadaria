@@ -2,79 +2,86 @@
   <table>    
     <tr>
       <td>
-        <h3><%= "#{@room.name}" %></h3>
+        <h4 class="list-item"><%= "#{@reservation.room.inn.brand_name}" %></h4>
       </td>
-
-      <td>
-        <h3><%= "Reserva #{@reservation.code}" %></h3>
-      </td>
-
       <td rowspan="3">
         <% if user_signed_in? && (current_user.document.nil? || current_user.full_name.nil?) %>
             <p class="alert"><%= 'Complete seu cadastro e garanta sua reserva.' %></p>
             <%= render partial: 'devise/registrations/edit_document', locals: { resource: current_user, resource_name: current_user.user_type } %>
         <% elsif !user_signed_in? %>
             <p class="alert"><%= 'Garanta sua reserva fazendo login no site.' %></p>
-            <%= render partial: 'devise/sessions/login', locals: { resource: User.new, resource_name: 'user' } %>         
+            <%= render partial: 'devise/sessions/login', locals: { resource: User.new, resource_name: 'user', reservation_id: @reservation.id } %>         
         <% end %>
       </td>
     </tr>
-
+      <% days = (@reservation.end_date - @reservation.start_date).to_i %>
+      <% daily_value = @reservation.total_value.fdiv(days) %>
+      <% value_per_guest = @reservation.total_value / @reservation.guests %>
     <tr>
-      <td>
+      <td>  
         <p class="list-item">
-          Tamanho: <%= @room.size %>m²
+          <%= "Código: #{@reservation.code}" %>
         </p>
         <p class="list-item">
-          Hóspedes: Até <%= @room.max_guests %> pessoas
+          <%= "Acomodações: #{@reservation.room.name}" %>
         </p>
-        <% {Suíte: @room.bathroom, Varanda: @room.balcony, "Ar condicionado": @room.air_conditioning, TV: @room.tv, Armários: @room.wardrobe, Cofre: @room.safe, "♿ Quarto Acessível": @room.accessible}.each do |key, value| %>
-          <% if value %>
+        <br>
+        <p class="list-item">
+          <%= "Diárias: #{days}" %>
+        </p>
+        <p class="list-item">
+          <%= "Check-in: #{l(@reservation.start_date)} até as #{l(@reservation.room.inn.check_in)}" %>
+        </p>
+        <p class="list-item">
+          <%= "Check-out: #{l(@reservation.end_date)} até as #{l(@reservation.room.inn.check_out)}" %>
+        </p>
+        <br>
+        <% case @reservation.status %>
+        <% when 'confirmed' %>
+          <p class="list-item">
+            <%= "Hóspedes: #{@reservation.guests}" %>
+          </p>
+          <p class="list-item">
+            <%= "Valor total: #{number_to_currency(@reservation.total_value)}" %>
+          </p>
+          <p class="list-item">
+            <%= "Aceita: #{@reservation.room.inn.payment_options}" %>
+          </p>
+          <p class="list-item">
+            <%= 'Status da Reserva: Confirmada!' %>
+          </p>
+        <% when 'available' %>
+          <% if user_signed_in? && current_user.document && current_user.full_name %>
             <p class="list-item">
-              ✓
-              <%= key if value %><br>
+              <%= form_with(model: [@room, @reservation]) do |f| %>
+                <%= f.label :guests, class: 'list-item' %>
+                <%= f.select :guests, 1..@room.max_guests, {}, class: 'list-item' %>
+                <p class="list-item">
+                  <%= "Valor total: #{number_to_currency(@reservation.total_value)}" %>
+                </p>
+                <p class="list-item">
+                  <%= "Aceita: #{@reservation.room.inn.payment_options}" %>
+                </p><br>
+                <%= f.submit 'Confirmar Reserva', class: 'inline-button', method: :get %>            
+              <% end %>
+            </p>
+          <% else %>
+            <p class="list-item">
+              Hóspedes: <%= @reservation.guests %>
+            </p>
+            <p class="list-item">
+              Valor total: <%= number_to_currency(@reservation.total_value) %>
+            </p>
+            <p class="list-item">
+              <%= "Aceita: #{@reservation.room.inn.payment_options}" %>
+            </p><br>
+            <p class="list-item">
+              <%= button_tag 'Confirmar Reserva', class: 'inline-button', disabled: true %><br>
             </p>
           <% end %>
         <% end %>
-      </td>
-
-      <td>  
-        <p class="list-item">
-          <% days = (@reservation.end_date - @reservation.start_date).to_i %>
-          <% daily_value = @reservation.total_value.fdiv(days) %>
-          <% value_per_guest = @reservation.total_value / @reservation.guests %>
-        </p>
-        <p class="list-item">
-          Data de Entrada: <%= l(@reservation.start_date) %>
-        </p>
-        <p class="list-item">
-          Data de Saída: <%= l(@reservation.end_date) %>
-        </p>
-        <p class="list-item">
-          Número de diárias: <%= days %>
-        </p>
-        <p class="list-item">
-          <%= form_with(model: [@room, @reservation]) do |f| %>
-            <%= f.label :guests, class: 'list-item' %>
-            <%= f.select :guests, 1..@room.max_guests, {}, class: 'list-item' %>
-            <%= f.hidden_field :room_id, value: params[:room_id] %>
-        </p>
-        <p class="list-item">
-          Valor total: <%= number_to_currency(@reservation.total_value) %>
-        </p>
-        <div class="list-item">
-            <% if @reservation.status == 'confirmed' %>
-              <br><h4><%= 'Reserva confirmada!' %></h4><br>
-            <% elsif user_signed_in? && current_user.document && current_user.full_name %>
-              <%= f.submit 'Confirmar Reserva', class: 'inline-button', method: :get %>
-            <% else %>
-              <%= button_tag 'Confirmar Reserva', class: 'inline-button', disabled: true %><br>
-            <% end %>
-          <% end %>
         </div>
       </td>
     </tr>
   </table>
-  
 </div>
-<%= render partial: 'reservations/index', locals: { scope: :recent } unless @room.reservations.empty? %>

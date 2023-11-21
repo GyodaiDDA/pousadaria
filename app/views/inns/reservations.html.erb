@@ -1,0 +1,31 @@
+<table id="all" class="list">
+  <tr>
+    <td>Código</td>
+    <td>Quarto</td>
+    <td>Entrada</td>
+    <td>Saída</td>
+    <td>Hospedes</td>
+    <td>Status</td>
+  </tr>
+  <% @reservations.each do |reservation| %>
+  <tr>
+    <td>
+      <%= link_to reservation.code, room_reservation_path(reservation.room, reservation) %>
+    </td>
+    <td>
+      <%= reservation.room.name %>
+    </td>
+    <td>
+      <%= l(reservation.start_date) %>
+    </td>
+    <td>
+      <%= l(reservation.end_date) %>
+    </td>
+    <td>
+      <%= reservation.guests %>
+    </td>
+    <td>
+      <%= reservation.status %>
+    </td>
+  <% end %>
+</div>

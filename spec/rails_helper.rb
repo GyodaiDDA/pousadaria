@@ -2,6 +2,7 @@
 require 'spec_helper'
 require 'support/fake'
 require 'support/login_steps'
+
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 # Prevent database truncation if the environment is production

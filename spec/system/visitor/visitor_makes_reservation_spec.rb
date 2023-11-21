@@ -37,7 +37,7 @@ describe '::Visitante consulta reserva de quarto' do
       # Assert
       expect(current_path).to eq(room_reservation_path(@room, Reservation.last))
       expect(page).to have_content('Legal! Quarto disponível para esta reserva.')
-      expect(page).to have_content("Reserva #{Reservation.last.code}")
+      expect(page).to have_content("Código: #{Reservation.last.code}")
       expect(page).to have_content('Garanta sua reserva fazendo login no site.')
       expect(page).to have_field('E-mail')
       expect(page).to have_field('Senha')
@@ -66,7 +66,13 @@ describe '::Visitante consulta reserva de quarto' do
       # Assert
       expect(current_path).to eq(room_reservation_path(@room, Reservation.last))
       expect(page).to have_content('Seu login foi feito com sucesso')
-      expect(page).to have_content("Reserva #{Reservation.last.code}")
+      expect(page).to have_content("Código: #{Reservation.last.code}")
+      expect(page).to have_content("até as #{I18n.localize(Reservation.last.room.inn.check_in)}")
+      expect(page).to have_content("até as #{I18n.localize(Reservation.last.room.inn.check_out)}")
+      expect(page).to have_content("Check-in: #{I18n.localize(Reservation.last.start_date)}")
+      expect(page).to have_content("Check-out: #{I18n.localize(Reservation.last.end_date)}")
+      expect(page).to have_content("Acomodações: #{Reservation.last.room.name}")
+      expect(page).to have_content("Valor total: R$ #{Reservation.last.total_value},00")
       expect(page).to have_button('Confirmar Reserva')
     end
 

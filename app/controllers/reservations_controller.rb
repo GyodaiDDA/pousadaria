@@ -6,6 +6,10 @@ class ReservationsController < ApplicationController
 
   def index; end
 
+  def list
+    @reservations = Reservation.where(user_id: current_user.id) if current_user.present?
+  end
+
   def new
     @reservation = Reservation.new
   end
