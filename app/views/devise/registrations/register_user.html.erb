@@ -18,13 +18,11 @@
     <%= f.label :password_confirmation %><br />
     <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
   </div>
+
   <div class="field">
-    <%= f.select(:user_type, options_for_select([['Dono de Pousada',"Owner"],['Quero me hospedar',"Customer"]])) %>
+    <%= f.hidden_field :user_type, value: params[:user_type] %>
   </div>
-  <!-- <div class="field">
-    <%= f.hidden_field :user_type, value: "Customer" %>
-  </div>
-  -->
+
   <div class="actions">
     <%= f.submit I18n.t('devise.registrations.new.sign_up') %>
   </div>

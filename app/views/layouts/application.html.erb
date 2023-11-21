@@ -20,9 +20,6 @@
               <li>
                   <%= button_to "Home", root_path, method: :get %>
               </li>
-              <li>
-                  <%= button_to 'Cidades', cities_path, method: :get unless Inn.all.empty? %>
-              </li>
               <% if user_signed_in? %>
                 <% if current_user.user_type == 'Owner' %>
                   <% unless Inn.find_by(user_id: current_user.id) %>
@@ -33,13 +30,23 @@
                     <li>
                         <%= button_to 'Minha Pousada', inn_path(Inn.find_by(user_id: current_user.id)), method: :get %>
                     </li>
+                    <li>
+                        <%= button_to 'Reservas', inn_reservations_path, method: :get %>
+                    </li>
                   <% end %>
-                <% elsif current_user.user_type == 'Customer' %>
+                <% end %>
+                <% if current_user.user_type == 'Customer' %>
                   <li>
                     <%= button_to 'Minhas Reservas', reservations_list_path, method: :get %>
                   </li>
                 <% end %>
               <% end %>
+              <% unless user_signed_in? && current_user.user_type == 'Owner' %>
+                <li>
+                  <%= button_to 'Cidades', cities_path, method: :get unless Inn.all.empty? %>
+                </li>
+              <% end %>
+              
               <li>          
                 <%= button_to 'Entrar', new_user_session_path, method: :get unless ['sessions', 'registrations'].include?(controller_name) || user_signed_in? %>
               </li>

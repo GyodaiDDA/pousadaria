@@ -4,15 +4,16 @@ describe '::Owner cadastra pousada' do
   context 'com sucesso' do
     it 'logo após criar sua conta.' do
       # Arrange
-      # Act I
+      # Act part I
       visit root_path
       click_on 'Entrar'
       click_on 'Ainda não tem cadastro?'
+      click_on 'Sou dono de Pousada'
       fill_in 'E-mail', with: 'usuario@servidor.co.uk'
       fill_in 'Senha', with: '.SenhaSuper3'
       fill_in 'Confirme sua senha', with: '.SenhaSuper3'
       click_on 'Cadastre-se'
-      # Act II 
+      # Act part II
       fill_in 'Nome Fantasia', with: 'Pousada Recanto do Sossego'
       fill_in 'Razão Social', with: 'Recanto do Sossego Hospedagens LTDA'
       fill_in 'CNPJ', with: '11222333000181'

@@ -6,6 +6,7 @@ describe '::Usuário cria uma nova conta' do
     visit root_path
     click_on 'Entrar'
     click_on 'Ainda não tem cadastro?'
+    click_on 'Quero me hospedar'
     # Act
     fill_in 'E-mail', with: 'usuario@servidor.co.uk'
     fill_in 'Senha', with: '.SenhaSuper3'
@@ -25,6 +26,7 @@ describe '::Usuário cria uma nova conta' do
                  password: '123456',
                  user_type: 'Owner')
     # Act
+    click_on 'Quero me hospedar'
     fill_in 'E-mail', with: 'usuario@servidor.co.uk'
     fill_in 'Senha', with: '.SenhaSuper3'
     fill_in 'Confirme sua senha', with: '.SenhaSuper3'
@@ -43,6 +45,7 @@ describe '::Usuário cria uma nova conta' do
                  password: '123456',
                  user_type: 'Customer')
     # Act
+    click_on 'Sou dono de Pousada'
     fill_in 'E-mail', with: 'usuario@servidor.co.uk'
     fill_in 'Senha', with: '.SenhaSuper3'
     fill_in 'Confirme sua senha', with: '.SenhaSuper3'
@@ -57,6 +60,7 @@ describe '::Usuário cria uma nova conta' do
     visit root_path
     click_on 'Entrar'
     click_on 'Ainda não tem cadastro?'
+    click_on 'Sou dono de Pousada'
     # Act
     fill_in 'E-mail', with: 'usuario@servidor.co.uk'
     fill_in 'Senha', with: '.SenhaSuper3'

@@ -14,9 +14,7 @@
         <% end %>
       </td>
     </tr>
-      <% days = (@reservation.end_date - @reservation.start_date).to_i %>
-      <% daily_value = @reservation.total_value.fdiv(days) %>
-      <% value_per_guest = @reservation.total_value / @reservation.guests %>
+      <% days = (@reservation.end_date - @reservation.start_date).ceil %>
     <tr>
       <td>  
         <p class="list-item">
