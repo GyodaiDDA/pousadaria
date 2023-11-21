@@ -28,8 +28,4 @@
     <%= number_to_currency(@room.base_price) %>
   </p>
 </div>
-<% if session[:codes].present? %>
-  <%= render 'index' %>
-<% end %>
-<%= render partial: 'consult_form', locals: { room: @room } %>
-<%= session[:codes] if session[:codes] %>
+<%= render partial: 'consult_form' %>

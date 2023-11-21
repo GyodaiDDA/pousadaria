@@ -1,0 +1,7 @@
+<% if @reservation.errors.any? %>
+  <div class="alert">
+    <% @reservation.errors.full_messages.each_with_index do |msg, i| %>
+      <br><%= "#{msg}" %>
+    <% end %>
+  </div>
+<% end %>

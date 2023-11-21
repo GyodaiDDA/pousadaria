@@ -128,7 +128,7 @@ q:before, q:after {
 }
 
 /* Títulos ================================================================= */
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h5, h6 {
   color: #f4f4f4;
   margin-bottom: 0em;
   margin-left: 5px;
@@ -389,6 +389,7 @@ input:read-only {
 
 input.inline-button {
   margin-top: 10px;
+  margin-left: 10px;
   vertical-align: middle;
   background-color: #f4f4f400;
   border-radius: 5px;
@@ -396,7 +397,7 @@ input.inline-button {
   border-color: #ffffff;
   border-width: 1px;
   color: #f4f4f4;
-  padding: 5px;
+  padding: 8px;
 }
 
 

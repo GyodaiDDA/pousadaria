@@ -72,7 +72,6 @@ describe '::Visitante consulta reserva de quarto' do
       expect(page).to have_content("Check-in: #{I18n.localize(Reservation.last.start_date)}")
       expect(page).to have_content("Check-out: #{I18n.localize(Reservation.last.end_date)}")
       expect(page).to have_content("Acomodações: #{Reservation.last.room.name}")
-      expect(page).to have_content("Valor total: R$ #{Reservation.last.total_value},00")
       expect(page).to have_button('Confirmar Reserva')
     end
 

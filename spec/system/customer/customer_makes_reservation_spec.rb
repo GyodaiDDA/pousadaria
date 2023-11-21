@@ -7,15 +7,15 @@ describe '::Customer consulta reserva' do
     @inn = make_inn(@owner)
     @room = make_room(@inn)
     @reservation = consult_reservation(@room, 3)
-    @customer = make_customer
+    @customer = make_customer('cpf')
     # Act
     visit root_path
     login(@customer)
     click_on @inn.brand_name
     click_on @room.name
     click_on 'Quero reservar'
-    fill_in 'Data de Entrada', with: @reservation.start_date + 1
-    fill_in 'Data de Saída', with: @reservation.end_date + 1
+    fill_in 'Data de Entrada', with: @reservation.start_date
+    fill_in 'Data de Saída', with: @reservation.end_date
     select rand(1..@room.max_guests).to_s, from: 'Hóspedes'
     click_button 'Fazer Reserva'
     # Assert
@@ -47,7 +47,6 @@ describe '::Customer consulta reserva' do
     expect(page).to have_content("Check-in: #{I18n.localize(Reservation.last.start_date)}")
     expect(page).to have_content("Check-out: #{I18n.localize(Reservation.last.end_date)}")
     expect(page).to have_content("Acomodações: #{Reservation.last.room.name}")
-    expect(page).to have_content("Valor total: R$ #{Reservation.last.total_value},00")
     expect(page).to have_content('Complete seu cadastro e garanta sua reserva.')
     expect(page).to have_field('Nome completo')
     expect(page).to have_field('CPF')

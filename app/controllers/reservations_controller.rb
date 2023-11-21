@@ -31,21 +31,21 @@ class ReservationsController < ApplicationController
       end
     else
       flash[:alert] = 'Ocorreu um problema no processamento da sua consulta.'
-      render 'edit'
+      render 'new'
     end
   end
 
-  def edit
-    reclaim
-  end
+  def edit; end
 
   def update
-    if @reservation.update(status: 'confirmed')
-      redirect_to room_reservation_path(@reservation.room, @reservation), notice: "Sua reserva foi realizada. Em breve, a #{@reservation.room.inn.brand_name} entrará em contato com você."
-    else
-      flash[:notice] = 'Não foi possível confirmar sua reserva.'
-      render edit
+    case status_params[:status]
+    when 'confirmed'
+      return redirect_to room_reservation_path(@reservation.room, @reservation), notice: "Sua reserva foi realizada. Em breve, a #{@reservation.room.inn.brand_name} entrará em contato com você." if @reservation.update(status_params)
+    when 'canceled'
+      return redirect_to room_reservation_path(@reservation.room, @reservation), notice: 'Poxa, que pena que teve que cancelar. Conte com a gente na sua próxima viagem.' if @reservation.update(status_params)
     end
+    flash.now[:alert] = 'Não foi possível alterar sua reserva.'
+    render 'show'
   end
 
   def retrieve
@@ -54,11 +54,11 @@ class ReservationsController < ApplicationController
 
   def reclaim
     @reservation.user_id = params[:user_id]
-    if @reservation.update
+    if @reservation.update(user_params)
       redirect_to room_reservation_path(@reservation.room, @reservation)
     else
       flash[:notice] = 'Não foi possível confirmar sua reserva.'
-      render retrieve
+      render 'retrieve'
     end
   end
 
@@ -94,8 +94,13 @@ class ReservationsController < ApplicationController
           .permit(:start_date, :end_date, :guests, :room_id)
   end
 
-  def confirmation_params
+  def user_params
     params.require(:reservation)
-          .permit(:guests, :status)
+          .permit(:user_id)
+  end
+
+  def status_params
+    params.require(:reservation)
+          .permit(:status)
   end
 end

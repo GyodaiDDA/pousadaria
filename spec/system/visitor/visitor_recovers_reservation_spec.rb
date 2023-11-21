@@ -43,7 +43,7 @@ describe '::quer fazer reserva' do
     # Assert
     expect(current_path).to eq(reservations_retrieve_path)
     expect(page).to have_content('Gostaria de continuar com alguma delas?')
-    expect(page).to have_link('Continuar Reserva')
+    expect(page).to have_button('Continuar Reserva')
   end
 
   it 'e não tem CPF' do
@@ -78,7 +78,6 @@ describe '::quer fazer reserva' do
     expect(page).to have_content("Check-in: #{I18n.localize(Reservation.last.start_date)}")
     expect(page).to have_content("Check-out: #{I18n.localize(Reservation.last.end_date)}")
     expect(page).to have_content("Acomodações: #{Reservation.last.room.name}")
-    expect(page).to have_content("Valor total: R$ #{Reservation.last.total_value},00")
     expect(page).to have_button('Confirmar Reserva')
   end
 

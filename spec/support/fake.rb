@@ -126,20 +126,7 @@ def make_seasonals(room)
                       room_id: room.id)
 end
 
-def consult_reservation(room, period = rand(10..20))
-    if room.reservations.last
-      start_date = room.reservations.last.end_date + 7
-    else 
-      start_date = Date.today + rand(10..20)
-    end
-    end_date = start_date + period
-    Reservation.create!(start_date: start_date,
-                        end_date: end_date,
-                        guests: rand(0..room.max_guests),
-                        room_id: room.id)
-end
-
-def make_reservation(room, status = 1, period = rand(10..20))
+def consult_reservation(room, status = 1, period = rand(10..20))
   if room.reservations.last
     start_date = room.reservations.last.end_date + 7
   else 
@@ -164,6 +151,7 @@ def make_customer_reservation(room, customer, status = 1, period = rand(10..20))
                       end_date: end_date,
                       guests: rand(0..room.max_guests),
                       room_id: room.id,
+                      total_value: (end_date - start_date).to_i * room.base_price,
                       user_id: customer.id,
                       status: status)
 end

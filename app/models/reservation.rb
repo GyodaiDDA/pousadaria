@@ -4,18 +4,19 @@ class Reservation < ApplicationRecord
   validates :room_id, :start_date, :end_date, :guests, presence: true
   validate :guest_count
   validates_with DatesPeriodValidator
+  # validates_with CancelationValidator, on: :cancelation
 
   before_create :generate_code
 
-  enum status: { unavailable: 0, available: 1, challenged: 2, confirmed: 3, executed: 5, closed: 7 }
+  enum status: { unavailable: 0, available: 1, confirmed: 3, canceled: 4, checked_in: 5, checked_out: 7 }
 
   def self.available?(params)
-    return 0 if Reservation.where(room_id: params[:room_id])
+    return 'unavailable' if Reservation.where(room_id: params[:room_id])
                            .where.not(id: nil)
                            .where('start_date <= ? AND end_date >= ?', params[:end_date], params[:start_date])
                            .exists?
 
-    1
+    'available'
   end
 
   private

@@ -35,51 +35,41 @@
         <p class="list-item">
           <%= "Check-out: #{l(@reservation.end_date)} até as #{l(@reservation.room.inn.check_out)}" %>
         </p>
+        <p class="list-item">
+          <%= "Hóspedes: #{@reservation.guests}" %>
+        </p>
+        <p class="list-item">
+          <%= "Valor total: #{number_to_currency(@reservation.total_value)}" %>
+        </p>
+        <p class="list-item">
+          <%= "Aceita: #{@reservation.room.inn.payment_options}" %>
+        </p>
         <br>
         <% case @reservation.status %>
-        <% when 'confirmed' %>
-          <p class="list-item">
-            <%= "Hóspedes: #{@reservation.guests}" %>
-          </p>
-          <p class="list-item">
-            <%= "Valor total: #{number_to_currency(@reservation.total_value)}" %>
-          </p>
-          <p class="list-item">
-            <%= "Aceita: #{@reservation.room.inn.payment_options}" %>
-          </p>
-          <p class="list-item">
-            <%= 'Status da Reserva: Confirmada!' %>
-          </p>
         <% when 'available' %>
           <% if user_signed_in? && current_user.document && current_user.full_name %>
+            <br>
             <p class="list-item">
               <%= form_with(model: [@room, @reservation]) do |f| %>
-                <%= f.label :guests, class: 'list-item' %>
-                <%= f.select :guests, 1..@room.max_guests, {}, class: 'list-item' %>
-                <p class="list-item">
-                  <%= "Valor total: #{number_to_currency(@reservation.total_value)}" %>
-                </p>
-                <p class="list-item">
-                  <%= "Aceita: #{@reservation.room.inn.payment_options}" %>
-                </p><br>
-                <%= f.submit 'Confirmar Reserva', class: 'inline-button', method: :get %>            
+                <%= f.hidden_field :status, value: 'confirmed' %>
+                <%= f.submit 'Confirmar Reserva', method: :patch, class: 'inline-button' %>
               <% end %>
             </p>
           <% else %>
+            <br>
             <p class="list-item">
-              Hóspedes: <%= @reservation.guests %>
-            </p>
-            <p class="list-item">
-              Valor total: <%= number_to_currency(@reservation.total_value) %>
-            </p>
-            <p class="list-item">
-              <%= "Aceita: #{@reservation.room.inn.payment_options}" %>
-            </p><br>
-            <p class="list-item">
-              <%= button_tag 'Confirmar Reserva', class: 'inline-button', disabled: true %><br>
+              <%= button_tag 'Confirmar Reserva', class: 'inline-button', disabled: true %>
             </p>
           <% end %>
+        <% when 'confirmed' %>
+          <% unless (@reservation.start_date - Time.zone.today).to_i < 7 %>
+            <%= form_with(model: [@room, @reservation], data: {turbo: false}) do |f| %>
+              <%= f.hidden_field :status, value: 'canceled' %>
+              <%= f.submit 'Cancelar Reserva', class: 'inline-button', method: :patch %>
+            <% end %>
+          <% end %>
         <% end %>
+        <%= render 'errors' %>
         </div>
       </td>
     </tr>
