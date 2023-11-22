@@ -1,26 +1,26 @@
 class ReservationsController < ApplicationController
-  before_action :set_room, only: %i[index new]
+  before_action :set_room, only: %i[index new create]
   before_action :set_reservation, only: %i[show edit update]
-  before_action :set_reservations, only: %i[index]
+  before_action :set_room_reservations, only: %i[index]
   before_action :cpf?, only: %i[edit update]
 
   def index; end
 
   def list
-    @reservations = Reservation.where(user_id: current_user.id) if current_user.present?
+    return unless current_user
+
+    @reservations = check_expiration(Reservation.where(user_id: current_user.id))
   end
+
+  def show; end
 
   def new
     @reservation = Reservation.new
   end
 
-  def show; end
-
   def create
-    @reservation = Reservation.new(consultation_params)
-    @reservation.status = Reservation.available?(consultation_params)
-    @reservation.user_id = current_user.id if current_user
-    @reservation.total_value = set_value
+    @reservation = Reservation.new(reservation_params)
+    PriceCalculator.new(@reservation).call
 
     if @reservation.save
       if @reservation.status == 'available'
@@ -38,11 +38,13 @@ class ReservationsController < ApplicationController
   def edit; end
 
   def update
-    case status_params[:status]
+    return unless @reservation.update(status_params)
+
+    case @reservation.status
     when 'confirmed'
-      return redirect_to room_reservation_path(@reservation.room, @reservation), notice: "Sua reserva foi realizada. Em breve, a #{@reservation.room.inn.brand_name} entrará em contato com você." if @reservation.update(status_params)
+      return redirect_to room_reservation_path(@reservation.room, @reservation), notice: "Sua reserva foi realizada. Em breve, a #{@reservation.room.inn.brand_name} entrará em contato com você."
     when 'canceled'
-      return redirect_to room_reservation_path(@reservation.room, @reservation), notice: 'Poxa, que pena que teve que cancelar. Conte com a gente na sua próxima viagem.' if @reservation.update(status_params)
+      return redirect_to room_reservation_path(@reservation.room, @reservation), notice: 'Poxa, que pena que teve que cancelar. Conte com a gente na sua próxima viagem.'
     end
     flash.now[:alert] = 'Não foi possível alterar sua reserva.'
     render 'show'
@@ -72,26 +74,27 @@ class ReservationsController < ApplicationController
     session[:codes] << @reservation.code
   end
 
-  def set_reservations
-    @reservations = Reservation.where(user_id: current_user.id, room_id: @room.id, status: 'available')
+  def set_room_reservations
+    @reservations = Reservation.where(room_id: @room.id, status: 'available')
   end
 
   def set_reservation
     @reservation = Reservation.find(params[:id])
-    @room = @reservation.room
   end
 
   def set_room
     @room = Room.find_by(id: params[:room_id])
   end
 
-  def set_value
-    (@reservation.end_date - @reservation.start_date) * @reservation.room.base_price
+  def check_expiration(reservations)
+    reservations.each do |reservation|
+      reservation.update(status: 'expired') if reservation.status == 'available' && reservation.start_date < Time.zone.tomorrow
+    end
   end
 
-  def consultation_params
+  def reservation_params
     params.require(:reservation)
-          .permit(:start_date, :end_date, :guests, :room_id)
+          .permit(:start_date, :end_date, :guests, :room_id, :user_id)
   end
 
   def user_params

@@ -31,7 +31,7 @@
                         <%= button_to 'Minha Pousada', inn_path(Inn.find_by(user_id: current_user.id)), method: :get %>
                     </li>
                     <li>
-                        <%= button_to 'Reservas', inn_reservations_path, method: :get %>
+                        <%= button_to 'Reservas', inn_reservations_path(current_user.inn), method: :get %>
                     </li>
                   <% end %>
                 <% end %>
@@ -43,7 +43,7 @@
               <% end %>
               <% unless user_signed_in? && current_user.user_type == 'Owner' %>
                 <li>
-                  <%= button_to 'Cidades', cities_path, method: :get unless Inn.all.empty? %>
+                  <%= button_to 'Cidades', city_inns_path, method: :get unless Inn.all.empty? %>
                 </li>
               <% end %>
               
@@ -70,9 +70,8 @@
     <% if controller_name = 'inns' %>
       <%= render partial: 'owners/submenu', locals: { inn: @inn } %><br>
     <% end %>
-      <span class="notice"><%= notice %></span>
-      <span class="alert"><%= alert %></span>
-      
+      <div class="notice"><%= notice %></div>
+      <div class="alert"><%= alert %></div>
       <%= yield %>
   </body>
 </html>

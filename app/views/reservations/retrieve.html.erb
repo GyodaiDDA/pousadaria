@@ -1,6 +1,6 @@
 <h5> Ei achamos que uma dessas reservas pode te interessar.<br>Gostaria de continuar com alguma delas? </h5>
 
-<div id="all" class="list">
+<div id="all">
     
   <% @session_reservations.each do |reservation| %>
     <% if reservation.status == 'available' && reservation.created_at > (Time.zone.now - 48.hours) %>

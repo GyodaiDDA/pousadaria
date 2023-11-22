@@ -4,19 +4,14 @@ class Reservation < ApplicationRecord
   validates :room_id, :start_date, :end_date, :guests, presence: true
   validate :guest_count
   validates_with DatesPeriodValidator
-  # validates_with CancelationValidator, on: :cancelation
-
+  validates_with CancelationValidator, on: :cancelation
   before_create :generate_code
+  before_create :initial_status
 
-  enum status: { unavailable: 0, available: 1, confirmed: 3, canceled: 4, checked_in: 5, checked_out: 7 }
+  enum status: { unavailable: 0, available: 1, expired: 2, confirmed: 3, canceled: 4, checked_in: 5, checked_out: 7 }
 
-  def self.available?(params)
-    return 'unavailable' if Reservation.where(room_id: params[:room_id])
-                           .where.not(id: nil)
-                           .where('start_date <= ? AND end_date >= ?', params[:end_date], params[:start_date])
-                           .exists?
-
-    'available'
+  def initial_status
+    self.status = (DatesChecker.overlap?(self) ? 'unavailable' : 'available')
   end
 
   private
@@ -35,6 +30,6 @@ class Reservation < ApplicationRecord
     return if room.nil?
     return unless guests > room.max_guests
 
-    error.add(:base, "O número de hóspedes está acima da capacidade do quarto (#{room.max_guests}).")
+    errors.add(:base, "O número de hóspedes está acima da capacidade do quarto (#{room.max_guests}).")
   end
 end

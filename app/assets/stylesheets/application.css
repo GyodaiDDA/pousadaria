@@ -6,7 +6,7 @@ del, dfn, em, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
 b, u, i, center,
 dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
+fieldset, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
 article, aside, details, embed, 
 figure, figcaption, footer, header, hgroup, 
@@ -24,37 +24,61 @@ time, mark, audio, video {
   margin: auto;
 }
 
-table.small{
+table.small {
   margin: 0px;
   padding: 0px;
 }
+/* Formulários =================================================================  */
 
-table.top-menu td {
-  vertical-align: baseline;
-  margin: 0;
-  padding: 0;
-  font-size: 90%; 
-  font: inherit;
+label {
+  font-size: small;
+  text-transform: uppercase;
   vertical-align: middle;
-  position: relative;
-  box-sizing: border-box;
-  margin: auto;
-  max-height: 1px;
-  margin: auto;
-  padding-left: 10px;
-  padding-top: 10px;
+  padding-right: 5px ;
 }
 
-table.top-menu ul,
-table.top-menu li {
-  list-style-type: none; 
+input {
+  font-size: 13px;
+  vertical-align: middle !important;
+  text-transform: uppercase;
+  background-color: #ffffff;
+  border-radius: 5px;
+  width: max-content;
+}
+
+
+.frozen {
+  background-color: #535353;
+  color: #000000;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+.peq {
+  font-size: small;
+}
+
+.footnote {
+  font-size: smaller;
+  color: #f4f4f430;
+  max-width: min-content;
+  padding: 0px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
+}
+
+/* top-menu ================================================================= */
+
+.top-menu ul,
+.top-menu li {
+  list-style-type: none;
   margin: 0;
   padding: 0;
   overflow: hidden;
   float: left;
 }
 
-table.top-menu input[type=submit] {
+.top-menu input[type=submit] {
   
   text-align: center; 
   padding: 5px 20px;
@@ -68,7 +92,7 @@ table.top-menu input[type=submit] {
   margin-left: 2px;
 }
 
-table.top-menu button{
+.top-menu button{
   display: block; 
   text-align: center; 
   padding: 10px 20px;
@@ -82,7 +106,7 @@ table.top-menu button{
   margin-left: 2px;
 }
 
-table.small button {
+.small-menu button {
   display: block;
   font-size: 11px; 
   text-align: center; 
@@ -98,33 +122,18 @@ table.small button {
   margin-left: 2px;
 }
 
-table.top-menu button:hover {
-  background-color: #222; 
+.top-menu button:hover {
+  background-color: #222;
 }
 
-/* Áreas ================================================================= */
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
-  display: block;
-}
-
+/* Body ================================================================= */
 body {
   line-height: 1.5;
   font-family: 'Calibri', 'Helvetica Neue', Helvetica;
   color: #f4f4f4; 
   background-color: #121212; 
   padding: 20px;
-  font-size: 16px;
-}
-
-blockquote, q {
-  quotes: none;
-}
-
-blockquote:before, blockquote:after,
-q:before, q:after {
-  content: '';
-  content: none;
+  font-size: 15px;
 }
 
 /* Títulos ================================================================= */
@@ -140,11 +149,11 @@ h1 {
 }
 
 h2 {
-  font-size: 1.8em;
+  font-size: 2em;
 }
 
 h3 {
-  font-size: 1.5em;
+  font-size: 1.7em;
 }
 
 h4 {
@@ -171,49 +180,12 @@ th {
   font-weight: bold;
 }
 
-/* Navegação ul ================================================================= */
-nav ul {
-  list-style-type: none; 
-  margin: 0;
-  padding: 0;
-  overflow: hidden; 
-}
-
-nav li {
-  float: left;
-}
-
-nav li button{
-  display: block; 
-  text-align: center; 
-  padding: 8px 10px;
-  text-decoration: none; 
-  color: white; 
-  background-color: #333; 
-  border: none; 
-  cursor: pointer; 
-  border-radius: 5px;
-  margin-right: 2px;
-  margin-left: 2px;
-}
-
-nav li button:hover {
-  background-color: #111; 
-}
-
-footer {
-  padding: 20px 0;
-  background-color: #333;
-  color: white;
-  text-align: center;
+tr, td, th {
+  max-width: 100%;
+  width: auto;
 }
 
 /* Containers ================================================================= */
-form.new_user,
-form.edit_Customer{
-  width: 100%;
-}
-
 .box {
   max-width: 1500px; 
   margin: 5px;
@@ -245,28 +217,26 @@ a {
   color: #dddddd;
 }
 
-.searching {
-  right: auto;
-}
-
 /* Texto ================================================================= */
 a:hover {
-  color: #0a58ca;
-  text-decoration: underline;
+  color: #eeff00;
+  text-decoration: none;
 }
 
 a {
   font-weight: bold;
+  color: #00f7ff80;
 }
 
 strong {
-  font-size: small;
+  font-size: smaller;
   text-transform: uppercase;
   font-weight: bold;
+  color: #f4f4f477;
 }
 
 .title {
-  font-size: small;
+  font-size: smaller;
   text-transform: uppercase;
   font-weight: bold;
 }
@@ -286,23 +256,35 @@ strong {
 
 .alert {
   color: #ca470a;
-  max-width: 600px;
-  padding: 10px;
+  padding: 0px;
+  padding-left: 10px;
+  margin: 0px;
   font-style: italic;
 }
 
 /* Listagens ================================================================= */
-div.list{
-  padding: 30px 30px 30px 30px;
+.list{
+  padding: 10px 30px 10px 30px;
   white-space: nowrap;
   background-color: #f4f4f410;
   border-radius: 5px;
   margin: 5px;
+  max-width: none;
+}
+
+.inlist{
+  padding: 30px 30px 30px 30px;
+  background-color: #f4f4f410;
+  border-radius: 5px;
+  margin: 5px;
+  max-width: none;
 }
 
 .list-item  {
-  padding: 0px 0px 0px 10px ;
+  padding-top: 30px;
 }
+
+
 
 .list table, tr,  th, td {
   padding: 0px 0px 5px 10px;
@@ -326,27 +308,33 @@ div.list{
 }
 
 .featured {
-  font-size: x-large;
+  font-size: large;
 }
 
 /* Itens Inline ================================================================= */
-.inline, .inline-button {
-  display: inline-block;
-}
 
-.inline-item {
-  padding-right: 10px;
-}
 
 .inline {
   margin-bottom: 15px;
+  margin-left: 30px;
   font-size: small;
   text-transform: uppercase;
   vertical-align: middle;
+  display: inline-block;
 }
 
-button.inline-button {
+.inline-input {
+  margin-bottom: 15px;
+  margin-left: 30px;
+  font-size: small;
+  text-transform: uppercase;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.inline-button {
   margin-top: 5px;
+  margin-left: 8px;
   vertical-align: middle;
   background-color: #f4f4f400;
   border-radius: 5px;
@@ -354,71 +342,31 @@ button.inline-button {
   border-color: #ffffff;
   border-width: 1px;
   color: #f4f4f4;
-  padding: 5px;
+  padding-left: 5px;
 }
 
-button.inline-button:hover {
-  background-color: #f4f4f440;
+.inline-button:hover {
+  background-color: #f4f4f460;
 }
 
-button.inline-button:disabled {
+.inline-button:disabled {
   color: #f4f4f440;
   border-color: #f4f4f420;
   pointer-events: none;
 }
 
-/* Formulários =================================================================  */
-
-input.inline, select.inline, textarea.inline {
-  margin-bottom: 15px;
-  margin-left: 5px;
-  font-size: small;
-  text-transform: uppercase;
-  vertical-align: middle;
-  font-size: x-small;
-}
-
-input:read-only {
-  font-size: 13px;
-  vertical-align: middle !important;
-  text-transform: uppercase;
-  background-color: #53535300;
-  color: #ffffff;
-  border-style: hidden;
-}
-
-input.inline-button {
-  margin-top: 10px;
-  margin-left: 10px;
-  vertical-align: middle;
-  background-color: #f4f4f400;
-  border-radius: 5px;
-  border-style: solid;
-  border-color: #ffffff;
-  border-width: 1px;
-  color: #f4f4f4;
-  padding: 8px;
-}
-
-
-.frozen {
-  background-color: #535353;
-  color: #000000;
-}
-
-.uppercase {
-  text-transform: uppercase;
-}
-.peq {
-  font-size: small;
-}
-
-.footnote {
-  font-size: smaller;
-  color: #f4f4f430;
-  max-width: min-content;
-  padding: 0px 0px 0px 0px;
-  margin: 0px 0px 0px 0px;
-}
 
 /* ================================================================= */
+
+body {
+  margin-left: 30px;
+}
+
+.field_with_errors {
+  margin: 0px;
+  padding: 0px;
+  font-size: small;
+  text-transform: uppercase;
+  vertical-align: middle;
+  display: inline-block;
+}

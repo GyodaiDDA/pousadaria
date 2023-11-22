@@ -1,5 +1,7 @@
 class DatesOverlapValidator < ActiveModel::Validator
   def validate(record)
+    return if record.errors.present?
+
     no_date_overlaping(record)
   end
 

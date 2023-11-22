@@ -31,7 +31,7 @@ describe '::Customer clica no botão Minhas Reservas' do
     @room = make_room(@inn)
     @customer = make_customer('cpf')
     @reserva_confirmada = make_customer_reservation(@room, @customer, 3)
-    @reserva_disponivel = make_customer_reservation(@room, @customer, 1)
+    # @reserva_disponivel = make_customer_reservation(@room, @customer, 1)
     # Act
     visit root_path
     login(@customer)

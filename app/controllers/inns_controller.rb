@@ -31,9 +31,12 @@ class InnsController < ApplicationController
     end
   end
 
-  def cities
+  def city
     @inns_by_city = Inn.all.where('active = 1').order(:city).order(:brand_name).group_by(&:city)
-    # @cities_list = @inns_by_city.keys
+  end
+
+  def by_cities
+    @inns_by_city = Inn.all.where('active = 1').order(:city).order(:brand_name).group_by(&:city)
   end
 
   def search

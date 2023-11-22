@@ -4,7 +4,7 @@
       <% @inns_by_city.each_value do |city| %>
         <dt><br><%= "#{city[0][:city]}/#{city[0][:state]}" %></dt>
         <% city.each do |inn| %>
-          <dd class="list"><%= link_to inn[:brand_name], inn_path(inn) %><br></dd>
+          <dd><%= link_to inn[:brand_name], inn_path(inn) %><br></dd>
         <%end%>
       <% end %>
   <% end %>

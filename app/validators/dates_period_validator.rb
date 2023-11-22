@@ -1,5 +1,7 @@
 class DatesPeriodValidator < ActiveModel::Validator
   def validate(record)
+    return if record.errors.present?
+
     no_backward_dates(record)
     no_bygone_dates(record)
   end

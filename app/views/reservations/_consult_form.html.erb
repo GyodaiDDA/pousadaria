@@ -1,6 +1,6 @@
-<div class="list">
-  <strong><p class="list_item"> <%= "Reserve já o #{@room.name}" %></p></strong><br>
-  <%= form_with(model: [@room, @reservation]) do |f| %>
+<div>
+  <strong><p> <%= "Reserve já o #{@room.name}" %></p></strong><br>
+  <%= form_with(model: [@room, @reservation], data: {turbo: false}) do |f| %>
     <%= f.label :start_date, class: 'inline' %>
     <%= f.date_field :start_date, class: 'inline' %><br>
     <%= f.label :end_date, class: 'inline' %>
@@ -8,6 +8,9 @@
     <%= f.label :guests, class: 'inline' %>
     <%= f.select :guests, 1..@room.max_guests, {}, class: 'inline' %>
     <%= f.hidden_field :room_id, value: params[:room_id] %>
+    <% if current_user %>
+      <%= f.hidden_field :user_id, value: current_user.id %>
+    <% end %>
     <br>
     <%= f.submit 'Fazer Reserva', class: 'inline-button', method: :get %>
   <% end %>

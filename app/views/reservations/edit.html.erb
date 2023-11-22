@@ -1,6 +1,6 @@
 
-  <div class="list">
-  <strong><p class="list_item"> <%= "Reserve já o #{@room.name}" %></p></strong><br>
+  <div>
+  <strong><p> <%= "Reserve já o #{@room.name}" %></p></strong><br>
   <%= form_with(model: [@room, @reservation]) do |f| %>
     <%= f.label :start_date, class: 'inline' %>
     <%= f.date_field :start_date, class: 'inline', readonly: true %><br>

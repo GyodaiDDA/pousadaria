@@ -1,5 +1,7 @@
 class CnpjValidator < ActiveModel::Validator
   def validate(record)
+    return if record.errors.present?
+
     return false unless fourteen_digits(record)
     return false unless valid_cnpj(record)
 

@@ -1,31 +1,4 @@
-<h1><%= @room.name %></h1>
-<h4 class="list-item"><%= @room.description %></h4>
-
-<div class="list">
-
-  <p class="list-item">
-    Tamanho:
-    <%= @room.size %>m²
-  </p><br>
-  <p class="list-item">
-    Hóspedes: Até
-    <%= @room.max_guests %>
-    pessoas
-  </p><br>
-
-  <div>
-    <% {Suíte: @room.bathroom, Varanda: @room.balcony, "Ar condicionado": @room.air_conditioning, TV: @room.tv, Armários: @room.wardrobe, Cofre: @room.safe, "♿ Quarto Acessível": @room.accessible}.each do |key, value| %>
-      <% if value %>
-        <p class="list-item">
-          ✓
-          <%= key if value %><br></p>
-      <% end %>
-    <% end %>
-  </div>
-  <br>
-  <p class="list-item">
-    Diária:
-    <%= number_to_currency(@room.base_price) %>
-  </p>
-</div>
+<%= render 'errors' %>
+<%= render 'rooms/room_details' %>
+<br>
 <%= render partial: 'consult_form' %>

@@ -84,7 +84,7 @@ def make_inn(owner, active = 1)
               zone: "#{['Vila', 'Jd.', 'Recanto'].sample} #{Faker::Address.city}",
               city: city_name.sample, state: state_letters.sample, postal_code: Faker::Address.postcode,
               description: inn_desc.sample,
-              payment_options: ['Cartão de Crédito', 'Todos os Cartões', 'Pix', 'Dinheiro', 'Débito / Crétido', 'Gratuito'].sample,
+              payment_options: ["Cartão de Crédito", "Cartão de Débito, Pix", "Pix, Dinheiro, Transferência", "Dinheiro", "PayPal", "Todos os cartões e GooglePay"].sample,
               pet_friendly: [true, false].sample,
               wheelchair_accessible: [true, false, false, false, true].sample,
               rules: "#{Faker::ElectricalComponents.active} todos os #{Faker::ElectricalComponents.passive} enquanto o #{Faker::Space.planet} não der a volta completa em #{Faker::Space.moon}.",

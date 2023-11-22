@@ -1,4 +1,4 @@
-<div id="seasonals_list" class="list">
+<div id="seasonals_list">
 <% Seasonal.all.select(room_id: room.id).each do |seasonal| %>
   <span class="inline"><%= seasonal.name %> | </span> 
   <span class="inline"><%= seasonal.start_date %> | </span>

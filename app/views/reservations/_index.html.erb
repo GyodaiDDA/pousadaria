@@ -1,7 +1,0 @@
-  <div id="all" class="list">
-    <% reservations = Reservation.where(code: session[:codes]) %>
-    <% reservations.each do |reservation| %>
-      <%= link_to reservation.code, room_reservation_path(reservation.room, reservation) %>
-      <%= " - #{l(reservation.start_date)} a #{l(reservation.end_date)} - #{number_to_currency(reservation.total_value)}" %><br>
-    <% end %>
-  </div>
