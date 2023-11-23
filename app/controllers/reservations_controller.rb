@@ -20,7 +20,7 @@ class ReservationsController < ApplicationController
 
   def create
     @reservation = Reservation.new(reservation_params)
-    PriceCalculator.new(@reservation).call
+    PriceCalculator.new(@reservation).estimate
 
     if @reservation.save
       if @reservation.status == 'available'
@@ -38,16 +38,25 @@ class ReservationsController < ApplicationController
   def edit; end
 
   def update
-    return unless @reservation.update(status_params)
-
-    case @reservation.status
-    when 'confirmed'
-      return redirect_to room_reservation_path(@reservation.room, @reservation), notice: "Sua reserva foi realizada. Em breve, a #{@reservation.room.inn.brand_name} entrará em contato com você."
-    when 'canceled'
-      return redirect_to room_reservation_path(@reservation.room, @reservation), notice: 'Poxa, que pena que teve que cancelar. Conte com a gente na sua próxima viagem.'
+    if @reservation.update(status_params)
+      case @reservation.status
+      when 'confirmed'
+        redirect_to room_reservation_path(@reservation.room, @reservation), notice: "Sua reserva foi realizada. Em breve, a #{@reservation.room.inn.brand_name} entrará em contato com você."
+      when 'canceled'
+        redirect_to room_reservation_path(@reservation.room, @reservation), notice: 'Poxa, que pena que teve que cancelar. Conte com a gente na sua próxima viagem.'
+      when 'active'
+        @reservation.update(check_in: Time.zone.today)
+        redirect_to room_reservation_path(@reservation.room, @reservation), notice: 'Check-in realizado.'
+      when 'closing'
+        PriceCalculator.new(@reservation).billing
+        redirect_to room_reservation_path(@reservation.room, @reservation), notice: 'Preparando check-out'
+      when 'closed'
+        redirect_to room_reservation_path(@reservation.room, @reservation), notice: 'Check-out realizado.'
+      end
+    else
+      flash.now[:alert] = 'Não foi possível alterar sua reserva.'
+      render 'show'
     end
-    flash.now[:alert] = 'Não foi possível alterar sua reserva.'
-    render 'show'
   end
 
   def retrieve
@@ -80,6 +89,7 @@ class ReservationsController < ApplicationController
 
   def set_reservation
     @reservation = Reservation.find(params[:id])
+    @owner_view = the_owner?(@reservation.room.inn)
   end
 
   def set_room

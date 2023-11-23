@@ -8,7 +8,7 @@
       <ul class="peq">
         <li class="title"><%= "#{reservation.room.inn.city}/#{reservation.room.inn.state}" %></li><br>
         <li><%= reservation.room.inn.brand_name %> / <%= reservation.room.name %></li><br>
-        <li><%= number_to_currency(reservation.total_value) %><%= " para o período de #{l(reservation.start_date)} a #{l(reservation.end_date)}" %></li><br>
+        <li><%= number_to_currency(reservation.estimate) %><%= " para o período de #{l(reservation.start_date)} a #{l(reservation.end_date)}" %></li><br>
         <li class="title"><strong><%= button_to "Continuar Reserva", room_reservation_path(reservation.room, reservation), method: :get %></strong></li><br>
       </ul>
     </nav>

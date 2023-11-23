@@ -15,6 +15,7 @@ class ApplicationController < ActionController::Base
   end
 
   def cpf?
+    return if current_user.user_type == 'Owner'
     return unless current_user.document.nil?
 
     redirect_to edit_customer_document_path, notice: 'Você precisa completar seus dados com nome e CPF para poder prosseguir.'

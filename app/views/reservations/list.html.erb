@@ -21,7 +21,7 @@
       <%= "#{l(reservation.start_date)} a #{l(reservation.end_date)}" %>
     </td>
     <td>
-      <%= reservation.status %>
+      <%= Reservation.l_enum(reservation.status) %>
     </td>
   <% end %>
 </div>

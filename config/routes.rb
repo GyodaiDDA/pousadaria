@@ -11,8 +11,9 @@ Rails.application.routes.draw do
 
   resources :inns, only: %i[index show new create edit update] do
     get 'search', on: :collection
-    get 'city', on: :collection
+    get 'cities', on: :collection
     get 'reservations', to: 'reservations'
+    get 'active_stays', to: 'active_stays'
   end
 
   resources :rooms, only: %i[show new create edit update] do

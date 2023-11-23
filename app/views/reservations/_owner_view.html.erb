@@ -1,0 +1,80 @@
+<div>
+  <table>    
+    <tr>
+      <td>
+        <h4><%= "#{reservation.room.inn.brand_name}" %></h4>
+      </td>
+      <td rowspan="3">
+        
+      </td>
+    </tr>
+      <% days = (reservation.end_date - reservation.start_date).ceil %>
+    <tr>
+      <td>  
+        <p>
+          <%= "Código: #{reservation.code}" %>
+        </p>
+        <p>
+          <%= "Hóspede: #{User.find_by(id: reservation.user_id).full_name}" %>
+        </p>
+        <p>
+          <%= "Acomodações: #{reservation.room.name}" %>
+        </p>
+        <br>
+        <p>
+          <%= "Diárias: #{days}" %>
+        </p>
+        <p>
+          <%= "Check-in: #{l(reservation.start_date)} até as #{l(reservation.room.inn.check_in)}" %>
+        </p>
+        <p>
+          <%= "Check-out: #{l(reservation.end_date)} até as #{l(reservation.room.inn.check_out)}" %>
+        </p>
+        <p>
+          <%= "Hóspedes: #{reservation.guests}" %>
+        </p>
+        <p>
+          <%= "Valor total: #{number_to_currency(reservation.estimate)}" %>
+        </p>
+        <p>
+          <%= "Status: "%><%= Reservation.l_enum(reservation.status) %>
+        </p>
+        <p>
+        <% case reservation.status %>
+        <% when 'available' %>
+          <% if Time.zone.today >= reservation.start_date + 2.day %>
+            <%= form_with(model: [reservation.room, reservation], data: {turbo: false}) do |f| %>
+              <%= f.hidden_field :status, value: 'canceled' %>
+              <%= f.submit 'Cancelar Reserva', method: :patch, class: 'inline-button' %>
+            <% end %>
+          <% end %>
+        <% when 'confirmed' %>
+          <% if Time.zone.today >= reservation.start_date %>
+            <%= form_with(model: [reservation.room, reservation], data: {turbo: false}) do |f| %>
+              <%= f.hidden_field :status, value: 'active' %>
+              <%= f.submit 'Fazer check-in', method: :patch, class: 'inline-button' %>
+            <% end %>
+          <% end %>
+        <% when 'active' %>
+          <%= "Check-in Efetivo: "%><%= reservation.check_in %>
+          <%= form_with(model: [reservation.room, reservation], data: {turbo: false}) do |f| %>
+            <%= f.hidden_field :status, value: 'closing' %>
+            <%= f.submit 'Iniciar check-out', method: :patch, class: 'inline-button' %>
+          <% end %>
+        <% when 'closing' %>
+        <%= "Check-in Efetivo: "%><%= reservation.check_in %>
+        <%= "Check-out Efetivo: "%><%= reservation.check_out %>
+        <%= "Valor a pagar: "%><%= reservation.total_value %>
+          <%= form_with(model: [reservation.room, reservation], data: {turbo: false}) do |f| %>
+            <%= f.hidden_field :status, value: 'closed' %>
+            <%= f.submit 'Finalizar check-out', method: :patch, class: 'inline-button' %>
+          <% end %>
+
+        <% end %>
+        </p>
+        <%= render 'errors' %>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>

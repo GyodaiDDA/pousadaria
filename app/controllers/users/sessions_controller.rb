@@ -19,9 +19,7 @@ class Users::SessionsController < Devise::SessionsController
 
   def after_customer_sign_in
     if params[:nested_login]
-      logger.info "Esse é o reservation_id: #{params[:reservation_id]} e esse é o cu: #{current_user.id}"
       associate_reservation_to_user(params[:reservation_id])
-      logger.info 'Passou pelo associate_reservation_to_user'
       stored_location_for(resource) || request.referer || root_path
     elsif session[:codes]
       reservations_retrieve_path
@@ -31,6 +29,8 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   def associate_reservation_to_user(reservation_id)
+    return unless current_user.user_type == 'Customer'
+
     reservation = Reservation.find_by(id: reservation_id)
     reservation.update(user_id: current_user.id) if current_user.present?
   end

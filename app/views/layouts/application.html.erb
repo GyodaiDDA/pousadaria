@@ -33,6 +33,9 @@
                     <li>
                         <%= button_to 'Reservas', inn_reservations_path(current_user.inn), method: :get %>
                     </li>
+                    <li>
+                        <%= button_to 'Estadias Ativas', inn_active_stays_path(current_user.inn), method: :get %>
+                    </li>
                   <% end %>
                 <% end %>
                 <% if current_user.user_type == 'Customer' %>
@@ -43,7 +46,7 @@
               <% end %>
               <% unless user_signed_in? && current_user.user_type == 'Owner' %>
                 <li>
-                  <%= button_to 'Cidades', city_inns_path, method: :get unless Inn.all.empty? %>
+                  <%= button_to 'Cidades', cities_inns_path, method: :get unless Inn.all.empty? %>
                 </li>
               <% end %>
               

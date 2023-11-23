@@ -16,3 +16,14 @@ pt-BR:
         available: Disponível
         created_at: Criado em
         updated_at: Atualizado em
+    enums:
+      reservation:
+        status:
+          unavailable: Indisponível
+          available: Disponível
+          expired: Expirada
+          confirmed: Confirmada
+          canceled: Cancelada
+          active: Ativa
+          closing: Checking-out
+          closed: Concluída

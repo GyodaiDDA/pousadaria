@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_18_073844) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_23_110936) do
   create_table "inns", force: :cascade do |t|
     t.string "brand_name"
     t.string "legal_name"
@@ -23,7 +23,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_18_073844) do
     t.string "state"
     t.string "postal_code"
     t.text "description"
-    t.text "payment_options"
+    t.integer "payment_options"
     t.boolean "pet_friendly"
     t.boolean "wheelchair_accessible"
     t.text "rules"
@@ -48,6 +48,10 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_18_073844) do
     t.integer "total_value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "check_in"
+    t.datetime "check_out"
+    t.string "payment"
+    t.integer "estimate"
     t.index ["room_id"], name: "index_reservations_on_room_id"
     t.index ["user_id"], name: "index_reservations_on_user_id"
   end

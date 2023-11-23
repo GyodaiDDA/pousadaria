@@ -31,11 +31,7 @@ class InnsController < ApplicationController
     end
   end
 
-  def city
-    @inns_by_city = Inn.all.where('active = 1').order(:city).order(:brand_name).group_by(&:city)
-  end
-
-  def by_cities
+  def cities
     @inns_by_city = Inn.all.where('active = 1').order(:city).order(:brand_name).group_by(&:city)
   end
 
@@ -46,10 +42,17 @@ class InnsController < ApplicationController
   end
 
   def reservations
-    return unless user_signed_in?
+    return unless user_signed_in? && current_user.inn
 
     @inn = current_user.inn
     @reservations = Reservation.where(room: @inn.rooms)
+  end
+
+  def active_stays
+    return unless user_signed_in? && current_user.inn
+
+    @inn = current_user.inn
+    @reservations = Reservation.where(status: 'active').where(room: @inn.rooms)
   end
 
   private

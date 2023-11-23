@@ -20,6 +20,42 @@ describe '::Visitante consulta reserva de quarto' do
     expect(page).to have_content('Que pena! Quarto indisponível para esta reserva.')
   end
 
+  it 'e falha por data no passado' do
+    # Arrange
+    @inn = make_inn(make_owner)
+    @room = make_room(@inn)
+    # Act
+    visit root_path
+    click_on @inn.brand_name
+    click_on @room.name
+    click_on 'Quero reservar'
+    fill_in 'Data de Entrada', with: Time.zone.yesterday
+    fill_in 'Data de Saída', with: Time.zone.tomorrow
+    select rand(1..@room.max_guests).to_s, from: 'Hóspedes'
+    click_button 'Fazer Reserva'
+    # Assert
+    expect(current_path).to eq(room_reservations_path(@room.id))
+    expect(page).not_to have_content('Que pena! Quarto indisponível para esta reserva.')
+  end
+
+  it 'e falha por datas invertidas' do
+    # Arrange
+    @inn = make_inn(make_owner)
+    @room = make_room(@inn)
+    # Act
+    visit root_path
+    click_on @inn.brand_name
+    click_on @room.name
+    click_on 'Quero reservar'
+    fill_in 'Data de Entrada', with: Time.zone.tomorrow + 10.days
+    fill_in 'Data de Saída', with: Time.zone.tomorrow + 8.days
+    select rand(1..@room.max_guests).to_s, from: 'Hóspedes'
+    click_button 'Fazer Reserva'
+    # Assert
+    expect(current_path).to eq(room_reservations_path(@room.id))
+    expect(page).not_to have_content('Que pena! Quarto indisponível para esta reserva.')
+  end
+
   context 'e há disponibilidade' do
     it 'mas precisa fazer login' do
       # Arrange

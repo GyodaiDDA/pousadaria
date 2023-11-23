@@ -21,6 +21,7 @@
       <strong>CEP:</strong> <%= @inn.postal_code %><br>
       <strong>Check-In:</strong> <%= @inn.check_in&.strftime("%H:%M") %><br>
       <strong>Check-Out:</strong> <%= @inn.check_out&.strftime("%H:%M") %><br>
+      <strong>Aceita:</strong> <%= @inn.payment_options %><br>
       <% if @inn.pet_friendly %>
         <%= '🐱🐶 Aceita Pets' %><br>
       <% end %>
@@ -30,7 +31,7 @@
     </ul>
   </div>
 </section>
-
+<br>
 
 <section id="rooms-list">
   <% if @owner_view %>

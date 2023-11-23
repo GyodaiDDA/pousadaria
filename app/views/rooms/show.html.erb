@@ -6,6 +6,6 @@
 
 <% if @owner_view %>
   <%= render 'seasonals/index', room: @room unless @room.seasonals.empty? %>
-<% else %>
+<% elsif current_user.nil? || current_user&.user_type != 'Owner' %>
   <div><%= button_to "Quero reservar", new_room_reservation_path(@room), method: :get, class: "inline-button" %></div>
 <% end %>

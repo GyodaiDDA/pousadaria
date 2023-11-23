@@ -6,7 +6,7 @@ class DatesChecker
     record.class
           .where(room_id: record.room_id)
           .where.not(id: record.id)
-          .where('start_date <= ? AND end_date >= ?', record.end_date, record.start_date)
+          .where('status IS NOT ? AND start_date <= ? AND end_date >= ?', 0, record.end_date, record.start_date)
           .exists?
   end
 end
