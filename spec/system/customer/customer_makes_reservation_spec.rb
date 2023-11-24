@@ -47,7 +47,7 @@ describe '::Customer consulta reserva' do
     expect(page).to have_content("Check-in: #{I18n.localize(Reservation.last.start_date)}")
     expect(page).to have_content("Check-out: #{I18n.localize(Reservation.last.end_date)}")
     expect(page).to have_content("Acomodações: #{Reservation.last.room.name}")
-    expect(page).to have_content("Aceita: #{Reservation.last.room.inn.payment_options}")
+    expect(page).to have_content("Aceita: #{Reservation.last.room.inn.payment_opt}")
     expect(page).to have_content('Complete seu cadastro e garanta sua reserva.')
     expect(page).to have_field('Nome completo')
     expect(page).to have_field('CPF')

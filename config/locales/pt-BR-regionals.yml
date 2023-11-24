@@ -9,3 +9,9 @@ pt-BR:
       default: "%k:%M"
       long: "%H:%M:%S"
       short: "%kh"
+      superlong: "%d/%m/%Y as %k:%M"
+  datetime:
+    formats:
+      default: "%d/%m/%Y, %k:%M"
+      long: "%d/%m/%Y as %k:%M"
+      short: "%e/%b, %k%M"

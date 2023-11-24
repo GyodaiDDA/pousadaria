@@ -42,7 +42,7 @@ describe '::quer fazer reserva' do
     click_on 'Entrar'
     # Assert
     expect(current_path).to eq(reservations_retrieve_path)
-    expect(page).to have_content('Gostaria de continuar com alguma delas?')
+    expect(page).to have_content('Gostaria de continuar com a sua reserva?')
     expect(page).to have_button('Continuar Reserva')
   end
 

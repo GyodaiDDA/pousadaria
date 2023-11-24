@@ -13,7 +13,7 @@ Rails.application.routes.draw do
     get 'search', on: :collection
     get 'cities', on: :collection
     get 'reservations', to: 'reservations'
-    get 'active_stays', to: 'active_stays'
+    get 'ratings', to: 'ratings'
   end
 
   resources :rooms, only: %i[show new create edit update] do

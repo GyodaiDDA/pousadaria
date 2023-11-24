@@ -16,7 +16,7 @@ pt-BR:
         state: UF
         postal_code: CEP
         description: Descrição
-        payment_options: Formas de Pagto
+        payment_opt: Formas de Pagto
         pet_friendly: Aceita pet?
         wheelchair_accessible: Acessível?
         rules: Políticas de uso

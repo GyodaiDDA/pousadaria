@@ -69,7 +69,7 @@ if Rails.env.development?
       zone: "#{["Vila", "Jd.", "Recanto"].sample} #{Faker::Address.city}",
       city: cidades.sample, state: ufs.sample, postal_code: Faker::Address.postcode,
       description: pousadas.sample,
-      payment_options: ["Cartão de Crédito", "Cartão de Débito, Pix", "Pix, Dinheiro, Transferência", "Dinheiro", "PayPal", "Todos os cartões e GooglePay"].sample,
+      payment_opt: ["Cartão de Crédito, Cartão de Débito, Dinheiro", "Cartão de Débito, Pix, Doc", "Pix, Dinheiro, Transferência, PayPal", "Dinheiro", "PayPal", "Todos os cartões, GooglePay"].sample,
       pet_friendly: [true, false].sample,
       wheelchair_accessible: [true, false, false, false, true].sample,
       rules: "#{Faker::ElectricalComponents.active} todos os #{Faker::ElectricalComponents.passive} enquanto o #{Faker::Space.planet} não der a volta completa em Saturno.",

@@ -38,25 +38,10 @@ class ReservationsController < ApplicationController
   def edit; end
 
   def update
-    if @reservation.update(status_params)
-      case @reservation.status
-      when 'confirmed'
-        redirect_to room_reservation_path(@reservation.room, @reservation), notice: "Sua reserva foi realizada. Em breve, a #{@reservation.room.inn.brand_name} entrará em contato com você."
-      when 'canceled'
-        redirect_to room_reservation_path(@reservation.room, @reservation), notice: 'Poxa, que pena que teve que cancelar. Conte com a gente na sua próxima viagem.'
-      when 'active'
-        @reservation.update(check_in: Time.zone.today)
-        redirect_to room_reservation_path(@reservation.room, @reservation), notice: 'Check-in realizado.'
-      when 'closing'
-        PriceCalculator.new(@reservation).billing
-        redirect_to room_reservation_path(@reservation.room, @reservation), notice: 'Preparando check-out'
-      when 'closed'
-        redirect_to room_reservation_path(@reservation.room, @reservation), notice: 'Check-out realizado.'
-      end
-    else
-      flash.now[:alert] = 'Não foi possível alterar sua reserva.'
-      render 'show'
-    end
+    return redirect_by_status if @reservation.update(update_params)
+
+    flash.now[:alert] = 'Não foi possível alterar a reserva.'
+    render 'show'
   end
 
   def retrieve
@@ -102,6 +87,29 @@ class ReservationsController < ApplicationController
     end
   end
 
+  def redirect_by_status
+    case @reservation.status
+    when 'confirmed'
+      redirect_to room_reservation_path(@reservation.room, @reservation), notice: "Sua reserva foi realizada. Em breve, a #{@reservation.room.inn.brand_name} entrará em contato com você."
+    when 'canceled'
+      redirect_to room_reservation_path(@reservation.room, @reservation), notice: 'Poxa, que pena que teve que cancelar. Conte com a gente na sua próxima viagem.'
+    when 'active'
+      @reservation.update(check_in: Time.zone.now)
+      redirect_to room_reservation_path(@reservation.room, @reservation), notice: 'Check-in realizado.'
+    when 'closing'
+      PriceCalculator.new(@reservation).billing
+      redirect_to room_reservation_path(@reservation.room, @reservation), notice: 'Preparando check-out'
+    when 'closed'
+      redirect_to room_reservation_path(@reservation.room, @reservation), notice: 'Check-out realizado.'
+    when 'rated'
+      @reservation.update(params.require(:reservation).permit(:grade, :comment))
+      redirect_to room_reservation_path(@reservation.room, @reservation), notice: 'Sua avaliação foi recebida. Obrigado!'
+    when 'answered'
+      @reservation.update(params.require(:reservation).permit(:response))
+      redirect_to room_reservation_path(@reservation.room, @reservation), notice: 'Sua resposta foi recebida. Obrigado!'
+    end
+  end
+
   def reservation_params
     params.require(:reservation)
           .permit(:start_date, :end_date, :guests, :room_id, :user_id)
@@ -112,8 +120,13 @@ class ReservationsController < ApplicationController
           .permit(:user_id)
   end
 
-  def status_params
+  def rating_params
     params.require(:reservation)
-          .permit(:status)
+          .permit(:grade, :comment, :response)
+  end
+
+  def update_params
+    params.require(:reservation)
+          .permit(:status, :payment)
   end
 end

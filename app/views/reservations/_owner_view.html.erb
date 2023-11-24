@@ -1,11 +1,8 @@
 <div>
   <table>    
     <tr>
-      <td>
+      <td colspan=2>
         <h4><%= "#{reservation.room.inn.brand_name}" %></h4>
-      </td>
-      <td rowspan="3">
-        
       </td>
     </tr>
       <% days = (reservation.end_date - reservation.start_date).ceil %>
@@ -62,18 +59,32 @@
             <%= f.submit 'Iniciar check-out', method: :patch, class: 'inline-button' %>
           <% end %>
         <% when 'closing' %>
-        <%= "Check-in Efetivo: "%><%= reservation.check_in %>
-        <%= "Check-out Efetivo: "%><%= reservation.check_out %>
-        <%= "Valor a pagar: "%><%= reservation.total_value %>
-          <%= form_with(model: [reservation.room, reservation], data: {turbo: false}) do |f| %>
-            <%= f.hidden_field :status, value: 'closed' %>
-            <%= f.submit 'Finalizar check-out', method: :patch, class: 'inline-button' %>
+          <%= "Check-in Efetivo: "%><%= l(reservation.check_in, format: :superlong) %><br>
+          <%= "Check-out Efetivo: "%><%= l(reservation.check_out, format: :superlong) %><br>
+          <%= "Diárias: #{(((reservation.check_out - reservation.check_in)/(60 * 60 * 24))).ceil}" %><br>
+          <%= "Valor a pagar: #{number_to_currency(reservation.total_value, delimiter: '')}" %><br>
+            <%= form_with(model: [reservation.room, reservation], data: {turbo: false}) do |f| %>
+              <%= f.select :payment, reservation.room.inn.payment_opt.to_s.split(','), {}, class: 'inline' %><br>
+              <%= f.hidden_field :status, value: 'closed' %>
+              <%= f.submit 'Finalizar check-out', method: :patch, class: 'inline-button' %>
           <% end %>
-
+        <% when 'closed' %>
+          <%= "Check-in Efetivo: "%><%= l(reservation.check_in, format: :superlong) %><br>
+          <%= "Check-out Efetivo: "%><%= l(reservation.check_out, format: :superlong) %><br>
+          <%= "Diárias: #{(((reservation.check_out - reservation.check_in)/(60 * 60 * 24))).ceil}" %><br>
+          <%= "Valor pago: #{number_to_currency(reservation.total_value, delimiter: '')}" %><br>
+          <%= "Forma de pagto: #{reservation.payment}" %>
         <% end %>
         </p>
         <%= render 'errors' %>
         </div>
+      </td>
+    </tr>
+    <tr>
+      <td rowspan="2">
+        <% if reservation.status == 'closed' || reservation.status == 'rated' || reservation.status == 'answered' %>
+          <%= render partial: 'rate', locals: { reservation: reservation, owner_view: @owner_view } %>
+        <% end %>
       </td>
     </tr>
   </table>

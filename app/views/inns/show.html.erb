@@ -21,7 +21,7 @@
       <strong>CEP:</strong> <%= @inn.postal_code %><br>
       <strong>Check-In:</strong> <%= @inn.check_in&.strftime("%H:%M") %><br>
       <strong>Check-Out:</strong> <%= @inn.check_out&.strftime("%H:%M") %><br>
-      <strong>Aceita:</strong> <%= @inn.payment_options %><br>
+      <strong>Aceita:</strong> <%= @inn.payment_opt %><br>
       <% if @inn.pet_friendly %>
         <%= '🐱🐶 Aceita Pets' %><br>
       <% end %>
@@ -37,6 +37,19 @@
   <% if @owner_view %>
     <%= render partial: 'rooms/index', locals: { rooms: @inn.rooms } %>
   <% else %>
-    <%= render partial: 'rooms/index', locals: { rooms: @available_rooms } %>
+    <%= render partial: 'rooms/index', locals: { rooms: @inn.rooms.where(available: true) } %>
+  <% end %>
+</section>
+
+<section id="ratings">  
+  <% if @inn.ratings %>
+    <h4><%= 'Avaliações' %></h4>
+    <h1><%= @inn.avg_rating %></h1>
+    <% @inn.ratings.first(3).each do |rating| %>
+      <p class="list"><span style="text-transform: capitalize"><%= rating.user.full_name %>:</span> <%= "#{rating.grade}/5" %> - <%= rating.comment %></p>
+    <% end %>
+  <% end %>   
+  <% if @inn.ratings.size > 3 %>
+    <%= link_to 'veja todas as avaliações', inn_ratings_path(@inn) %>
   <% end %>
 </section>

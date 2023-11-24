@@ -60,7 +60,7 @@ group :development, :test do
   gem 'faker'
   gem 'guard-rubycritic'
   gem 'rspec-core'
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 6.0.3'
   gem 'rubocop', require: false
   gem 'rubocop-rails', require: false
   gem 'rubycritic', require: false
@@ -79,5 +79,6 @@ end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
+  gem 'activesupport', '~> 7.1.2'
   gem 'selenium-webdriver'
 end

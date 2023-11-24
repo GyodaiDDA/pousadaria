@@ -1,0 +1,4 @@
+<h3><%= 'Avaliações Recentes' %></h3>
+  <% @ratings.each do |rating| %>
+    <p class="list"><span style="text-transform: capitalize"><%= rating.user.full_name %>:</span> <%= "#{rating.grade}/5" %> - <%= rating.comment %></p>
+  <% end %>

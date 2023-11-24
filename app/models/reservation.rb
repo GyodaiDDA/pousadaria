@@ -7,7 +7,9 @@ class Reservation < ApplicationRecord
   before_create :generate_code
   before_create :initial_status
 
-  enum status: { unavailable: 0, available: 1, expired: 2, confirmed: 3, canceled: 4, active: 5, closing: 6, closed: 7 }
+  enum status: { unavailable: 0, available: 1, expired: 2, confirmed: 3, canceled: 4, active: 5, closing: 6, closed: 7, rated: 8, answered: 9 }
+
+  scope :active, -> { where(status: 'active') }
 
   def initial_status
     self.status = (DatesChecker.overlap?(self) ? 'unavailable' : 'available')
