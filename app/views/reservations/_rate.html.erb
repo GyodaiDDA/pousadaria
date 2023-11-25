@@ -1,6 +1,6 @@
 <div class="list">
   <p class="inline"><%= "Avaliação da estadia" %><br>
-  <% if reservation.status == 'closed' && !owner_view%>
+  <% if reservation.status == 'closed' && !@owner_view%>
     <%= form_with(model: [reservation.room, reservation]) do |f| %>
       <%= f.label :grade, class: 'inline' %><br>
       <%= f.select :grade, 0..5, {}, class: 'inline' %><br>
@@ -10,13 +10,13 @@
       <%= f.hidden_field :status, value: 'rated' %>
       <%= f.submit 'Avaliar', class: 'inline-button' %>
     <% end %>
-  <% elsif reservation.status == 'rated' && !owner_view %>
+  <% elsif reservation.status == 'rated' && !@owner_view %>
     <strong><%= "Nota:" %></strong><%= reservation.grade %><br><br>
     <% unless reservation.comment.nil? %>
       <strong><%= "Seu comentário" %></strong><br>
       <%= reservation.comment %><br>
     <% end %>
-  <% elsif reservation.status == 'rated' && owner_view %>
+  <% elsif reservation.status == 'rated' && @owner_view %>
     <strong><%= "Nota:" %></strong><%= reservation.grade %><br>
     <% unless reservation.comment.nil? %>
       <strong><%= "Comentário" %></strong><br>

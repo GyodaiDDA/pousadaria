@@ -16,6 +16,9 @@ pt-BR:
         available: Disponível
         created_at: Criado em
         updated_at: Atualizado em
+        grade: Nota
+        comment: Comentários
+        response: Resposta
     enums:
       reservation:
         status:

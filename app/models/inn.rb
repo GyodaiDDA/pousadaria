@@ -12,7 +12,7 @@ class Inn < ApplicationRecord
   end
 
   def avg_rating
-    reservations.average(:grade)
+    reservations.average(:grade).to_i
   end
 
   def self.by_city

@@ -16,6 +16,14 @@ Rails.application.routes.draw do
     get 'ratings', to: 'ratings'
   end
 
+  namespace :api do
+    namespace :v1 do
+      resources :inns, only: %i[index show] do
+        resources :rooms, only: %i[index]
+      end
+    end
+  end
+
   resources :rooms, only: %i[show new create edit update] do
     resources :seasonals, only: %i[index show new create edit]
     resources :reservations, only: %i[index show new create edit update]
@@ -23,4 +31,5 @@ Rails.application.routes.draw do
   get 'reservations/retrieve', to: 'reservations#retrieve'
   patch 'rooms/:room.id/reservations/:id', to: 'reservations#reclaim'
   get 'reservations/list', to: 'reservations#list'
+
 end

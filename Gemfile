@@ -60,7 +60,7 @@ group :development, :test do
   gem 'faker'
   gem 'guard-rubycritic'
   gem 'rspec-core'
-  gem 'rspec-rails', '~> 6.0.3'
+  gem 'rspec-rails'
   gem 'rubocop', require: false
   gem 'rubocop-rails', require: false
   gem 'rubycritic', require: false

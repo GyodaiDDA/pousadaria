@@ -155,3 +155,17 @@ def make_customer_reservation(room, customer, start_date = nil, period = rand(10
                       estimate: (end_date - start_date).to_i * room.base_price,
                       user_id: customer.id)
 end
+
+
+def make_closed_reservation(room, customer, start_date = nil, period = rand(10..20).days)
+  reservation = make_customer_reservation(room, customer)
+  reservation.check_in = Time.now.change(year: reservation.start_date.year, month: reservation.start_date.month, day: reservation.start_date.day)
+  reservation.check_out = Time.now.change(year: reservation.end_date.year, month: reservation.end_date.month, day: reservation.end_date.day) + 2.hours
+  reservation.status = 'closed'
+  reservation.total_value = reservation.estimate
+  reservation.payment = 'Cartão de crédito'
+  reservation.save
+  reservation.nights = (reservation.end_date - reservation.start_date).to_i
+  reservation.save
+  reservation
+end

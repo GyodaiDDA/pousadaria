@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe '::Customer clica no botão Minhas Reservas' do
-  it 'e visualiza lista de reservations com status' do
+  it 'e visualiza lista de reservas com status' do
     # Arrange
     @owner = make_owner
     @inn = make_inn(@owner)
@@ -25,7 +25,7 @@ describe '::Customer clica no botão Minhas Reservas' do
     expect(page).to have_content(Reservation.l_enum(@reservation2.status))
   end
 
-  it 'e acessa uma das reservations' do
+  it 'e acessa uma das reservas' do
     # Arrange
     @owner = make_owner
     @inn = make_inn(@owner)
@@ -48,7 +48,7 @@ describe '::Customer clica no botão Minhas Reservas' do
     expect(page).to have_button('Cancelar Reserva')
   end
 
-  it 'e cancela a reservation com sucesso' do
+  it 'e cancela a reserva com sucesso' do
     # Arrange
     @owner = make_owner
     @inn = make_inn(@owner)
