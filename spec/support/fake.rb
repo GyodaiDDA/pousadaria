@@ -32,7 +32,12 @@ def inn_desc
    'Uma mistura de pousada e retiro espiritual com aulas de yoga e meditação.', 'Decorada com obras de arte com estúdios disponíveis para hóspedes criativos.',
    'Temática de castelo com torres muralhas e até um banquete estilo medieval.', 'Cercada por um jardim botânico com trilhas secretas e cantinhos de leitura ao ar livre.',
    'Cada quarto representa um país diferente perfeito para viajantes que amam culturas diversas.', 'No topo de um penhasco com uma vista de águia e a sensação de estar acima das nuvens.',
-   'Com várias piscinas naturais e cachoeiras ideal para quem busca refresco e tranquilidade.', 'Uma pousada com labirintos e enigmas para resolver um desafio e tanto!', 'Localizada em meio a dunas com tendas luxuosas e noites estreladas épicas.']
+   'Com várias piscinas naturais e cachoeiras ideal para quem busca refresco e tranquilidade.', 'Uma pousada com labirintos e enigmas para resolver um desafio e tanto!', 'Localizada em meio a dunas com tendas luxuosas e noites estreladas épicas.',
+   'Refúgio na montanha com um observatório astronômico perfeito para os aficionados por estrelas e constelações.', 'Pousada de luxo com spa e terapias holísticas, um oásis para relaxamento e rejuvenescimento.',
+   'Estilo vintage com móveis antigos e um charmoso café literário para os amantes de um bom livro.', 'Pousada temática de cinema com salas de projeção e quartos inspirados em clássicos do cinema.',
+   'Cabanas isoladas com lareiras aconchegantes, ideal para quem busca um refúgio de inverno romântico.', 'Retiro na selva com aulas de sobrevivência e aventuras na floresta, uma experiência única para os destemidos.',
+   'Ambiente retrô com discoteca dos anos 70 e 80, revivendo as épocas douradas do disco.', 'Hospedagem em casas na árvore, uma experiência incrível em meio à natureza.',
+   'Pousada temática de super-heróis, com decoração e atividades inspiradas nos personagens favoritos dos quadrinhos.', 'Localizado em um vinhedo, com degustações de vinho e tours pelas vinícolas, um sonho para os amantes de vinho.']
 end
 
 def make_owner
@@ -75,7 +80,7 @@ def make_cpf(user = nil)
 end
 
 def make_inn(owner, active = 1)
-  Inn.create!(brand_name: "Pousada #{Faker::Food.ingredients} #{Faker::Gender.type}",
+  Inn.create!(brand_name: "Pousada #{Faker::Food.ingredients} #{Faker::Gender.type} #{Faker::University.suffix}",
               legal_name: "#{Faker::Job.title} #{Faker::Space.moon} #{Faker::Company.suffix}",
               vat_number: Faker::Company.brazilian_company_number,
               phone: Faker::PhoneNumber.phone_number,
@@ -126,7 +131,7 @@ def make_seasonals(room)
                       room_id: room.id)
 end
 
-def consult_reservation(room, period = rand(10..20))
+def make_reservation(room, period = rand(10..20))
   if room.reservations.last
     start_date = room.reservations.last.end_date + 7
   else 

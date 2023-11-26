@@ -5,7 +5,7 @@ describe '::Visitante consulta reserva de quarto' do
     # Arrange
     @inn = make_inn(make_owner)
     @room = make_room(@inn)
-    @reservation = consult_reservation(@room, 3)
+    @reservation = make_reservation(@room, 3)
     # Act
     visit root_path
     click_on @inn.brand_name

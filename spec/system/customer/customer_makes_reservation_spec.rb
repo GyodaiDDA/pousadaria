@@ -6,7 +6,7 @@ describe '::Customer consulta reserva' do
     @owner = make_owner
     @inn = make_inn(@owner)
     @room = make_room(@inn)
-    @reservation = consult_reservation(@room, 3)
+    @reservation = make_reservation(@room, 3)
     @customer = make_customer('cpf')
     # Act
     visit root_path

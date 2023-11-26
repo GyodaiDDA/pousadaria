@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       resources :inns, only: %i[index show] do
         resources :rooms, only: %i[index]
       end
+      post 'rooms/:room_id/reservation', to: 'reservations#create', as: :room_reservation
     end
   end
 

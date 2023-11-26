@@ -11,5 +11,7 @@ class Api::V1::InnsController < ActionController::API
   def show
     @inn = Inn.find(params['id'])
     render json: @inn.as_json(except: %i[user_id legal_name vat_number created_at updated_at]).merge(avg_rating: @inn.avg_rating)
+  rescue StandardError => e
+    render json: "404. #{e}", status: :not_found
   end
 end
