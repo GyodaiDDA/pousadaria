@@ -9,7 +9,7 @@ class Api::V1::ReservationsController < ActionController::API
         render json: 'Não há disponibilidade para a reserva', status: :accepted
       end
     else
-      render json: 'Bad request', status: :bad_request
+      render json: { errors: reservation.errors.full_messages }, status: :unprocessable_entity
     end
   end
 end

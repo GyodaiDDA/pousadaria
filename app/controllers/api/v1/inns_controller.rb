@@ -5,7 +5,7 @@ class Api::V1::InnsController < ActionController::API
             else
               Inn.where('brand_name LIKE ? OR city LIKE ? OR zone LIKE ?', "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%")
             end
-    render json: @inns.as_json(except: %i[user_id legal_name vat_number created_at updated_at])
+    render json: @inns.as_json(only: %i[id brand_name city state phone email])
   end
 
   def show

@@ -152,6 +152,7 @@ describe '::API v1 Inns' do
       expect(response.body).to include(Reservation.last.code)
       expect(response.body).to include(Reservation.last.estimate.to_s)
     end
+
     it 'succeeds: unavailable' do
       # Arrange
       owner = make_owner
@@ -160,7 +161,7 @@ describe '::API v1 Inns' do
       reservation1 = make_reservation(room)
       # Act
       reservation_params = { reservation: { room_id: room.id, start_date: reservation1.start_date + 1, end_date: reservation1.end_date + 2, guests: rand(1..room.max_guests) } }
-      post api_v1_room_reservation_path(1), params: reservation_params
+      post api_v1_room_reservation_path(2), params: reservation_params
       # Assert
       expect(response.status).to eq(202)
       expect(response.content_type).to include('application/json')
@@ -173,12 +174,12 @@ describe '::API v1 Inns' do
       inn = make_inn(owner)
       room = make_room(inn)
       # Act
-      reservation_params = { reservation: { room_id: Room.last.id + 4, start_date: Time.zone.today + 1..5.days, end_date: Time.zone.today + 6..10.days, guests: rand(1..room.max_guests) } }
+      reservation_params = { reservation: { room_id: room.id, start_date: Time.zone.today + 1..5.days, end_date: Time.zone.tomorrow, guests: rand(1..room.max_guests) } }
       post api_v1_room_reservation_path(1), params: reservation_params
       # Assert
-      expect(response.status).to eq(400)
+      expect(response.status).to eq(422)
       expect(response.content_type).to include('application/json')
-      expect(response.body).to include('Bad request')
+      expect(response.body).to include('A data final não pode ser menor que a data inicial')
     end
   end
 end
