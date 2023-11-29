@@ -48,6 +48,10 @@
         <% when 'confirmed' %>
           <% if Time.zone.today >= reservation.start_date %>
             <%= form_with(model: [reservation.room, reservation], data: {turbo: false}) do |f| %>
+              <%= f.hidden_field :status, value: 'canceled' %>
+              <%= f.submit 'Cancelar Reserva', method: :patch, class: 'inline-button' %>
+            <% end %>
+            <%= form_with(model: [reservation.room, reservation], data: {turbo: false}) do |f| %>
               <%= f.hidden_field :status, value: 'active' %>
               <%= f.submit 'Fazer check-in', method: :patch, class: 'inline-button' %>
             <% end %>

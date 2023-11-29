@@ -19,6 +19,13 @@ class Reservation < ApplicationRecord
     I18n.t("activerecord.enums.reservation.status.#{status}")
   end
 
+  def check_expiration
+    return unless status == 'available' && start_date < Time.zone.tomorrow
+
+    self.status = 'expired'
+    save
+  end
+
   private
 
   def generate_code

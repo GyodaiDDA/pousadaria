@@ -1,15 +1,11 @@
 class ReservationsController < ApplicationController
-  before_action :set_room, only: %i[index new create]
+  before_action :set_room, only: %i[new create]
   before_action :set_reservation, only: %i[show edit update]
-
-  def index
-    @reservations = Reservation.where(room_id: @room.id, status: 'available')
-  end
 
   def list
     return unless current_user
 
-    @reservations = check_expiration(Reservation.where(user_id: current_user.id))
+    @reservations = ReservationsSelector.new({ user: current_user }).find
   end
 
   def show; end
@@ -53,7 +49,6 @@ class ReservationsController < ApplicationController
   end
 
   def reclaim
-    @reservation.user_id = params[:user_id]
     if @reservation.update(user_params)
       redirect_to room_reservation_path(@reservation.room, @reservation)
     else
@@ -71,12 +66,6 @@ class ReservationsController < ApplicationController
 
   def set_room
     @room = Room.find(params[:room_id])
-  end
-
-  def check_expiration(reservations)
-    reservations.each do |reservation|
-      reservation.update(status: 'expired') if reservation.status == 'available' && reservation.start_date < Time.zone.tomorrow
-    end
   end
 
   def save_to_session_if_user_unknown
