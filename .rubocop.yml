@@ -6,6 +6,7 @@ AllCops:
   Exclude:
     - 'db/*'
     - 'spec/support/*'
+    - 'config/routes.rb'
 
 Style/FrozenStringLiteralComment:
   Enabled: false

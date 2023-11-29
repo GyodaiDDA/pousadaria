@@ -3,7 +3,7 @@ class Reservation < ApplicationRecord
   belongs_to :user, optional: true
   validates :room_id, :start_date, :end_date, :guests, presence: true
   validate :guest_count
-  validates_with DatesPeriodValidator, if: -> { new_record? }
+  validates_with PeriodValidator, if: -> { new_record? }
   before_create :generate_code
   before_create :initial_status
 
@@ -12,11 +12,18 @@ class Reservation < ApplicationRecord
   scope :active, -> { where(status: 'active') }
 
   def initial_status
-    self.status = (DatesChecker.overlap?(self) ? 'unavailable' : 'available')
+    self.status = (OverlapChecker.overlap?(self) ? 'unavailable' : 'available')
   end
 
   def self.l_enum(status)
     I18n.t("activerecord.enums.reservation.status.#{status}")
+  end
+
+  def check_expiration
+    return unless status == 'available' && start_date < Time.zone.tomorrow
+
+    self.status = 'expired'
+    save
   end
 
   private

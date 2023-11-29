@@ -1,4 +1,4 @@
-class DatesPeriodValidator < ActiveModel::Validator
+class PeriodValidator < ActiveModel::Validator
   def validate(record)
     return if record.errors.present?
 

@@ -8,13 +8,12 @@ describe '::Owner acessa uma reserva' do
     @inn = make_inn(@owner)
     @room = make_room(@inn)
     @customer1 = make_customer('cpf')
-    @reservation1 = Reservation.new(room_id: @room.id,
-                                    user_id: @customer1.id,
-                                    start_date: Time.zone.yesterday,
-                                    end_date: Time.zone.tomorrow,
-                                    guests: 1,
-                                    status: 'confirmed')
-    @reservation1.save(validate: false)
+    travel_to Time.zone.now - 10.days
+    @reservation1 = Reservation.create!(room_id: @room.id,
+                                        user_id: @customer1.id,
+                                        start_date: Time.zone.tomorrow,
+                                        end_date: Time.zone.tomorrow + 10.days,
+                                        guests: 1)
     # Act
     visit root_path
     login(@owner)
@@ -27,7 +26,7 @@ describe '::Owner acessa uma reserva' do
     expect(page).to have_content(@reservation1.code)
     expect(page).to have_content(I18n.localize(@reservation1.start_date))
     expect(page).to have_content(I18n.localize(@reservation1.end_date))
-    expect(page).to have_content('Status: Disponível')
+    expect(page).to have_content(Reservation.l_enum(@reservation1.status))
   end
 
   it 'e cancela a reserva' do
@@ -38,9 +37,12 @@ describe '::Owner acessa uma reserva' do
     @customer1 = make_customer('cpf')
     @reservation1 = Reservation.new(room_id: @room.id,
                                     user_id: @customer1.id,
-                                    start_date: Time.zone.yesterday - 2.days,
-                                    end_date: Time.zone.tomorrow,
+                                    start_date: Time.zone.tomorrow,
+                                    end_date: Time.zone.tomorrow + 10.days,
                                     guests: 1)
+    @reservation1.save(validate: false)
+    @reservation1.start_date = Time.zone.now - 3.days
+    @reservation1.status = 'confirmed'
     @reservation1.save(validate: false)
     # Act
     visit root_path

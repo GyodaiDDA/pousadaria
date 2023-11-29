@@ -38,12 +38,14 @@ class InnsController < ApplicationController
 
   def search
     @key = params[:search]
+    return if @key.blank?
+
     @active_inns =
       Inn.where('brand_name LIKE ? OR city LIKE ? OR zone LIKE ?', "%#{@key}%", "%#{@key}%", "%#{@key}%")
   end
 
   def reservations
-    @reservations = current_user.inn.reservations
+    @reservations = ReservationsSelector.new({ inn: current_user.inn }).find
     @reservations = @reservations.active if params[:active].present?
   end
 

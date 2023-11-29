@@ -1,5 +1,4 @@
-# app/services/price_calculator.rb
-class DatesChecker
+class OverlapChecker
   def self.overlap?(record)
     return unless record.start_date && record.end_date && record.room_id
 
