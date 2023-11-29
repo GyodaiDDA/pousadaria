@@ -33,7 +33,7 @@ class InnsController < ApplicationController
   end
 
   def cities
-    @inns_by_city = Inn.by_city
+    @inns_by_cities = Inn.by_cities
   end
 
   def search
@@ -45,7 +45,7 @@ class InnsController < ApplicationController
   end
 
   def reservations
-    @reservations = ReservationsSelector.new({ inn: current_user.inn }).find
+    @reservations = current_user.inn.reservations
     @reservations = @reservations.active if params[:active].present?
   end
 

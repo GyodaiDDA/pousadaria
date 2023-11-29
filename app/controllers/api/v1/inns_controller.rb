@@ -11,7 +11,23 @@ class Api::V1::InnsController < ActionController::API
   def show
     @inn = Inn.find(params['id'])
     render json: @inn.as_json(except: %i[user_id legal_name vat_number created_at updated_at]).merge(avg_rating: @inn.avg_rating)
+  rescue StandardError
+    render json: 'Não foi possível encontrar a informação.', status: :not_found
+  end
+
+  def cities
+    @cities = Inn.pluck(:city, :state)
+    render json: @cities.as_json, status: :ok if @cities.present?
+    render json: [], status: :no_content if @cities.blank?
+  rescue StandardError
+    render json: 'Não foi possível encontrar a informação.', status: :not_found
+  end
+
+  def location
+    @inns = Inn.by_location(params)
+    render json: @inns.as_json, status: :ok if @inns.present?
+    render json: [], status: :no_content if @inns.blank?
   rescue StandardError => e
-    render json: "404. #{e}", status: :not_found
+    render json: "#{e} Não foi possível encontrar a informação.", status: :not_found
   end
 end

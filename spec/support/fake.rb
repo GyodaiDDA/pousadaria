@@ -79,7 +79,7 @@ def make_cpf(user = nil)
   end
 end
 
-def make_inn(owner, active = 1)
+def make_inn(owner, city = city_name.sample, active = 1)
   Inn.create!(brand_name: "Pousada #{Faker::Food.ingredients} #{Faker::Gender.type} #{Faker::University.suffix}",
               legal_name: "#{Faker::Job.title} #{Faker::Space.moon} #{Faker::Company.suffix}",
               vat_number: Faker::Company.brazilian_company_number,
@@ -87,7 +87,7 @@ def make_inn(owner, active = 1)
               email: Faker::Internet.email,
               address: "#{Faker::Address.street_suffix} #{Faker::Address.street_name}, #{Faker::Address.building_number}",
               zone: "#{['Vila', 'Jd.', 'Recanto'].sample} #{Faker::Address.city}",
-              city: city_name.sample, state: state_letters.sample, postal_code: Faker::Address.postcode,
+              city: city, state: state_letters.sample, postal_code: Faker::Address.postcode,
               description: inn_desc.sample,
               payment_opt: ["Cartão de Crédito", "Cartão de Débito, Pix", "Pix, Dinheiro, Transferência", "Dinheiro", "PayPal", "Todos os cartões e GooglePay"].sample,
               pet_friendly: [true, false].sample,

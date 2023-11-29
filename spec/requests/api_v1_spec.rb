@@ -82,7 +82,7 @@ describe '::API v1 Inns' do
       # Assert
       expect(response.status).to eq(404)
       expect(response.content_type).to include('application/json')
-      expect(response.body).to include("404. Couldn't find Inn with 'id'")
+      expect(response.body).to include('Não foi possível encontrar a informação.')
     end
   end
 
@@ -180,6 +180,119 @@ describe '::API v1 Inns' do
       expect(response.status).to eq(422)
       expect(response.content_type).to include('application/json')
       expect(response.body).to include('A data final não pode ser menor que a data inicial')
+    end
+  end
+
+  context 'GET api_v1_cities' do
+    it 'succeeds' do
+      # Arrange
+      ['Casa Nova', 'Dom Macedo', 'Bauru', 'Formosa do Sul', 'Brejo da Cruz', 'Porto de São Domingos'].each do |city|
+        owner = make_owner
+        make_inn(owner, city)
+      end
+      # Act
+      get api_v1_cities_path
+      # Assert
+      expect(response.status).to eq(200)
+      expect(response.content_type).to include('application/json')
+      expect(response.body).to include('Casa Nova')
+      expect(response.body).to include('Dom Macedo')
+      expect(response.body).to include('Bauru')
+      expect(response.body).to include('Formosa do Sul')
+      expect(response.body).to include('Brejo da Cruz')
+      expect(response.body).to include('Porto de São Domingos')
+    end
+
+    it 'fails' do
+      # Arrange
+      # Act
+      get api_v1_cities_path
+      # Assert
+      expect(response.status).to eq(204)
+      expect(response.body).not_to include('Casa Nova')
+      expect(response.body).not_to include('Bauru')
+    end
+  end
+
+  context 'GET api_v1_location' do
+    it 'succeeds / city & state' do
+      # Arrange
+      @inn1 = make_inn(make_owner)
+      @inn2 = make_inn(make_owner)
+      @inn3 = make_inn(make_owner)
+      @inn1.update(brand_name: 'Paulistana da Gema', city: 'São Paulo', state: 'SP')
+      @inn2.update(brand_name: 'Pousada Mineirinha', city: 'Belo Horizonte', state: 'MG')
+      @inn3.update(brand_name: 'Bauruense', city: 'Bauru', state: 'SP')
+      # Act
+      get api_v1_location_path, params: { city: 'São Paulo', state: 'SP' }
+      # Assert
+      expect(response.status).to eq(200)
+      expect(response.content_type).to include('application/json')
+      expect(response.body).to include('Paulistana da Gema')
+      expect(response.body).not_to include('Pousada Mineirinha')
+      expect(response.body).not_to include('Bauruense')
+    end
+
+    it 'succeeds / city' do
+      # Arrange
+      @inn1 = make_inn(make_owner)
+      @inn2 = make_inn(make_owner)
+      @inn3 = make_inn(make_owner)
+      @inn4 = make_inn(make_owner)
+      @inn1.update(brand_name: 'Paulistana da Gema', city: 'São Paulo', state: 'SP')
+      @inn2.update(brand_name: 'Pousada Mineirinha', city: 'Belo Horizonte', state: 'MG')
+      @inn3.update(brand_name: 'Bauruense', city: 'Bauru', state: 'SP')
+      @inn4.update(brand_name: 'Aconchego do Interior', city: 'São Paulo', state: 'MG')
+      # Act
+      get api_v1_location_path, params: { city: 'São Paulo' }
+      # Assert
+      expect(response.status).to eq(200)
+      expect(response.content_type).to include('application/json')
+      expect(response.body).to include('Paulistana da Gema')
+      expect(response.body).to include('Aconchego do Interior')
+      expect(response.body).not_to include('Bauruense')
+      expect(response.body).not_to include('Pousada Mineirinha')
+    end
+
+    it 'succeeds / state' do
+      # Arrange
+      @inn1 = make_inn(make_owner)
+      @inn2 = make_inn(make_owner)
+      @inn3 = make_inn(make_owner)
+      @inn4 = make_inn(make_owner)
+      @inn1.update(brand_name: 'Paulistana da Gema', city: 'São Paulo', state: 'SP')
+      @inn2.update(brand_name: 'Pousada Mineirinha', city: 'Belo Horizonte', state: 'MG')
+      @inn3.update(brand_name: 'Bauruense', city: 'Bauru', state: 'SP')
+      @inn4.update(brand_name: 'Aconchego do Interior', city: 'São Paulo', state: 'MG')
+      # Act
+      get api_v1_location_path, params: { state: 'MG' }
+      # Assert
+      expect(response.status).to eq(200)
+      expect(response.content_type).to include('application/json')
+      expect(response.body).not_to include('Paulistana da Gema')
+      expect(response.body).to include('Aconchego do Interior')
+      expect(response.body).not_to include('Bauruense')
+      expect(response.body).to include('Pousada Mineirinha')
+    end
+
+    it 'succeeds / 204' do
+      # Arrange
+      @inn1 = make_inn(make_owner)
+      @inn2 = make_inn(make_owner)
+      @inn3 = make_inn(make_owner)
+      @inn4 = make_inn(make_owner)
+      @inn1.update(brand_name: 'Paulistana da Gema', city: 'São Paulo', state: 'SP')
+      @inn2.update(brand_name: 'Pousada Mineirinha', city: 'Belo Horizonte', state: 'MG')
+      @inn3.update(brand_name: 'Bauruense', city: 'Bauru', state: 'SP')
+      @inn4.update(brand_name: 'Aconchego do Interior', city: 'São Paulo', state: 'MG')
+      # Act
+      get api_v1_location_path, params: { city: 'New York' }
+      # Assert
+      expect(response.status).to eq(204)
+      expect(response.body).not_to include('Paulistana da Gema')
+      expect(response.body).not_to include('Aconchego do Interior')
+      expect(response.body).not_to include('Bauruense')
+      expect(response.body).not_to include('Pousada Mineirinha')
     end
   end
 end

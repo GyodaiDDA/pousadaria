@@ -15,10 +15,19 @@ class Inn < ApplicationRecord
     reservations.average(:grade).to_i
   end
 
-  def self.by_city
+  def self.by_cities
     Inn.where(active: true)
        .order(:city)
        .order(:brand_name)
        .group_by(&:city)
+  end
+
+  def self.by_location(params)
+    city = params['city']
+    state = params['state']
+    @inns = Inn.where(active: true)
+    @inns = @inns.where('city LIKE ?', "%#{city}") if city.present?
+    @inns = @inns.where('state LIKE ?', "%#{state}") if state.present?
+    @inns.order(:state).order(:city)
   end
 end
