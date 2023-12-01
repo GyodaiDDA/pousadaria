@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe '::Visitante consulta reserva de quarto' do
+describe '::Não-logado consulta reserva de quarto' do
   it 'e não há disponibilidade de data' do
     # Arrange
     @inn = make_inn(make_owner)
@@ -84,7 +84,7 @@ describe '::Visitante consulta reserva de quarto' do
       # Arrange
       @inn = make_inn(make_owner)
       @room = make_room(@inn)
-      @visitor_account = make_customer('CPF')
+      @unknow_customer_account = make_customer('CPF')
       # Act
       visit root_path
       click_on @inn.brand_name
@@ -95,8 +95,8 @@ describe '::Visitante consulta reserva de quarto' do
       select rand(1..@room.max_guests).to_s, from: 'Hóspedes'
       click_button 'Fazer Reserva'
       within 'form#new_user' do
-        fill_in 'E-mail', with: @visitor_account.email
-        fill_in 'Senha', with: @visitor_account.password
+        fill_in 'E-mail', with: @unknow_customer_account.email
+        fill_in 'Senha', with: @unknow_customer_account.password
         click_on 'Entrar'
       end
       # Assert
@@ -115,7 +115,7 @@ describe '::Visitante consulta reserva de quarto' do
       # Arrange
       @inn = make_inn(make_owner)
       @room = make_room(@inn)
-      @visitor_account = make_customer('CPF')
+      @unknow_customer_account = make_customer('CPF')
       # Act
       visit root_path
       click_on @inn.brand_name
@@ -126,8 +126,8 @@ describe '::Visitante consulta reserva de quarto' do
       select rand(1..@room.max_guests).to_s, from: 'Hóspedes'
       click_button 'Fazer Reserva'
       within 'form#new_user' do
-        fill_in 'E-mail', with: @visitor_account.email
-        fill_in 'Senha', with: @visitor_account.password
+        fill_in 'E-mail', with: @unknow_customer_account.email
+        fill_in 'Senha', with: @unknow_customer_account.password
         click_on 'Entrar'
       end
       click_button 'Confirmar Reserva'

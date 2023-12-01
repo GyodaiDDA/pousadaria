@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe '::Visitante vê a página da Pousada' do
+describe '::Não-logado vê a página da Pousada' do
   it 'com lista de quartos ativos' do
     # Arrange
     @owner = make_owner

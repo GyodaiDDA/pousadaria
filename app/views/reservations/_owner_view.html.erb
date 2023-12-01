@@ -7,25 +7,33 @@
     </tr>
       <% days = (reservation.end_date - reservation.start_date).ceil %>
     <tr>
-      <td>  
+      <td rowspan = 4 class="block">  
         <p>
           <%= "Código: #{reservation.code}" %>
         </p>
         <p>
-          <%= "Hóspede: #{User.find_by(id: reservation.user_id).full_name}" %>
-        </p>
-        <p>
           <%= "Acomodações: #{reservation.room.name}" %>
         </p>
-        <br>
         <p>
-          <%= "Diárias: #{days}" %>
+          <% if reservation.user_id %>
+            <% customer = Customer.find_by(id: reservation.user_id) %>
+            <%= "<br>".html_safe if customer.email %>
+            <%= "Cliente: #{customer.full_name}" if customer.full_name %>
+            <%= "<br>".html_safe if customer.full_name %>
+            <%= "CPF: #{customer.document}" if customer.document %>
+            <%= "<br>".html_safe if customer.document %>
+            <%= "contato: #{customer.email}" if customer.email %>
+            <%= "<br><br>".html_safe if customer.email %>
+          <% end %>
         </p>
         <p>
           <%= "Check-in: #{l(reservation.start_date)} até as #{l(reservation.room.inn.check_in)}" %>
         </p>
         <p>
           <%= "Check-out: #{l(reservation.end_date)} até as #{l(reservation.room.inn.check_out)}" %>
+        </p>
+        <p>
+          <%= "Diárias: #{days}" %>
         </p>
         <p>
           <%= "Hóspedes: #{reservation.guests}" %>
@@ -37,58 +45,52 @@
           <%= "Status: "%><%= Reservation.l_enum(reservation.status) %>
         </p>
         <p>
-        <% case reservation.status %>
-        <% when 'available' %>
-          <% if Time.zone.today >= reservation.start_date + 2.day %>
-            <%= form_with(model: [reservation.room, reservation], data: {turbo: false}) do |f| %>
-              <%= f.hidden_field :status, value: 'canceled' %>
-              <%= f.submit 'Cancelar Reserva', method: :patch, class: 'inline-button' %>
-            <% end %>
-          <% end %>
-        <% when 'confirmed' %>
-          <% if Time.zone.today >= reservation.start_date %>
-            <%= form_with(model: [reservation.room, reservation], data: {turbo: false}) do |f| %>
-              <%= f.hidden_field :status, value: 'canceled' %>
-              <%= f.submit 'Cancelar Reserva', method: :patch, class: 'inline-button' %>
-            <% end %>
-            <%= form_with(model: [reservation.room, reservation], data: {turbo: false}) do |f| %>
-              <%= f.hidden_field :status, value: 'active' %>
-              <%= f.submit 'Fazer check-in', method: :patch, class: 'inline-button' %>
-            <% end %>
-          <% end %>
-        <% when 'active' %>
-          <%= "Check-in Efetivo: "%><%= reservation.check_in %>
-          <%= form_with(model: [reservation.room, reservation], data: {turbo: false}) do |f| %>
-            <%= f.hidden_field :status, value: 'closing' %>
-            <%= f.submit 'Iniciar check-out', method: :patch, class: 'inline-button' %>
-          <% end %>
-        <% when 'closing' %>
-          <%= "Check-in Efetivo: "%><%= l(reservation.check_in, format: :superlong) %><br>
-          <%= "Check-out Efetivo: "%><%= l(reservation.check_out, format: :superlong) %><br>
-          <%= "Diárias: #{(((reservation.check_out - reservation.check_in)/(60 * 60 * 24))).ceil}" %><br>
-          <%= "Valor a pagar: #{number_to_currency(reservation.total_value, delimiter: '')}" %><br>
-            <%= form_with(model: [reservation.room, reservation], data: {turbo: false}) do |f| %>
-              <%= f.select :payment, reservation.room.inn.payment_opt.to_s.split(','), {}, class: 'inline' %><br>
-              <%= f.hidden_field :status, value: 'closed' %>
-              <%= f.submit 'Finalizar check-out', method: :patch, class: 'inline-button' %>
-          <% end %>
-        <% when 'closed' %>
-          <%= "Check-in Efetivo: "%><%= l(reservation.check_in, format: :superlong) %><br>
-          <%= "Check-out Efetivo: "%><%= l(reservation.check_out, format: :superlong) %><br>
-          <%= "Diárias: #{(((reservation.check_out - reservation.check_in)/(60 * 60 * 24))).ceil}" %><br>
-          <%= "Valor pago: #{number_to_currency(reservation.total_value, delimiter: '')}" %><br>
-          <%= "Forma de pagto: #{reservation.payment}" %>
-        <% end %>
+            <%= "<br>".html_safe if reservation.check_in %>
+            <%= "Check-in Efetivo: #{l(reservation.check_in, format: :superlong)}" if reservation.check_in %>
+            <%= "<br>".html_safe if reservation.check_in %>
+            <%= "Check-out Efetivo: #{l(reservation.check_out, format: :superlong)}"  if reservation.check_out %>
+            <%= "<br>".html_safe if reservation.check_out %>
+            <%= "Diárias: #{(((reservation.check_out - reservation.check_in)/(60 * 60 * 24))).ceil}" if reservation.check_out %>
+            <%= "<br>".html_safe if reservation.check_out %>
+            <%= "Valor final: #{number_to_currency(reservation.total_value, delimiter: '')}" if reservation.total_value %>
+            <%= "<br>".html_safe if reservation.total_value %>
+            <%= "Forma de pagto: #{reservation.payment}" if reservation.payment %>
+            <%= "<br>".html_safe if reservation.payment %>
         </p>
+        <p>
+          <% if reservation.status == 'confirmed' && Time.zone.today >= (reservation.start_date + 2.days) %>
+            <br>
+            <%= form_with(model: [reservation.room, reservation], data: { turbo: false }) do |f| %>
+              <%= f.hidden_field(:status, value: 'canceled') %>
+              <%= f.submit('Cancelar reserva', method: :patch, class: 'inline-button') %>
+            <% end %>
+          <% end %>
         <%= render 'errors' %>
+        </div>
+      </td>
+      <td class="block">
+        <div>
+        <% if reservation.visitors.size > 0 %>
+          <h4><%= 'Hóspedes Registrados' %></h4><br> 
+        <% else %>
+          <h4><%= 'Cadastro de Hóspedes' %></h4><br> 
+        <% end %>
+        <% reservation.visitors.each_with_index do |visitor, index| %>
+          <p>
+            <%= "Hóspede #{index + 1}: " %>
+            <%= visitor.full_name %><br>
+            <%= "E-mail: #{visitor.email}" %><br>
+            <%= "Documento: #{visitor.document}" %>
+          </p><br>
+        <% end %>
         </div>
       </td>
     </tr>
     <tr>
-      <td rowspan="2">
-        <% if reservation.status == 'closed' || reservation.status == 'rated' || reservation.status == 'answered' %>
-          <%= render partial: 'rate', locals: { reservation: reservation, owner_view: @owner_view } %>
-        <% end %>
+      <td class="block">
+        <div>
+          <%= reservation_statuses(reservation) %>
+        </div>
       </td>
     </tr>
   </table>

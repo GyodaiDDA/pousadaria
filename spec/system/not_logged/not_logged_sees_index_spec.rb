@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe '::Visitante acessa o site' do
+describe '::Não-logado acessa o site' do
   before(:each) do
     6.times do
       @owner = make_owner

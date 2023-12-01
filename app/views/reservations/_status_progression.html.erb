@@ -1,0 +1,13 @@
+<br>
+<div>
+  <%= form_with(model: [room, reservation]) do |f| %>
+    <% if status == 'closed' %>
+      <%= f.label :payment %>
+      <%= f.select :payment, room.inn.payment_opt.split(/\,/), {} %>
+    <% end %>
+    <%= f.hidden_field :reservation_id, value: reservation.id %>
+    <%= f.hidden_field :status, value: status %>
+    <br>
+    <%= f.submit "#{button_tag}", locals: {reservation: reservation} %>
+  <% end %>
+</div>

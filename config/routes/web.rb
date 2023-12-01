@@ -19,6 +19,11 @@ resources :rooms, only: %i[show new create edit update] do
   resources :seasonals, only: %i[index show new create edit]
   resources :reservations, only: %i[show new create edit update]
 end
+
 get 'reservations/retrieve', to: 'reservations#retrieve'
 patch 'rooms/:room.id/reservations/:id', to: 'reservations#reclaim'
 get 'reservations/list', to: 'reservations#list'
+
+resources :reservations do
+  resources :visitors, only: %i[new create]
+end

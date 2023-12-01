@@ -1,13 +1,14 @@
 class Reservation < ApplicationRecord
   belongs_to :room
   belongs_to :user, optional: true
+  has_many :visitors, dependent: :restrict_with_error
   validates :room_id, :start_date, :end_date, :guests, presence: true
   validate :guest_count
   validates_with PeriodValidator, if: -> { new_record? }
   before_create :generate_code
   before_create :initial_status
 
-  enum status: { unavailable: 0, available: 1, expired: 2, confirmed: 3, canceled: 4, active: 5, closing: 6, closed: 7, rated: 8, answered: 9 }
+  enum status: { unavailable: 0, available: 1, expired: 2, confirmed: 3, canceled: 4, registered: 5, active: 6, closing: 7, closed: 8, rated: 9, answered: 10 }
 
   scope :active, -> { where(status: 'active') }
 

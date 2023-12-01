@@ -1,0 +1,10 @@
+---
+pt-BR:
+  activerecord:
+    models:
+      visitor: Hóspede
+    attributes:
+      visitor:
+        full_name: Nome Completo
+        document: CPF ou RG
+        email: E-mail

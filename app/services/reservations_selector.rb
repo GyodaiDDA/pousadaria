@@ -1,5 +1,6 @@
 class ReservationsSelector
   def initialize(params = nil)
+    Rails.logger.info " Ó OS PARAMS: #{params}"
     @user = params[:user]
     @room = params[:room]
     @inn = params[:inn]
@@ -8,8 +9,10 @@ class ReservationsSelector
 
   def find
     if @status
+      Rails.logger.info 'Com status'
       find_with_status
     else
+      Rails.logger.info 'Sem status'
       find_all_status
     end
   end
@@ -24,6 +27,7 @@ class ReservationsSelector
                    else
                      Reservation.all
                    end
+    Rails.logger.info reservations.size
     expired?(reservations)
     reservations
   end

@@ -1,0 +1,12 @@
+<%= render 'errors' %>
+<%= form_with(model: [@reservation, @visitor], data: {turbo: false}) do |f| %>
+  <%= f.label :full_name, class: 'inline' %>
+  <%= f.text_field :full_name, class: 'inline' %><br>
+  <%= f.label :document, class: 'inline' %>
+  <%= f.text_field :document, class: 'inline' %><br>
+  <%= f.label :email, class: 'inline' %>
+  <%= f.text_field :email, class: 'inline' %><br>
+  <%= f.hidden_field :reservation_id, value: @reservation.id %>
+  <%= f.submit "Registrar", class: 'inline-button' %>
+  <br><br><br>
+<% end %>

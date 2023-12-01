@@ -1,0 +1,26 @@
+  <% if reservation.status == 'rated' && @owner_view %>
+    <%= "Nota:" %><%= reservation.grade %><br>
+    <% unless reservation.comment.nil? %>
+      <%= "Comentário" %><br>
+      <%= reservation.comment %><br>
+    <% end %>
+
+    <%= form_with(model: [reservation.room, reservation]) do |f| %>
+
+      <%= f.label :response, class: 'inline' %><br>
+      <%= f.text_area :response, class: 'inline' %><br>
+      
+      <%= f.hidden_field :status, value: 'answered' %>
+      <%= f.submit 'Responder', class: 'inline-button' %><br><br>
+    <% end %>
+
+  <% elsif reservation.status == 'answered' %>
+    <%= "Nota:"%>
+    <%= reservation.grade %><br>
+    <% unless reservation.comment.nil? %>
+      <%= "Comentário" %><br>
+      <%= reservation.comment %><br><br>
+    <% end %>
+    <%= "Resposta da #{reservation.room.inn.brand_name}" %><br>
+    <%= reservation.response %>
+  <% end %>

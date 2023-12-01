@@ -12,7 +12,7 @@
           <p class="alert"><%= 'Garanta sua reserva fazendo login no site.' %></p>
           <%= render partial: 'devise/sessions/login', locals: { resource: User.new, resource_name: 'user', reservation_id: reservation.id } %>         
         <% elsif reservation.status == 'closed' || reservation.status == 'rated' || reservation.status == 'answered' %>
-          <%= render partial: 'rate', locals: { reservation: reservation } %>
+          <%= render partial: 'rating', locals: { reservation: reservation } %>
         <% end %>
       </td>
     </tr>

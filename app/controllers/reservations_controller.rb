@@ -5,6 +5,7 @@ class ReservationsController < ApplicationController
   def list
     return unless current_user
 
+    Rails.logger.info "Ó O USER: #{current_user.id}"
     @reservations = ReservationsSelector.new({ user: current_user }).find
   end
 
@@ -35,7 +36,9 @@ class ReservationsController < ApplicationController
 
   def update
     if @reservation.update(update_params)
+      Rails.logger.info "UM! : #{update_params} / #{@reservation.id}"
       StatusChange.new.procedure(@reservation, update_params)
+      Rails.logger.info "UM! : #{update_params} / #{@reservation.id}"
       flash[:notice] = MessageService.new.reservation_status_update(@reservation)
       redirect_to room_reservation_path(@reservation.room, @reservation)
     else

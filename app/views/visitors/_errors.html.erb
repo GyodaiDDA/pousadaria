@@ -1,0 +1,8 @@
+<% if @visitor.errors.any? %>
+  <div class="alert">
+    Verifique os erros abaixo:
+    <% @visitor.errors.full_messages.each_with_index do |msg, i| %>
+      <br><%= "#{i+1}. #{msg}" %>
+    <% end %>
+  </div>
+<% end %>
