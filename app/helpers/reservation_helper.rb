@@ -1,5 +1,5 @@
 module ReservationHelper
-  def reservation_statuses(reservation)
+  def reservation_management(reservation)
     case reservation.status
     when 'confirmed'
       confirmed_menu(reservation)
@@ -9,10 +9,15 @@ module ReservationHelper
       active_menu(reservation)
     when 'closing'
       checking_out_menu(reservation)
+    when 'rated'
+      rated_menu(reservation)
+    end
+  end
+
+  def reservation_dashboard(reservation)
+    case reservation.status
     when 'closed'
       closed_menu(reservation)
-    when 'rated' 'answered'
-      rating_menu(reservation)
     end
   end
 
@@ -44,7 +49,7 @@ module ReservationHelper
     render(partial: 'reservations/status_progression', locals: { reservation: reservation, room: reservation.room, button_tag: 'Avaliar', status: 'rated' })
   end
 
-  def rating_menu
-    render(partial: 'reservations/answering', locals: { reservation: reservation, owner_view: @owner_view })
+  def rated_menu(reservation)
+    render(partial: 'reservations/status_progression', locals: { reservation: reservation, room: reservation.room, button_tag: 'Responder', status: 'answered' })
   end
 end

@@ -1,0 +1,75 @@
+<div>
+  <table>    
+    <tr>
+      <td class="list" colspan="2">
+        <h4><%= "#{reservation.room.inn.brand_name}" %></h4>
+      </td>
+    </tr>
+      
+    <tr>
+      <td class="block">
+        <%= "Código: #{reservation.code}" %><br>
+        <%= "Acomodações: #{reservation.room.name}" %><br><br>
+        <% if user_signed_in? && current_user.document && current_user.full_name %>
+          <% case reservation.status %>
+          <% when 'available', 'confirmed', 'active' %>
+            <% if reservation.check_in.nil? %>
+              <%= "Check-in: #{l(reservation.start_date)} até as #{l(reservation.room.inn.check_in)}" %>
+            <% else %>
+              <%= "Check-in realizado em "%><%= l(reservation.check_in, format: :superlong) %>
+            <% end %><br>
+            <%= "Check-out: #{l(reservation.end_date)} até as #{l(reservation.room.inn.check_out)}" %><br>
+            <%= "Hóspedes: #{reservation.guests}" %><br><br>
+            <%= "Diárias: #{(reservation.end_date - reservation.start_date).to_i.nonzero? || 1}" %><br>
+            <%= "Valor total: #{number_to_currency(reservation.estimate)}" %><br>
+            <%= "Aceita: #{reservation.room.inn.payment_opt}" %><br>
+          <% when 'closing', 'closed' %>
+            <%= "Diárias: #{reservation.nights}" %><br>
+            <%= "Check-in realizado em "%><%= l(reservation.check_in, format: :superlong) %><br>
+            <%= "Check-out realizado em "%><%= l(reservation.check_out, format: :superlong) %><br>
+            <%= "Valor pago: #{number_to_currency(reservation.total_value, delimiter: '')}" %><br>
+            <%= "Forma de pagto: #{reservation.payment}" %>
+          <% end %>
+          
+          <% if reservation.status == 'available' %>
+            <%= form_with(model: [reservation.room, reservation], data: {turbo: false}) do |f| %>
+              <%= f.hidden_field :status, value: "confirmed" %>
+              <%= f.submit 'Confirmar Reserva', method: :get, class: 'inline-button' %>
+            <% end %>
+          <% elsif reservation.status == 'confirmed' && (reservation.start_date - Time.zone.today).to_i >= 7%>
+            <%= form_with(model: [reservation.room, reservation]) do |f| %>
+              <%= f.hidden_field :status, value: 'canceled' %>
+              <%= f.submit 'Cancelar Reserva', method: :patch, class: 'inline-button' %>
+            <% end %>
+          <% end %>
+        <% else %>
+          <%= "Check-in: #{l(reservation.start_date)} até as #{l(reservation.room.inn.check_in)}" %><br>
+          <%= "Check-out: #{l(reservation.end_date)} até as #{l(reservation.room.inn.check_out)}" %><br>
+          <%= "Hóspedes: #{reservation.guests}" %><br><br>
+          <%= "Diárias: #{(reservation.end_date - reservation.start_date).to_i.nonzero? || 1}" %><br>
+          <%= "Valor total: #{number_to_currency(reservation.estimate)}" %><br>
+          <%= "Aceita: #{reservation.room.inn.payment_opt}" %><br><br>
+          <%= button_tag 'Confirmar Reserva', class: 'inline-button', disabled: true %>
+        <% end %>
+        <%= render 'errors' %>
+      </td>
+      <td class="list">
+        <% if user_signed_in? && (current_user.document.nil? || current_user.full_name.nil?) %>
+          <p class="alert"><%= 'Complete seu cadastro e garanta sua reserva.' %></p>
+          <%= render partial: 'devise/registrations/edit_document', locals: { resource: current_user, resource_name: current_user.user_type } %>
+        <% elsif !user_signed_in? %>
+          <p class="alert"><%= 'Garanta sua reserva fazendo login no site.' %></p>
+          <%= render partial: 'devise/sessions/login', locals: { resource: User.new, resource_name: 'user', reservation_id: reservation.id } %>         
+        <% end %>
+        <% if reservation.status == 'closed' %>
+          <%= reservation_dashboard(reservation) %>
+        <% elsif reservation.status ==  'rated' || reservation.status == 'answered' %>
+          <h4>Avaliação da estadia</h4><br>
+          <%= "Sua nota: #{reservation.grade}" if reservation.grade %><br>
+          <%= "Seu comentário: #{reservation.comment}" if reservation.comment %><br>
+          <%= "Resposta da pousada: #{reservation.response}" if reservation.response %>
+        <% end %>
+      </td>
+    </tr>
+  </table>
+</div>

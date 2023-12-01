@@ -67,6 +67,7 @@ describe '::quer fazer reserva' do
     fill_in 'Senha', with: @customer.password
     click_on 'Entrar'
     click_on 'Continuar Reserva'
+    fill_in 'Nome completo', with: 'Cesar Tralha'
     fill_in 'CPF', with: make_cpf
     fill_in 'Senha atual', with: @customer.password
     click_on 'Atualizar'

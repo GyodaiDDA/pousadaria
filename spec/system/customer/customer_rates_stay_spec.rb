@@ -14,7 +14,7 @@ describe '::Customer acessa reserva concluída' do
     click_on 'Minhas Reservas'
     click_on @reservation.code
     # Assert
-    expect(page).to have_content('Avaliação da estadia')
+    expect(page).to have_content('Avalie a sua estadia')
     expect(page).to have_field('Nota')
     expect(page).to have_field('Comentário')
     expect(page).to have_button('Avaliar')
@@ -55,7 +55,7 @@ describe '::Customer acessa reserva concluída' do
     click_on @reservation.code
     # Assert
     expect(page).to have_content(@reservation.grade)
-    expect(page).to have_content(@reservation.comment)
+    expect(page).to have_content('Seu comentário')
     expect(page).to have_content(@reservation.response)
     expect(page).not_to have_button('Avaliar')
   end

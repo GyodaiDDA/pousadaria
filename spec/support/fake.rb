@@ -185,8 +185,9 @@ def make_answered_reservation(room, customer, start_date = nil, period = rand(10
   reservation.grade = rand(1..5)
   reservation.comment = "A estadia foi boa. Tivemos um problema de #{Faker::ElectricalComponents.active} do #{Faker::ElectricalComponents.passive} e não deu pra ver #{Faker::Space.planet} dar a volta completa em #{Faker::Space.moon}."
   reservation.response = "Esperamos contar com a sua preferência!"
+  reservation.status = 'answered'
   reservation.save
-  reservation.nights = (reservation.end_date - reservation.start_date).to_i
-  reservation.save
+  #reservation.nights = (reservation.end_date - reservation.start_date).to_i
+  #reservation.save
   reservation
 end

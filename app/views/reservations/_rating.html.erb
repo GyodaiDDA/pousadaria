@@ -3,7 +3,7 @@
   <p class="inline"><%= "Avaliação da estadia" %><br>
 
   <% if reservation.status == 'closed' && !@owner_view %>
-    <%= reservation_statuses(reservation) %>
+    <%= reservation_management(reservation) %>
     
 
   <% elsif reservation.status == 'rated' %>

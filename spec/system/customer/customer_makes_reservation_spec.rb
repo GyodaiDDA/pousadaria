@@ -77,7 +77,7 @@ describe '::Customer consulta reserva' do
     expect(current_path).to eq(room_reservation_path(@room, Reservation.last))
     expect(page).to have_content('Seu cadastrado foi atualizado.')
     expect(page).to have_content("Código: #{@room.reservations.last.code}")
-    expect(page).to have_content('Valor total')
+    expect(page).to have_content('Valor da reserva')
     expect(page).to have_button('Confirmar Reserva')
   end
 
