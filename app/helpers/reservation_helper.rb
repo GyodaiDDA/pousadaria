@@ -9,7 +9,9 @@ module ReservationHelper
       active_menu(reservation)
     when 'closing'
       checking_out_menu(reservation)
-    when 'closed' 'rated' 'answered'
+    when 'closed'
+      closed_menu(reservation)
+    when 'rated' 'answered'
       rating_menu(reservation)
     end
   end
@@ -36,6 +38,10 @@ module ReservationHelper
 
   def checking_out_menu(reservation)
     render(partial: 'reservations/status_progression', locals: { reservation: reservation, room: reservation.room, button_tag: 'Finalizar', status: 'closed' })
+  end
+
+  def closed_menu(reservation)
+    render(partial: 'reservations/status_progression', locals: { reservation: reservation, room: reservation.room, button_tag: 'Avaliar', status: 'rated' })
   end
 
   def rating_menu

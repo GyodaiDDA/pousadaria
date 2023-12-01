@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe '::Owner visualiza detalhes' do
-  it 'da sua pousada' do
+  it 'da sua pousada com acesso para edição' do
     # Arrange
     @owner = make_owner
     @inn = make_inn(@owner)
@@ -17,7 +17,7 @@ describe '::Owner visualiza detalhes' do
     expect(page).to have_button('Adicionar Quarto')
   end
 
-  it 'da pousada de outrem' do
+  it 'da pousada de outrem sem acesso para edição' do
     # Arrange
     @owner = make_owner
     @inn = make_inn(@owner)

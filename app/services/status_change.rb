@@ -8,7 +8,8 @@ class StatusChange
     when 'closing'
       PriceCalculator.new(reservation).billing
     when 'rated'
-      reservation.update(params.require(:reservation).permit(:grade, :comment))
+      Rails.logger.info "TRES! : #{params}"
+      reservation.update(params.require(:reservation).permit(:grade, :comment, :status))
     when 'answered'
       reservation.update(params.require(:reservation).permit(:response))
     end

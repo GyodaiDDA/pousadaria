@@ -31,7 +31,7 @@ describe '::Owner clica no botão Entrar' do
   end
 
   context 'e faz login com sucesso' do
-    it 'tendo pousada' do
+    it 'e visualiza sua pousada' do
       # Arrange
       @owner = make_owner
       @inn = make_inn(@owner)
@@ -49,7 +49,7 @@ describe '::Owner clica no botão Entrar' do
       expect(page).to have_content(@inn.brand_name)
     end
 
-    it 'sem ter pousada' do
+    it 'e é levado a cadastrar pousada' do
       # Arrange
       @owner = make_owner
       # Act

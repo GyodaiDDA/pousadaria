@@ -11,8 +11,11 @@
         <% elsif !user_signed_in? %>
           <p class="alert"><%= 'Garanta sua reserva fazendo login no site.' %></p>
           <%= render partial: 'devise/sessions/login', locals: { resource: User.new, resource_name: 'user', reservation_id: reservation.id } %>         
-        <% elsif reservation.status == 'closed' || reservation.status == 'rated' || reservation.status == 'answered' %>
-          <%= render partial: 'rating', locals: { reservation: reservation } %>
+        <% elsif reservation.status == 'closed' %>
+          <%= reservation_statuses(reservation) %>
+        <% elsif reservation.status ==  'rated' || reservation.status == 'answered' %>
+          <%= "Sua nota: #{reservation.grade}" %><br>
+          <%= "Seu comentário: #{reservation.comment}" %>
         <% end %>
       </td>
     </tr>

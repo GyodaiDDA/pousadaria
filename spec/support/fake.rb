@@ -80,7 +80,7 @@ def make_cpf(user = nil)
 end
 
 def make_inn(owner, city = city_name.sample, active = 1)
-  Inn.create!(brand_name: "Pousada #{Faker::Food.ingredients} #{Faker::Gender.type} #{Faker::University.suffix}",
+  Inn.create!(brand_name: "Pousada #{Faker::Food.ingredients} #{Faker::Space.planet} #{Faker::University.suffix}",
               legal_name: "#{Faker::Job.title} #{Faker::Space.moon} #{Faker::Company.suffix}",
               vat_number: Faker::Company.brazilian_company_number,
               phone: Faker::PhoneNumber.phone_number,
@@ -140,7 +140,7 @@ def make_reservation(room, period = rand(10..20))
   end_date = start_date + period
   Reservation.create!(start_date: start_date,
                       end_date: end_date,
-                      guests: rand(0..room.max_guests),
+                      guests: rand(1..room.max_guests),
                       room_id: room.id)
 end
 
@@ -169,6 +169,22 @@ def make_closed_reservation(room, customer, start_date = nil, period = rand(10..
   reservation.status = 'closed'
   reservation.total_value = reservation.estimate
   reservation.payment = 'Cartão de crédito'
+  reservation.save
+  reservation.nights = (reservation.end_date - reservation.start_date).to_i
+  reservation.save
+  reservation
+end
+
+def make_answered_reservation(room, customer, start_date = nil, period = rand(10..20).days)
+  reservation = make_customer_reservation(room, customer)
+  reservation.check_in = Time.now.change(year: reservation.start_date.year, month: reservation.start_date.month, day: reservation.start_date.day)
+  reservation.check_out = Time.now.change(year: reservation.end_date.year, month: reservation.end_date.month, day: reservation.end_date.day) + 2.hours
+  reservation.status = 'closed'
+  reservation.total_value = reservation.estimate
+  reservation.payment = 'Cartão de crédito'
+  reservation.grade = rand(1..5)
+  reservation.comment = "A estadia foi boa. Tivemos um problema de #{Faker::ElectricalComponents.active} do #{Faker::ElectricalComponents.passive} e não deu pra ver #{Faker::Space.planet} dar a volta completa em #{Faker::Space.moon}."
+  reservation.response = "Esperamos contar com a sua preferência!"
   reservation.save
   reservation.nights = (reservation.end_date - reservation.start_date).to_i
   reservation.save

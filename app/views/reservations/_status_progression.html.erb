@@ -1,11 +1,17 @@
 <br>
+<% render 'errors' %>
 <div>
   <%= form_with(model: [room, reservation]) do |f| %>
     <% if status == 'closed' %>
       <%= f.label :payment %>
       <%= f.select :payment, room.inn.payment_opt.split(/\,/), {} %>
+    <% elsif status == 'rated' %>
+      <%= f.label :grade, class: 'inline' %><br>
+      <%= f.select :grade, 0..5, {}, class: 'inline' %><br>
+      <%= f.label :comment, class: 'inline' %><br>
+      <%= f.text_area :comment, class: 'inline' %><br>
     <% end %>
-    <%= f.hidden_field :reservation_id, value: reservation.id %>
+    
     <%= f.hidden_field :status, value: status %>
     <br>
     <%= f.submit "#{button_tag}", locals: {reservation: reservation} %>

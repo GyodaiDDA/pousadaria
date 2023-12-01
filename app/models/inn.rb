@@ -4,6 +4,14 @@ class Inn < ApplicationRecord
   has_many :reservations, through: :rooms
   validates :brand_name, :legal_name, :vat_number, :city, :state, :postal_code, presence: true
   validates_with CnpjValidator
+  validate :user_is_owner
+
+  def user_is_owner
+    @user = User.find_by(id: user_id)
+    return if @user.user_type == 'Owner'
+
+    errors.add(:base, 'O cadastro de usuário não é proprietário')
+  end
 
   def ratings
     reservations.select(:grade, :comment, :user_id, :response)
